@@ -18,7 +18,7 @@ import android.view.View;
  */
 
 public class DividerLinearDecoration2 extends RecyclerView.ItemDecoration {
-    private static final String TAG = "DividerLinearDecoration";
+    private static final String TAG = "DividerLinearItemDecoration";
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
     };

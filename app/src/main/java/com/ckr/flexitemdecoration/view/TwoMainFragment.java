@@ -11,7 +11,7 @@ import android.util.Log;
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.adapter.MainAdapter;
 import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
-import com.ckr.flexitemdecoration.widget.DividerLinearDecoration;
+import com.ckr.flexitemdecoration.widget.DividerLinearItemDecoration;
 
 import java.util.Arrays;
 
@@ -79,7 +79,7 @@ public class TwoMainFragment extends BaseFragment {
         if (itemDecoration != null) {
             recyclerView.removeItemDecoration(itemDecoration);
         }
-        DividerLinearDecoration.Builder builder = new DividerLinearDecoration.Builder(getContext(), orientation);
+        DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(getContext(), orientation);
         builder.setDivider(R.drawable.bg_divider_list);
         if (is_checked[0]) {
         } else {

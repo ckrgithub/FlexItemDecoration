@@ -14,18 +14,18 @@ import android.view.View;
  * 支持recyclerview的下划线的类
  */
 
-public class DividerLinearDecoration extends BaseItemDecoration {
-    private static final String TAG = "DividerLinearDecoration";
+public class DividerLinearItemDecoration extends BaseItemDecoration {
+    private static final String TAG = "LinearItemDecoration";
 
-    public DividerLinearDecoration(Context context, int orientation) {
+    public DividerLinearItemDecoration(Context context, int orientation) {
         super(context, orientation);
     }
 
-    public DividerLinearDecoration(Context context, int orientation, int drawableId) {
+    public DividerLinearItemDecoration(Context context, int orientation, int drawableId) {
         super(context, orientation, drawableId);
     }
 
-    private DividerLinearDecoration(Builder builder) {
+    private DividerLinearItemDecoration(Builder builder) {
         super(builder);
     }
 
@@ -193,7 +193,7 @@ public class DividerLinearDecoration extends BaseItemDecoration {
         }
 
         public BaseItemDecoration build() {
-            return new DividerLinearDecoration(this);
+            return new DividerLinearItemDecoration(this);
 
         }
     }
