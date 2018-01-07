@@ -91,6 +91,16 @@ public class TwoMainFragment extends BaseFragment {
         }
         itemDecoration = builder.build();
         recyclerView.addItemDecoration(itemDecoration);
+       /* itemDecoration = new DividerLinearItemDecoration(getContext(), orientation,R.drawable.bg_divider_list);
+        if (is_checked[0]) {
+        } else {
+            itemDecoration.removeHeaderDivider(is_checked[1])
+                    .removeFooterDivider(is_checked[2])
+                    .removeLeftDivider(is_checked[3])
+                    .removeRightDivider(is_checked[4])
+            ;
+        }
+        recyclerView.addItemDecoration(itemDecoration);*/
     }
 
 

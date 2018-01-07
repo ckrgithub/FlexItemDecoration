@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.ckr.flexitemdecoration.R;
-import com.ckr.flexitemdecoration.adapter.MainAdapter;
+import com.ckr.flexitemdecoration.adapter.ThreeMainAdapter;
 import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
 import com.ckr.flexitemdecoration.widget.DividerGridItemDecoration;
 
@@ -21,29 +21,29 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends BaseFragment {
+public class ThreeMainFragment extends BaseFragment {
     private static final String TAG = "MainFragment";
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindDimen(R.dimen.size10)
     int padding;
-    private MainAdapter mainAdapter;
+    private ThreeMainAdapter mainAdapter;
     public static final int SPAN_COUNT = 2;
-    public static final int ORIENTATION = LinearLayoutManager.VERTICAL;
+    public static final int ORIENTATION = LinearLayoutManager.HORIZONTAL;
     private BaseItemDecoration itemDecoration;
     public boolean[] is_checked = {true, false, false, false, false};
     private boolean isInit = false;
 
-    public static MainFragment newInstance() {
+    public static ThreeMainFragment newInstance() {
         Bundle args = new Bundle();
-        MainFragment fragment = new MainFragment();
+        ThreeMainFragment fragment = new ThreeMainFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int getContentLayoutId() {
-        return R.layout.fragment_main;
+        return R.layout.fragment_main_three;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MainFragment extends BaseFragment {
         setItemDecoration();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT, ORIENTATION, false));
         recyclerView.setPadding(padding, padding, padding, padding);
-        mainAdapter = new MainAdapter(getContext());
+        mainAdapter = new ThreeMainAdapter(getContext());
         recyclerView.setAdapter(mainAdapter);
     }
 

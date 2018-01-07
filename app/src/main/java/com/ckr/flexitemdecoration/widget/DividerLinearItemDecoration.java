@@ -3,6 +3,7 @@ package com.ckr.flexitemdecoration.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +18,15 @@ import android.view.View;
 public class DividerLinearItemDecoration extends BaseItemDecoration {
     private static final String TAG = "LinearItemDecoration";
 
+    public DividerLinearItemDecoration(Context context) {
+        super(context, LINEAR,VERTICAL);
+    }
     public DividerLinearItemDecoration(Context context, int orientation) {
-        super(context, orientation);
+        super(context, LINEAR,orientation);
     }
 
-    public DividerLinearItemDecoration(Context context, int orientation, int drawableId) {
-        super(context, orientation, drawableId);
+    public DividerLinearItemDecoration(Context context, int orientation, @DrawableRes int drawableId) {
+        super(context,LINEAR, orientation, drawableId);
     }
 
     private DividerLinearItemDecoration(Builder builder) {
@@ -176,11 +180,11 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
     public static class Builder extends BaseBuilder {
 
         public Builder(Context context) {
-            super(context);
+            super(context,LINEAR);
         }
 
         public Builder(Context context, int mOrientation) {
-            super(context, mOrientation);
+            super(context,LINEAR, mOrientation);
         }
 
         @Override
@@ -194,7 +198,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 
         public BaseItemDecoration build() {
             return new DividerLinearItemDecoration(this);
-
         }
     }
 }

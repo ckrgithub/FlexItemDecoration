@@ -18,7 +18,9 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     public static final int HORIZONTAL = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL = LinearLayoutManager.VERTICAL;
+    protected static final int LINEAR = 1;
     protected static final int GRID = 2;
+    protected int mFlag = 0;
     protected int mOrientation = VERTICAL;
     protected Drawable mDivider;
     protected boolean noDrawHeaderDivider;
@@ -27,31 +29,28 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
     protected boolean noDrawRightDivider;
     protected int mDividerHeight;
     protected int mDividerWidth;
+    private Context mContext;
 
-    public BaseItemDecoration(Context context, int orientation) {
+    protected BaseItemDecoration(Context context, int mFlag, int orientation) {
         if (orientation != HORIZONTAL && orientation != VERTICAL && orientation != GRID) {
             throw new IllegalArgumentException("invalid orientation");
         }
-        mOrientation = orientation;
+        this.mContext = context;
+        this.mFlag = mFlag;
+        this.mOrientation = orientation;
         initDefaultDivider(context);
     }
 
-    public BaseItemDecoration(Context context, int orientation, int drawableId) {
+    protected BaseItemDecoration(Context context, int mFlag, int orientation, int drawableId) {
         if (orientation != HORIZONTAL && orientation != VERTICAL && orientation != GRID) {
             throw new IllegalArgumentException("invalid orientation");
         }
-        mOrientation = orientation;
+        this.mContext = context;
+        this.mFlag = mFlag;
+        this.mOrientation = orientation;
         mDivider = ContextCompat.getDrawable(context.getApplicationContext(), drawableId);
         mDividerHeight = mDivider.getIntrinsicHeight();
         mDividerWidth = mDivider.getIntrinsicWidth();
-    }
-
-    private void initDefaultDivider(Context context) {
-        final TypedArray a = context.obtainStyledAttributes(ATTRS);
-        mDivider = a.getDrawable(0);
-        a.recycle();
-        mDividerHeight = mDivider.getIntrinsicHeight() * 5;
-        mDividerWidth = mDivider.getIntrinsicWidth() * 5;
     }
 
     protected BaseItemDecoration(BaseBuilder baseBuilder) {
@@ -62,11 +61,28 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             mDividerHeight = mDivider.getIntrinsicHeight();
             mDividerWidth = mDivider.getIntrinsicWidth();
         }
+        this.mContext = baseBuilder.context;
+        this.mFlag = baseBuilder.mFlag;
         this.mOrientation = baseBuilder.mOrientation;
         this.noDrawHeaderDivider = baseBuilder.noDrawHeaderDivider;
         this.noDrawFooterDivider = baseBuilder.noDrawFooterDivider;
         this.noDrawLeftDivider = baseBuilder.noDrawLeftDivider;
         this.noDrawRightDivider = baseBuilder.noDrawRightDivider;
+    }
+
+    private void initDefaultDivider(Context context) {
+        final TypedArray a = context.obtainStyledAttributes(ATTRS);
+        mDivider = a.getDrawable(0);
+        a.recycle();
+        mDividerHeight = mDivider.getIntrinsicHeight() * 5;
+        mDividerWidth = mDivider.getIntrinsicWidth() * 5;
+    }
+
+    public BaseItemDecoration setDivider(@DrawableRes int drawableId) {
+        this.mDivider = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        mDividerHeight = mDivider.getIntrinsicHeight();
+        mDividerWidth = mDivider.getIntrinsicWidth();
+        return this;
     }
 
     public BaseItemDecoration removeHeaderDivider(boolean noDrawHeaderDivider) {
@@ -91,11 +107,13 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent) {
-        if (mOrientation == VERTICAL) {
-            drawVertical(c, parent);
-        } else if (mOrientation == HORIZONTAL) {
-            drawHorizontal(c, parent);
-        } else {
+        if (mFlag == LINEAR) {
+            if (mOrientation == VERTICAL) {
+                drawVertical(c, parent);
+            } else {
+                drawHorizontal(c, parent);
+            }
+        } else if (mFlag == GRID) {
             drawHorizontal(c, parent);
             drawVertical(c, parent);
         }
@@ -108,21 +126,24 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
     public static abstract class BaseBuilder {
         protected Context context;
         protected Drawable mDivider;
+        protected int mFlag;
         protected int mOrientation = VERTICAL;
         protected boolean noDrawHeaderDivider;
         protected boolean noDrawFooterDivider;
         protected boolean noDrawLeftDivider;
         protected boolean noDrawRightDivider;
 
-        protected BaseBuilder(Context context) {
+        protected BaseBuilder(Context context, int flag) {
             this.context = context;
+            this.mFlag = flag;
         }
 
-        protected BaseBuilder(Context context, int mOrientation) {
+        protected BaseBuilder(Context context, int flag, int mOrientation) {
             if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
                 throw new IllegalArgumentException("invalid orientation");
             }
             this.context = context;
+            this.mFlag = flag;
             this.mOrientation = mOrientation;
         }
 
