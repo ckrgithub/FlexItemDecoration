@@ -4,6 +4,7 @@
 ![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_1.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)
 
 #功能及使用
+
 	##网格分割线的使用
 		网格分割线只实现竖直方向的分割线的头部、底部、最左边、最右边的移除功能
 		DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(context, 2);//2:列数
