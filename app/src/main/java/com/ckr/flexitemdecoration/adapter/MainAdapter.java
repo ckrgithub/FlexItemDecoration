@@ -1,7 +1,10 @@
 package com.ckr.flexitemdecoration.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ckr.flexitemdecoration.R;
 
@@ -9,28 +12,29 @@ import com.ckr.flexitemdecoration.R;
  * Created by PC大佬 on 2018/1/4.
  */
 
-public class MainAdapter extends BaseAdpater<String>{
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHorld> {
+    private Context mContext;
+
     public MainAdapter(Context context) {
-        super(context);
-    }
-
-
-    @Override
-    protected int getLayoutId(int viewType) {
-        return R.layout.item_picture;
+        mContext = context;
     }
 
     @Override
-    protected BaseViewHorld getViewHorld(View itemView, int viewType) {
-        return new MainHorld(itemView);
+    public MainHorld onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new MainHorld(LayoutInflater.from(mContext).inflate(R.layout.item_picture, parent, false));
     }
 
     @Override
-    protected void convert(BaseViewHorld horld, int position, String s) {
+    public void onBindViewHolder(MainHorld holder, int position) {
 
     }
 
-    class MainHorld extends BaseViewHorld{
+    @Override
+    public int getItemCount() {
+        return 13;
+    }
+
+    class MainHorld extends RecyclerView.ViewHolder {
 
         public MainHorld(View itemView) {
             super(itemView);
