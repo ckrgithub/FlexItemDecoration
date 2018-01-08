@@ -21,7 +21,7 @@ public class ThreeMainAdapter extends RecyclerView.Adapter<ThreeMainAdapter.Main
 
     @Override
     public MainHorld onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainHorld(LayoutInflater.from(mContext).inflate(R.layout.item_picture_three, parent, false));
+        return new MainHorld(LayoutInflater.from(mContext).inflate(R.layout.item_picture_horizontal, parent, false));
     }
 
     @Override

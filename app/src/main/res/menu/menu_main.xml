@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/item1"
-        android:checked="true"
         android:checkable="true"
+        android:checked="true"
         android:title="默认" />
     <item
         android:id="@+id/item2"
@@ -23,4 +23,32 @@
         android:id="@+id/item5"
         android:checkable="true"
         android:title="移除右边分割线" />
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/item6"
+            android:checkable="true"
+            android:title="批量定制分割线" />
+        <item
+            android:id="@+id/item7"
+            android:checkable="true"
+            android:title="定制某个分割线" />
+        <item
+            android:id="@+id/item8"
+            android:checkable="true"
+            android:title="定制头部分割线" />
+        <item
+            android:id="@+id/item9"
+            android:checkable="true"
+            android:title="定制底部分割线" />
+        <item
+            android:id="@+id/item10"
+            android:checkable="true"
+            android:title="定制左边分割线" />
+        <item
+            android:id="@+id/item11"
+            android:checkable="true"
+            android:title="定制右边分割线" />
+
+    </group>
+
 </menu>

@@ -10,7 +10,6 @@ import android.util.Log;
 
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.adapter.MainAdapter;
-import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
 import com.ckr.flexitemdecoration.widget.DividerLinearItemDecoration;
 
 import java.util.Arrays;
@@ -24,8 +23,8 @@ import static com.ckr.flexitemdecoration.widget.BaseItemDecoration.VERTICAL;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TwoMainFragment extends BaseFragment {
-    private static final String TAG = "TwoMainFragment";
+public class LinearFragment extends BaseFragment {
+    private static final String TAG = "LinearFragment";
     public static final String ORIENTATION = "orientation";
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -33,17 +32,17 @@ public class TwoMainFragment extends BaseFragment {
     int padding;
     private MainAdapter mainAdapter;
     public int orientation = LinearLayoutManager.VERTICAL;
-    public boolean[] is_checked = {true, false, false, false, false};
-    private BaseItemDecoration itemDecoration;
+    public boolean[] is_checked = {true, false, false, false, false, false, false, false, false, false, false};
+    private DividerLinearItemDecoration itemDecoration;
     private boolean isInit = false;
 
-    public static TwoMainFragment newInstance(int orientation) {
+    public static LinearFragment newInstance(int orientation) {
         if (orientation != HORIZONTAL && orientation != VERTICAL) {
             orientation = VERTICAL;
         }
         Bundle args = new Bundle();
         args.putInt(ORIENTATION, orientation);
-        TwoMainFragment fragment = new TwoMainFragment();
+        LinearFragment fragment = new LinearFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -89,6 +88,51 @@ public class TwoMainFragment extends BaseFragment {
                     .removeRightDivider(is_checked[4])
             ;
         }
+        if (is_checked[5]) {
+            builder.subDivider(1, 4)
+                    .setSubDividerHeight(24)
+                    .setSubDividerWidth(24)
+                    .setSubDividerDrawable(R.drawable.bg_divider_offset);
+        }
+        if (is_checked[6]) {
+            builder.redrawDivider(2)
+                    .redrawDividerHeight(30)
+                    .redrawDividerDrawable(R.drawable.bg_divider_redraw);
+        }
+        if (is_checked[7]) {
+            builder.redrawHeaderDivider()
+                    .redrawHeaderDividerHeight(40)
+                    .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset);
+        }
+        if (is_checked[8]) {
+            builder.redrawFooterDivider()
+                    .redrawFooterDividerHeight(40)
+                    .redrawFooterDividerDrawable(R.drawable.bg_divider_offset);
+        }
+        if (is_checked[9]) {
+            builder.redrawLeftDivider().
+                    redrawLeftDividerWidth(40)
+                    .redrawLeftDividerDrawable(R.drawable.bg_divider_list);
+        }
+        if (is_checked[10]) {
+            builder.redrawRightDivider()
+                    .redrawRightDividerWidth(40)
+                    .redrawRightDividerDrawable(R.drawable.bg_divider_list);
+        }
+      /*  builder
+                .redrawHeaderDivider().
+                redrawHeaderDividerHeight(40)
+                .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset)
+                .redrawFooterDivider()
+                .redrawFooterDividerHeight(40)
+                .redrawFooterDividerDrawable(R.drawable.bg_divider_offset)
+                .redrawLeftDivider().
+                redrawLeftDividerWidth(40)
+                .redrawLeftDividerDrawable(R.drawable.bg_divider_list)
+                .redrawRightDivider().
+                redrawRightDividerWidth(40)
+                .redrawRightDividerDrawable(R.drawable.bg_divider_list)
+        ;*/
         itemDecoration = builder.build();
         recyclerView.addItemDecoration(itemDecoration);
        /* itemDecoration = new DividerLinearItemDecoration(getContext(), orientation,R.drawable.bg_divider_list);
@@ -115,9 +159,18 @@ public class TwoMainFragment extends BaseFragment {
                     break;
                 }
             }
+            if (!forceRefresh) {
+                for (int i = 5; i < params.length; i++) {
+                    if (params[i] != is_checked[i]) {
+                        forceRefresh = true;
+                        break;
+                    }
+                }
+            }
             if (forceRefresh) {
                 System.arraycopy(params, 0, is_checked, 0, 3);
-                Log.d(TAG, "refreshFragment: is_checked:" + Arrays.toString(is_checked));
+                System.arraycopy(params, 5, is_checked, 5,params.length-5);
+                Log.d(TAG, "refreshFragment: is_checked111:" + Arrays.toString(is_checked));
                 setItemDecoration();
             }
         } else {
@@ -133,11 +186,11 @@ public class TwoMainFragment extends BaseFragment {
             }
             if (forceRefresh) {
                 is_checked[0] = params[0];
-                is_checked[3] = params[3];
-                is_checked[4] = params[4];
-                Log.d(TAG, "refreshFragment: is_checked:" + Arrays.toString(is_checked));
+                System.arraycopy(params, 3, is_checked, 3, params.length-3);
+                Log.d(TAG, "refreshFragment: is_checked222:" + Arrays.toString(is_checked));
                 setItemDecoration();
             }
+
         }
     }
 }

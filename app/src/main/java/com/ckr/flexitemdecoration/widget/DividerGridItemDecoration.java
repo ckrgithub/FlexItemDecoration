@@ -35,6 +35,14 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
         this.mSpanCount = builder.mSpanCount;
     }
 
+    public DividerGridItemDecoration setShowOtherStyle(boolean showOtherStyle) {
+        isShowOtherStyle = showOtherStyle;
+        return this;
+    }
+    public void showOtherStyle() {
+        isShowOtherStyle = true;
+    }
+
     //绘制水平分割线
     @Override
     protected void drawHorizontal(Canvas c, RecyclerView parent) {
@@ -185,7 +193,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
                     if (leftPosHandle) {
                         int adapterPosition = parent.getChildAdapterPosition(child);
                         if (mSpanCount > adapterPosition) {
-                            Log.e(TAG, "drawHorizontal: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+                            Log.e(TAG, "drawVertical: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
                             leftDividerWidth = 0;
                             if (adapterPosition == mSpanCount - 1) {
                                 leftPosHandle = false;
@@ -211,7 +219,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
                         if (startNum <= i) {
                             int adapterPosition = parent.getChildAdapterPosition(child);
                             if (columnNum * mSpanCount <= adapterPosition) {
-                                Log.d(TAG, "drawHorizontal: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+                                Log.d(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
                                 rightDividerWidth = 0;
                                 if (adapterPosition == itemCount - 1) {
                                     rightPosHandle = false;
@@ -224,18 +232,18 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
                 }
             }
             //---------item的左边的分割线绘制---------
-            Log.d(TAG, "drawHorizontal: getLeft:" + child.getLeft() + ",i:" + i + ",leftDividerWidth:" + leftDividerWidth + ",rightDividerWidth:" + rightDividerWidth);
+            Log.d(TAG, "drawVertical: getLeft:" + child.getLeft() + ",i:" + i + ",leftDividerWidth:" + leftDividerWidth + ",rightDividerWidth:" + rightDividerWidth);
             right = child.getLeft() - params.leftMargin;
             left = right - leftDividerWidth;
-            Log.d(TAG, "drawHorizontal: right:" + right + ",left:" + left);
+            Log.d(TAG, "drawVertical: right:" + right + ",left:" + left);
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
             //------------------end-------------------
             //---------item的右边的分割线绘制---------
-            Log.d(TAG, "drawHorizontal: getRight:" + child.getRight());
+            Log.d(TAG, "drawVertical: getRight:" + child.getRight());
             left = child.getRight() + params.rightMargin;
             right = left + rightDividerWidth;
-            Log.d(TAG, "drawHorizontal: right222:" + right + ",left222:" + left);
+            Log.d(TAG, "drawVertical: right222:" + right + ",left222:" + left);
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
             //------------------end-------------------
@@ -312,7 +320,11 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
         * right：代表item的右边分割线占有的x轴长度
         * bottom：代表item的底部分割线占有的y轴长度
         * */
-        outRect.set(left, top, right, bottom);
+        if (isShowOtherStyle) {
+            outRect.set(0, 0, right, bottom);
+        } else {
+            outRect.set(left, top, right, bottom);
+        }
     }
 
     public static class Builder extends BaseBuilder {
@@ -336,16 +348,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
             }
         }
 
-        @Override
-        public Builder setOrientation(int mOrientation) {
-            if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
-                throw new IllegalArgumentException("invalid orientation");
-            }
-            this.mOrientation = mOrientation;
-            return this;
-        }
-
-        public BaseItemDecoration build() {
+        public DividerGridItemDecoration build() {
             return new DividerGridItemDecoration(this);
         }
     }

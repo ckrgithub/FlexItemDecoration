@@ -21,7 +21,7 @@
         android:background="@drawable/bg_tablayout"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="#f00"
         app:tabTextColor="#333"></android.support.design.widget.TabLayout>
 </FrameLayout>

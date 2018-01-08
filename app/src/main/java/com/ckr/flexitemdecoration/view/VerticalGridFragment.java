@@ -1,6 +1,7 @@
 package com.ckr.flexitemdecoration.view;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,8 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.ckr.flexitemdecoration.R;
-import com.ckr.flexitemdecoration.adapter.ThreeMainAdapter;
-import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
+import com.ckr.flexitemdecoration.adapter.MainAdapter;
 import com.ckr.flexitemdecoration.widget.DividerGridItemDecoration;
 
 import java.util.Arrays;
@@ -21,29 +21,41 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ThreeMainFragment extends BaseFragment {
-    private static final String TAG = "MainFragment";
+public class VerticalGridFragment extends BaseFragment {
+    private static final String TAG = "VerticalGridFragment";
+    public static final String STYLE = "style";
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindDimen(R.dimen.size10)
     int padding;
-    private ThreeMainAdapter mainAdapter;
+    private MainAdapter mainAdapter;
     public static final int SPAN_COUNT = 2;
-    public static final int ORIENTATION = LinearLayoutManager.HORIZONTAL;
-    private BaseItemDecoration itemDecoration;
-    public boolean[] is_checked = {true, false, false, false, false};
+    public static final int ORIENTATION = LinearLayoutManager.VERTICAL;
+    private DividerGridItemDecoration itemDecoration;
+    public boolean[] is_checked = {true, false, false, false, false, false, false, false, false, false, false};
     private boolean isInit = false;
+    private boolean isShowOtherStyle;
 
-    public static ThreeMainFragment newInstance() {
+    public static VerticalGridFragment newInstance(boolean b) {
         Bundle args = new Bundle();
-        ThreeMainFragment fragment = new ThreeMainFragment();
+        args.putBoolean(STYLE, b);
+        VerticalGridFragment fragment = new VerticalGridFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            isShowOtherStyle = arguments.getBoolean(STYLE, false);
+        }
+    }
+
+    @Override
     protected int getContentLayoutId() {
-        return R.layout.fragment_main_three;
+        return R.layout.fragment_main;
     }
 
     @Override
@@ -53,7 +65,7 @@ public class ThreeMainFragment extends BaseFragment {
         setItemDecoration();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT, ORIENTATION, false));
         recyclerView.setPadding(padding, padding, padding, padding);
-        mainAdapter = new ThreeMainAdapter(getContext());
+        mainAdapter = new MainAdapter(getContext());
         recyclerView.setAdapter(mainAdapter);
     }
 
@@ -64,9 +76,10 @@ public class ThreeMainFragment extends BaseFragment {
         if (itemDecoration != null) {
             recyclerView.removeItemDecoration(itemDecoration);
         }
-        DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(getContext(),ORIENTATION, SPAN_COUNT);
+        DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(getContext(), ORIENTATION, SPAN_COUNT);
 //        DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(getContext(), SPAN_COUNT);
-        builder.setDivider(R.drawable.bg_divider_list);
+        builder.setDivider(R.drawable.bg_divider_list)
+                .setShowOtherStyle(isShowOtherStyle);
         if (is_checked[0]) {
         } else {
             builder.removeHeaderDivider(is_checked[1])

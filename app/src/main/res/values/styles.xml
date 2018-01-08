@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>-->
+        <!--<item name="actionMenuTextAppearance">@style/MenuTextStyle</item>-->
+        <!--<item name="android:actionBarDivider">?android:attr/listDivider</item>-->
     </style>
 
+    <style name="MenuTextStyle">
+        <item name="android:textSize">8sp</item>
+    </style>
 </resources>

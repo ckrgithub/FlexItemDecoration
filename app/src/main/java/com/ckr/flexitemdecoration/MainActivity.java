@@ -10,9 +10,9 @@ import android.view.MenuItem;
 
 import com.ckr.flexitemdecoration.adapter.MyFragmentPagerAdpater;
 import com.ckr.flexitemdecoration.view.BaseFragment;
-import com.ckr.flexitemdecoration.view.MainFragment;
-import com.ckr.flexitemdecoration.view.ThreeMainFragment;
-import com.ckr.flexitemdecoration.view.TwoMainFragment;
+import com.ckr.flexitemdecoration.view.HorizontalGridFragment;
+import com.ckr.flexitemdecoration.view.LinearFragment;
+import com.ckr.flexitemdecoration.view.VerticalGridFragment;
 import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
 
 import java.util.ArrayList;
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private ArrayList<BaseFragment> fragmentList;
     private int currentPage = 0;
     public Map<Integer, Integer> map;
-    public static final int[] MENU_ITEM_ID = {R.id.item1, R.id.item2, R.id.item3, R.id.item4, R.id.item5};
-    public boolean[] is_checked = {true, false, false, false, false};
-    public static final String[] TITLES = {"垂直网格","水平网格", "垂直线性", "水平线性"};
+    public static final int[] MENU_ITEM_ID = {R.id.item1, R.id.item2, R.id.item3, R.id.item4, R.id.item5, R.id.item6, R.id.item7, R.id.item8, R.id.item9, R.id.item10, R.id.item11};
+    public boolean[] is_checked = {true, false, false, false, false, false, false, false, false, false, false};
+    public static final String[] TITLES = {"垂直网格", "水平网格", "垂直网格2", "垂直线性", "水平线性"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private void initFragment() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(MainFragment.newInstance());
-        fragmentList.add(ThreeMainFragment.newInstance());
-        fragmentList.add(TwoMainFragment.newInstance(BaseItemDecoration.VERTICAL));
-        fragmentList.add(TwoMainFragment.newInstance(BaseItemDecoration.HORIZONTAL));
+        fragmentList.add(VerticalGridFragment.newInstance(false));
+        fragmentList.add(HorizontalGridFragment.newInstance());
+        fragmentList.add(VerticalGridFragment.newInstance(true));
+        fragmentList.add(LinearFragment.newInstance(BaseItemDecoration.VERTICAL));
+        fragmentList.add(LinearFragment.newInstance(BaseItemDecoration.HORIZONTAL));
     }
 
     private void initView() {
@@ -100,6 +101,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 if (!item.isChecked()) {
                     disableChecked(0);
                 }
+                break;
+            case R.id.item6:
+            case R.id.item7:
+            case R.id.item8:
+            case R.id.item9:
+            case R.id.item10:
+            case R.id.item11:
                 break;
             default:
                 return super.onOptionsItemSelected(item);
