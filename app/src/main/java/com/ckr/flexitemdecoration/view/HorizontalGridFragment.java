@@ -8,10 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.ckr.decoration.BaseItemDecoration;
+import com.ckr.decoration.DividerGridItemDecoration;
 import com.ckr.flexitemdecoration.R;
-import com.ckr.flexitemdecoration.adapter.ThreeMainAdapter;
-import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
-import com.ckr.flexitemdecoration.widget.DividerGridItemDecoration;
+import com.ckr.flexitemdecoration.adapter.HorizontalGridAdapter;
 
 import java.util.Arrays;
 
@@ -27,7 +27,7 @@ public class HorizontalGridFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindDimen(R.dimen.size10)
     int padding;
-    private ThreeMainAdapter mainAdapter;
+    private HorizontalGridAdapter mainAdapter;
     public static final int SPAN_COUNT = 2;
     public static final int ORIENTATION = LinearLayoutManager.HORIZONTAL;
     private BaseItemDecoration itemDecoration;
@@ -53,7 +53,7 @@ public class HorizontalGridFragment extends BaseFragment {
         setItemDecoration();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT, ORIENTATION, false));
         recyclerView.setPadding(padding, padding, padding, padding);
-        mainAdapter = new ThreeMainAdapter(getContext());
+        mainAdapter = new HorizontalGridAdapter(getContext());
         recyclerView.setAdapter(mainAdapter);
     }
 

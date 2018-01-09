@@ -8,17 +8,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.ckr.decoration.DividerLinearItemDecoration;
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.adapter.MainAdapter;
-import com.ckr.flexitemdecoration.widget.DividerLinearItemDecoration;
 
 import java.util.Arrays;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
 
-import static com.ckr.flexitemdecoration.widget.BaseItemDecoration.HORIZONTAL;
-import static com.ckr.flexitemdecoration.widget.BaseItemDecoration.VERTICAL;
+import static com.ckr.decoration.BaseItemDecoration.HORIZONTAL;
+import static com.ckr.decoration.BaseItemDecoration.VERTICAL;
 
 /**
  * A simple {@link Fragment} subclass.

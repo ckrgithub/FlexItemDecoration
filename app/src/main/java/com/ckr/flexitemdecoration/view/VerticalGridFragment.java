@@ -9,9 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.ckr.decoration.DividerGridItemDecoration;
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.adapter.MainAdapter;
-import com.ckr.flexitemdecoration.widget.DividerGridItemDecoration;
 
 import java.util.Arrays;
 
@@ -61,7 +61,6 @@ public class VerticalGridFragment extends BaseFragment {
     @Override
     protected void init() {
         isInit = true;
-//        int dimension = (int) getResources().getDimension(R.dimen.size12);
         setItemDecoration();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT, ORIENTATION, false));
         recyclerView.setPadding(padding, padding, padding, padding);

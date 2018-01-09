@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+
+def siteUrl = 'https://github.com/ckrgithub/FlexItemDecoration'
+publish{
+    repoName = 'FlexItemDecoration'
+    userOrg = 'ckrjfrog'
+    groupId = 'ckrjfrog.FlexItemDecoration'
+    artifactId = 'Decoration'
+    publishVersion = '1.0.1'
+    desc = '列表分割线'
+    website = siteUrl
+}
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+android {
+    compileSdkVersion rootProject.ext.androidConfig.compileSdkVersion
+    buildToolsVersion rootProject.ext.androidConfig.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.androidConfig.minSdkVersion
+        targetSdkVersion rootProject.ext.androidConfig.targetSdkVersion
+        versionCode 1
+        versionName "1.0.1"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:appcompat-v7:$rootProject.supportVersion"
+    provided "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+    provided "com.android.support:cardview-v7:$rootProject.supportVersion"
+    provided "com.android.support:design:$rootProject.supportVersion"
+}

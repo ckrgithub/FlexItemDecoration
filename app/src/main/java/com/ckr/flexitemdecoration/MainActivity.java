@@ -2,18 +2,19 @@ package com.ckr.flexitemdecoration;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ckr.decoration.BaseItemDecoration;
 import com.ckr.flexitemdecoration.adapter.MyFragmentPagerAdpater;
 import com.ckr.flexitemdecoration.view.BaseFragment;
 import com.ckr.flexitemdecoration.view.HorizontalGridFragment;
 import com.ckr.flexitemdecoration.view.LinearFragment;
 import com.ckr.flexitemdecoration.view.VerticalGridFragment;
-import com.ckr.flexitemdecoration.widget.BaseItemDecoration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +25,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
-
     private static final String TAG = "MainActivity";
+    private static final String PAGE = "page";
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.tabLayout)
@@ -38,10 +39,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public static final int[] MENU_ITEM_ID = {R.id.item1, R.id.item2, R.id.item3, R.id.item4, R.id.item5, R.id.item6, R.id.item7, R.id.item8, R.id.item9, R.id.item10, R.id.item11};
     public boolean[] is_checked = {true, false, false, false, false, false, false, false, false, false, false};
     public static final String[] TITLES = {"垂直网格", "水平网格", "垂直网格2", "垂直线性", "水平线性"};
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+        } else {
+            currentPage = savedInstanceState.getInt(PAGE);
+        }
         setContentView(R.layout.activity_main);
         unBinder = ButterKnife.bind(this);
         initFragment();
@@ -52,18 +58,43 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(PAGE, currentPage);
+    }
+
+    private static String makeFragmentName(int viewId, long id) {
+        return "android:switcher:" + viewId + ":" + id;
+    }
+
     private void initFragment() {
+        fragmentManager = getSupportFragmentManager();
         fragmentList = new ArrayList<>();
-        fragmentList.add(VerticalGridFragment.newInstance(false));
-        fragmentList.add(HorizontalGridFragment.newInstance());
-        fragmentList.add(VerticalGridFragment.newInstance(true));
-        fragmentList.add(LinearFragment.newInstance(BaseItemDecoration.VERTICAL));
-        fragmentList.add(LinearFragment.newInstance(BaseItemDecoration.HORIZONTAL));
+        for (int i = 0; i < TITLES.length; i++) {
+            String name = makeFragmentName(R.id.viewPager, currentPage);
+            BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentByTag(name);
+            if (fragment == null) {
+                if (i == 0) {
+                    fragmentList.add(VerticalGridFragment.newInstance(false));
+                } else if (i == 1) {
+                    fragmentList.add(HorizontalGridFragment.newInstance());
+                } else if (i == 2) {
+                    fragmentList.add(VerticalGridFragment.newInstance(true));
+                } else if (i == 3) {
+                    fragmentList.add(LinearFragment.newInstance(BaseItemDecoration.VERTICAL));
+                } else if (i == 4) {
+                    fragmentList.add(LinearFragment.newInstance(BaseItemDecoration.HORIZONTAL));
+                }
+            } else {
+                fragmentList.add(fragment);
+            }
+        }
     }
 
     private void initView() {
-        tabLayout.addTab(tabLayout.newTab().setText(TITLES[currentPage]), true);
-        viewPager.setAdapter(new MyFragmentPagerAdpater(getSupportFragmentManager(), fragmentList, TITLES));
+        tabLayout.addTab(tabLayout.newTab().setText(TITLES[currentPage]), currentPage, true);
+        viewPager.setAdapter(new MyFragmentPagerAdpater(fragmentManager, fragmentList, TITLES));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
     }

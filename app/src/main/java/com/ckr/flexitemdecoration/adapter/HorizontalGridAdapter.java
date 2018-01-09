@@ -12,10 +12,10 @@ import com.ckr.flexitemdecoration.R;
  * Created by PC大佬 on 2018/1/4.
  */
 
-public class ThreeMainAdapter extends RecyclerView.Adapter<ThreeMainAdapter.MainHorld> {
+public class HorizontalGridAdapter extends RecyclerView.Adapter<HorizontalGridAdapter.MainHorld> {
     private Context mContext;
 
-    public ThreeMainAdapter(Context context) {
+    public HorizontalGridAdapter(Context context) {
         mContext = context;
     }
 

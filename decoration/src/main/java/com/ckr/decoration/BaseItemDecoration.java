@@ -1,4 +1,4 @@
-package com.ckr.flexitemdecoration.widget;
+package com.ckr.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;
