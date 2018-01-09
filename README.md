@@ -24,7 +24,7 @@
                 .removeFooterDivider(false)//是否移除底部分割线，在竖直方向有效
                 .removeLeftDivider(false)//是否移除最左边分割线，在水平方向有效
                 .removeRightDivider(false);//是否移除最右边分割线，在水平方向有效
-		.subDivider(1, 4);//分割线截取绘制，1：开始下标，4：结束下标
+		    .subDivider(1, 4);//分割线截取绘制，1：开始下标，4：结束下标
 		.setSubDividerHeight(24)//设置截取分割线的高度，在竖直方向有效
                 .setSubDividerWidth(24)//设置截取分割线的宽度，在水平方向有效
                 .setSubDividerDrawable(R.drawable.bg_divider_offset)//设置截取分割线的样式
