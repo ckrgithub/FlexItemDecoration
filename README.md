@@ -6,10 +6,10 @@
 ![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_1.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)
 
 #依赖
-
     ##添加依赖：
 	dependencies {
-		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.0.1'
+		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.0.1'//gradle plugin 3.0(包含)以上使用
+		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.0.1'//gradle plugin 3.0一下使用
 	}
 
 #功能及使用
