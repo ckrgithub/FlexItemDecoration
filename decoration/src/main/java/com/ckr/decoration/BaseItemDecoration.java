@@ -161,9 +161,9 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent) {
         if (mFlag == LINEAR) {
             if (mOrientation == VERTICAL) {
-                drawVertical(c, parent);
-            } else {
                 drawHorizontal(c, parent);
+            } else {
+                drawVertical(c, parent);
             }
         } else if (mFlag == GRID) {
             drawHorizontal(c, parent);
@@ -184,9 +184,9 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
         protected boolean noDrawFooterDivider;
         protected boolean noDrawLeftDivider;
         protected boolean noDrawRightDivider;
-        private boolean isSubDivider = false;//分割线截取绘制
-        private int mStartIndex;//分割线开始绘制的下标
-        private int mEndIndex;//分割线停止绘制的下标
+        protected boolean isSubDivider = false;//分割线截取绘制
+        protected int mStartIndex;//分割线开始绘制的下标
+        protected int mEndIndex;//分割线停止绘制的下标
         private int mSubDividerHeight;
         private int mSubDividerWidth;
         private Drawable mSubDrawable;
@@ -254,13 +254,13 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
-        public BaseBuilder setOrientation(int mOrientation) {
+       /* public BaseBuilder setOrientation(int mOrientation) {
             if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
                 throw new IllegalArgumentException("invalid orientation");
             }
             this.mOrientation = mOrientation;
             return this;
-        }
+        }*/
 
 
         public BaseBuilder redrawHeaderDivider() {
@@ -367,7 +367,7 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
         public BaseBuilder subDivider(@IntRange(from = 0) int startIndex, @IntRange(from = 1) int endIndex) {
             int subLen = endIndex - startIndex;
-            if (subLen < 0) {
+            if (subLen <= 0) {
                 throw new IndexOutOfBoundsException(startIndex + ">=" + endIndex);
             }
             this.mStartIndex = startIndex;
