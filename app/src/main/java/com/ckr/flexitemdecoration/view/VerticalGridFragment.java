@@ -94,7 +94,7 @@ public class VerticalGridFragment extends BaseFragment {
                     .setSubDividerDrawable(R.drawable.bg_divider_offset_grid);
         }
         if (is_checked[6]) {
-            builder.redrawDivider(3)
+            builder.redrawDivider(2)
                     .redrawDividerHeight(30)
                     .redrawDividerDrawable(R.drawable.bg_divider_redraw_grid);
         }
