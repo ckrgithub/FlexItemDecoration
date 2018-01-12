@@ -16,10 +16,10 @@ import android.view.View;
 public class DividerGridItemDecoration extends BaseItemDecoration {
 	private static final String TAG = "GridItemDecoration";
 	protected int mSpanCount = 1;
-	private Drawable mTopDivider;
-	private Drawable mBottomDivider;
-	private Drawable mLeftDivider;
-	private Drawable mRightDivider;
+	private Drawable mTopDivider;		//item上方分割线的drawable
+	private Drawable mBottomDivider;	//item下方分割线的drawable
+	private Drawable mLeftDivider;		//item左边方分割线的drawable
+	private Drawable mRightDivider;		//item右方分割线的drawable
 
 	public DividerGridItemDecoration(Context context, int mSpanCount) {
 		super(context, GRID, VERTICAL);
@@ -46,17 +46,12 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 		return this;
 	}
 
-	public void showOtherStyle() {
-		isShowOtherStyle = true;
-	}
-
 	//绘制水平分割线
 	@Override
 	protected void drawHorizontal(Canvas c, RecyclerView parent) {
 		int childCount = parent.getChildCount();//可视item的个数
-		int itemCount = parent.getAdapter().getItemCount();//item个数
+		int itemCount = parent.getAdapter().getItemCount();//item总个数
 		Log.d(TAG, "drawHorizontal: childCount:" + childCount + ",itemCount:" + itemCount);
-		Log.d(TAG, "drawHorizontal: width:" + mDividerWidth + ",height:" + mDividerHeight);
 		int left = 0;
 		int top = 0;
 		int right = 0;
@@ -76,12 +71,12 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 			if (mOrientation == VERTICAL) {
 				int leftDividerWidth = mDividerWidth;
 				int rightDividerWidth = mDividerWidth;
-				if (noDrawLeftDivider) {
+				if (noDrawLeftDivider) {//最左边分割线处理
 					if (i % mSpanCount == 0) {
 						leftDividerWidth = 0;
 					}
 				}
-				if (noDrawRightDivider) {
+				if (noDrawRightDivider) {//最右边分割线处理
 					if (i % mSpanCount == mSpanCount - 1) {
 						rightDividerWidth = 0;
 					}
@@ -102,10 +97,11 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				} else {
-					if (isRedrawHeaderDivider) {
+					if (isRedrawHeaderDivider) {//顶部分割线的定制
 						if (headerPosHandle) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
 							if (mSpanCount > adapterPosition) {
+								Log.d(TAG, "drawHorizontal: isRedrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
 								topDividerHeight = mHeaderDividerHeight;
 								if (adapterPosition == mSpanCount - 1) {
 									headerPosHandle = false;
@@ -137,13 +133,14 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				} else {
-					if (isRedrawFooterDivider) {
+					if (isRedrawFooterDivider) {//底部分割线的定制
 						if (footerPosHandle) {
 							int rowNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
 							int startNum = childCount - (itemCount - rowNum * mSpanCount);
 							if (startNum <= i) {
 								int adapterPosition = parent.getChildAdapterPosition(child);
 								if (rowNum * mSpanCount <= adapterPosition) {
+									Log.d(TAG, "drawHorizontal: isRedrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
 									bottomDividerHeight = mFooterDividerHeight;
 									if (adapterPosition == itemCount - 1) {
 										footerPosHandle = false;
@@ -158,13 +155,12 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				if (isSubDivider) {
+				if (isSubDivider) {//分割线的截取
 					if (isSubDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;
 						int rowNum = (adapterPosition + 1) % mSpanCount == 0 ? (adapterPosition + 1) / mSpanCount - 1 : (adapterPosition + 1) / mSpanCount;
 						if (rowNum > mStartIndex) {
-							Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",adapterPosition:" + adapterPosition);
 							int maxRow = Math.min(mEndIndex, rowCount - 1);
 							if (rowNum < maxRow) {
 								bottomDividerHeight = mSubDividerHeight;
@@ -189,7 +185,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				if (isRedrawDivider) {
+				if (isRedrawDivider) {//分割线的定制
 					if (isRedrawDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						int rowNum = (adapterPosition + 1) % mSpanCount == 0 ? (adapterPosition + 1) / mSpanCount : (adapterPosition + 1) / mSpanCount + 1;
@@ -207,18 +203,14 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 				//---------item的上方的分割线绘制---------
-				Log.d(TAG, "drawHorizontal: getTop:" + child.getTop() + ",i:" + i + ",topDividerHeight:" + topDividerHeight + ",bottomDividerHeight:" + bottomDividerHeight);
 				bottom = child.getTop() - params.topMargin;//计算分割线的下边
-				Log.d(TAG, "drawHorizontal: bottom:" + bottom);
 				top = bottom - topDividerHeight;//计算分割线的上边
 				mTopDivider.setBounds(left, top, right, bottom);
 				mTopDivider.draw(c);
 				//------------------end-------------------
 				//---------item的下方的分割线绘制---------
-				Log.d(TAG, "drawHorizontal: getBottom:" + child.getBottom());
 				top = child.getBottom() + params.bottomMargin;//计算分割线的上边
 				bottom = top + bottomDividerHeight;//计算分割线的下边
-				Log.d(TAG, "drawHorizontal: bottom22:" + bottom);
 				mBottomDivider.setBounds(left, top, right, bottom);
 				mBottomDivider.draw(c);
 				//------------------end-------------------
@@ -238,18 +230,14 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 				//---------item的上方的分割线绘制---------
-				Log.d(TAG, "drawHorizontal: getTop:" + child.getTop() + ",i:" + i + ",topDividerHeight:" + topDividerHeight + ",bottomDividerHeight:" + bottomDividerHeight);
 				bottom = child.getTop() - params.topMargin;//计算分割线的下边
-				Log.d(TAG, "drawHorizontal: bottom:" + bottom);
 				top = bottom - topDividerHeight;//计算分割线的上边
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
 				//------------------end-------------------
 				//---------item的下方的分割线绘制---------
-				Log.d(TAG, "drawHorizontal: getBottom:" + child.getBottom());
 				top = child.getBottom() + params.bottomMargin;//计算分割线的上边
 				bottom = top + bottomDividerHeight;//计算分割线的下边
-				Log.d(TAG, "drawHorizontal: bottom22:" + bottom);
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
 				//------------------end-------------------
@@ -292,18 +280,14 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 				//---------item的左边的分割线绘制---------
-				Log.d(TAG, "drawVertical: getLeft:" + child.getLeft() + ",i:" + i + ",leftDividerWidth:" + leftDividerWidth + ",rightDividerWidth:" + rightDividerWidth);
 				right = child.getLeft() - params.leftMargin;
 				left = right - leftDividerWidth;
-				Log.d(TAG, "drawVertical: right:" + right + ",left:" + left);
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
 				//------------------end-------------------
 				//---------item的右边的分割线绘制---------
-				Log.d(TAG, "drawVertical: getRight:" + child.getRight());
 				left = child.getRight() + params.rightMargin;
 				right = left + rightDividerWidth;
-				Log.d(TAG, "drawVertical: right222:" + right + ",left222:" + left);
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
 				//------------------end-------------------
@@ -399,7 +383,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;
 						int rowNum = (adapterPosition + 1) % mSpanCount == 0 ? (adapterPosition + 1) / mSpanCount - 1 : (adapterPosition + 1) / mSpanCount;
 						if (rowNum > mStartIndex) {
-							Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",adapterPosition:" + adapterPosition);
+							Log.e(TAG, "drawVertical: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",adapterPosition:" + adapterPosition);
 							int maxRow = Math.min(mEndIndex, rowCount - 1);
 							if (rowNum < maxRow) {
 								leftDividerWidth = mSubDividerWidth;
@@ -441,21 +425,15 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-
-
 				//---------item的左边的分割线绘制---------
-				Log.d(TAG, "drawVertical: getLeft:" + child.getLeft() + ",i:" + i + ",leftDividerWidth:" + leftDividerWidth + ",rightDividerWidth:" + rightDividerWidth);
 				right = child.getLeft() - params.leftMargin;
 				left = right - leftDividerWidth;
-				Log.d(TAG, "drawVertical: right:" + right + ",left:" + left);
 				mLeftDivider.setBounds(left, top, right, bottom);
 				mLeftDivider.draw(c);
 				//------------------end-------------------
 				//---------item的右边的分割线绘制---------
-				Log.d(TAG, "drawVertical: getRight:" + child.getRight());
 				left = child.getRight() + params.rightMargin;
 				right = left + rightDividerWidth;
-				Log.d(TAG, "drawVertical: right222:" + right + ",left222:" + left);
 				mRightDivider.setBounds(left, top, right, bottom);
 				mRightDivider.draw(c);
 				//------------------end-------------------
@@ -524,11 +502,9 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					if (rowNum > mStartIndex) {
 						int maxRow = Math.min(mEndIndex, rowCount - 1);
 						if (rowNum < maxRow) {
-							Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",maxRow:" + maxRow + ",itemPosition:" + itemPosition);
 							top = mSubDividerHeight;
 							bottom = mSubDividerHeight;
 						} else if (rowNum == maxRow) {
-							Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",maxRow:" + maxRow + ",itemPosition:" + itemPosition);
 							top = mSubDividerHeight;
 						}
 					} else if (rowNum == mStartIndex) {
@@ -544,10 +520,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				}
 				int rowNum = (itemPosition + 1) % mSpanCount == 0 ? (itemPosition + 1) / mSpanCount : (itemPosition + 1) / mSpanCount + 1;//计算第几行
 				if ((rowNum - 1) == mDividerIndex) {
-					Log.e(TAG, "getItemOffsets: mDividerIndex:" + mDividerIndex + ",itemPosition:" + itemPosition);
 					bottom = mRedrawDividerHeight;
 				} else if (mDividerIndex + 1 == rowNum - 1) {
-					Log.e(TAG, "getItemOffsets: mDividerIndex:" + mDividerIndex + ",itemPosition222:" + itemPosition);
 					top = mRedrawDividerHeight;
 				}
 			}
@@ -572,7 +546,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 			}else {
 				if (isRedrawLeftDivider) {
 					if (mSpanCount > itemPosition) {
-						Log.e(TAG, "getItemOffsets: noDrawLeftDivider:" + itemPosition);
+						Log.e(TAG, "getItemOffsets: isRedrawLeftDivider:" + itemPosition);
 						left = mLeftDividerWidth;
 					}
 				}
@@ -602,11 +576,9 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					if (rowNum > mStartIndex) {
 						int maxRow = Math.min(mEndIndex, rowCount - 1);
 						if (rowNum < maxRow) {
-							Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",maxRow:" + maxRow + ",itemPosition:" + itemPosition);
 							left = mSubDividerWidth;
 							right = mSubDividerWidth;
 						} else if (rowNum == maxRow) {
-							Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",maxRow:" + maxRow + ",itemPosition:" + itemPosition);
 							left = mSubDividerWidth;
 						}
 					}else if (rowNum == mStartIndex) {
@@ -622,10 +594,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				}
 				int rowNum = (itemPosition + 1) % mSpanCount == 0 ? (itemPosition + 1) / mSpanCount : (itemPosition + 1) / mSpanCount + 1;//计算第几行
 				if ((rowNum - 1) == mDividerIndex) {
-					Log.e(TAG, "getItemOffsets: mDividerIndex:" + mDividerIndex + ",itemPosition:" + itemPosition);
 					right = mRedrawDividerWidth;
 				} else if (mDividerIndex + 1 == rowNum - 1) {
-					Log.e(TAG, "getItemOffsets: mDividerIndex:" + mDividerIndex + ",itemPosition222:" + itemPosition);
 					left = mRedrawDividerWidth;
 				}
 			}

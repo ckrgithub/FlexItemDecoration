@@ -15,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
  */
 
 public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
-    private static final String TAG = "BaseItemDecoration";
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     public static final int HORIZONTAL = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL = LinearLayoutManager.VERTICAL;
@@ -157,6 +156,142 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
         return this;
     }
 
+    public BaseItemDecoration redrawHeaderDivider() {
+        this.isRedrawHeaderDivider = true;
+        return this;
+    }
+
+    public BaseItemDecoration redrawHeaderDividerDrawable(@DrawableRes int drawableId) {
+        this.mHeaderDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        if (this.mHeaderDividerHeight == 0) {
+            this.mHeaderDividerHeight = mHeaderDividerDrawable.getIntrinsicHeight();
+        }
+        return this;
+    }
+
+    public BaseItemDecoration redrawHeaderDividerHeight(@IntRange(from = 0) int height) {
+        this.mHeaderDividerHeight = height;
+        return this;
+    }
+
+    public BaseItemDecoration redrawFooterDivider() {
+        this.isRedrawFooterDivider = true;
+        return this;
+    }
+
+    public BaseItemDecoration redrawFooterDividerDrawable(@DrawableRes int drawableId) {
+        this.mFooterDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        if (this.mFooterDividerHeight == 0) {
+            this.mFooterDividerHeight = this.mFooterDividerDrawable.getIntrinsicHeight();
+        }
+        return this;
+    }
+
+    public BaseItemDecoration redrawFooterDividerHeight(@IntRange(from = 0) int height) {
+        this.mFooterDividerHeight = height;
+        return this;
+    }
+
+    public BaseItemDecoration redrawLeftDivider() {
+        this.isRedrawLeftDivider = true;
+        return this;
+    }
+
+    public BaseItemDecoration redrawLeftDividerDrawable(@DrawableRes int drawableId) {
+        this.mLeftDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        if (this.mLeftDividerWidth == 0) {
+            this.mLeftDividerWidth = mLeftDividerDrawable.getIntrinsicWidth();
+        }
+        return this;
+    }
+
+    public BaseItemDecoration redrawLeftDividerWidth(@IntRange(from = 0) int width) {
+        this.mLeftDividerWidth = width;
+        return this;
+    }
+
+    public BaseItemDecoration redrawRightDivider() {
+        this.isRedrawRightDivider = true;
+        return this;
+    }
+
+    public BaseItemDecoration redrawRightDividerDrawable(@DrawableRes int drawableId) {
+        this.mRightDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        if (this.mRightDividerWidth == 0) {
+            this.mRightDividerWidth = mRightDividerDrawable.getIntrinsicWidth();
+        }
+        return this;
+    }
+
+    public BaseItemDecoration redrawRightDividerWidth(@IntRange(from = 0) int width) {
+        this.mRightDividerWidth = width;
+        return this;
+    }
+
+    public BaseItemDecoration redrawDivider(@IntRange(from = 0) int dividerLineIndex) {
+        this.mDividerIndex = dividerLineIndex;
+        this.isRedrawDivider = true;
+        return this;
+    }
+
+    public BaseItemDecoration redrawDividerHeight(@IntRange(from = 0) int height) {
+        this.mRedrawDividerHeight = height;
+        return this;
+    }
+
+    public BaseItemDecoration redrawDividerWidth(@IntRange(from = 0) int width) {
+        this.mRedrawDividerWidth = width;
+        return this;
+    }
+
+    public BaseItemDecoration redrawDividerDrawable(@DrawableRes int drawableId) {
+        this.mDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        if (mOrientation == VERTICAL) {
+            if (this.mRedrawDividerHeight == 0) {
+                this.mRedrawDividerHeight = mDividerDrawable.getIntrinsicHeight();
+            }
+        } else {
+            if (mRedrawDividerWidth == 0) {
+                this.mRedrawDividerWidth = mDividerDrawable.getIntrinsicWidth();
+            }
+        }
+        return this;
+    }
+
+    public BaseItemDecoration subDivider(@IntRange(from = 0) int startIndex, @IntRange(from = 1) int endIndex) {
+        int subLen = endIndex - startIndex;
+        if (subLen < 0) {
+            throw new IndexOutOfBoundsException(startIndex + ">=" + endIndex);
+        }
+        this.mStartIndex = startIndex;
+        this.mEndIndex = endIndex;
+        this.isSubDivider = true;
+        return this;
+    }
+
+    public BaseItemDecoration setSubDividerHeight(@IntRange(from = 0) int height) {
+        this.mSubDividerHeight = height;
+        return this;
+    }
+
+    public BaseItemDecoration setSubDividerWidth(@IntRange(from = 0) int width) {
+        this.mSubDividerWidth = width;
+        return this;
+    }
+
+    public BaseItemDecoration setSubDividerDrawable(@DrawableRes int drawableId) {
+        this.mSubDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+        if (mOrientation == VERTICAL) {
+            if (this.mSubDividerHeight == 0) {
+                this.mSubDividerHeight = mSubDrawable.getIntrinsicHeight();
+            }
+        } else {
+            if (this.mSubDividerWidth == 0) {
+                this.mSubDividerWidth = mSubDrawable.getIntrinsicWidth();
+            }
+        }
+        return this;
+    }
     @Override
     public void onDraw(Canvas c, RecyclerView parent) {
         if (mFlag == LINEAR) {
@@ -253,15 +388,6 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             isShowOtherStyle = showOtherStyle;
             return this;
         }
-
-       /* public BaseBuilder setOrientation(int mOrientation) {
-            if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
-                throw new IllegalArgumentException("invalid orientation");
-            }
-            this.mOrientation = mOrientation;
-            return this;
-        }*/
-
 
         public BaseBuilder redrawHeaderDivider() {
             this.isRedrawHeaderDivider = true;

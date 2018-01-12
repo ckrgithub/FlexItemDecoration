@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntRange;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -32,143 +30,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		super(context, LINEAR, orientation, drawableId);
 	}
 
-	public DividerLinearItemDecoration redrawHeaderDivider() {
-		this.isRedrawHeaderDivider = true;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawHeaderDividerDrawable(@DrawableRes int drawableId) {
-		this.mHeaderDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
-		if (this.mHeaderDividerHeight == 0) {
-			this.mHeaderDividerHeight = mHeaderDividerDrawable.getIntrinsicHeight();
-		}
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawHeaderDividerHeight(@IntRange(from = 0) int height) {
-		this.mHeaderDividerHeight = height;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawFooterDivider() {
-		this.isRedrawFooterDivider = true;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawFooterDividerDrawable(@DrawableRes int drawableId) {
-		this.mFooterDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
-		if (this.mFooterDividerHeight == 0) {
-			this.mFooterDividerHeight = this.mFooterDividerDrawable.getIntrinsicHeight();
-		}
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawFooterDividerHeight(@IntRange(from = 0) int height) {
-		this.mFooterDividerHeight = height;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawLeftDivider() {
-		this.isRedrawLeftDivider = true;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawLeftDividerDrawable(@DrawableRes int drawableId) {
-		this.mLeftDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
-		if (this.mLeftDividerWidth == 0) {
-			this.mLeftDividerWidth = mLeftDividerDrawable.getIntrinsicWidth();
-		}
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawLeftDividerWidth(@IntRange(from = 0) int width) {
-		this.mLeftDividerWidth = width;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawRightDivider() {
-		this.isRedrawRightDivider = true;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawRightDividerDrawable(@DrawableRes int drawableId) {
-		this.mRightDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
-		if (this.mRightDividerWidth == 0) {
-			this.mRightDividerWidth = mRightDividerDrawable.getIntrinsicWidth();
-		}
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawRightDividerWidth(@IntRange(from = 0) int width) {
-		this.mRightDividerWidth = width;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawDivider(@IntRange(from = 0) int dividerLineIndex) {
-		this.mDividerIndex = dividerLineIndex;
-		this.isRedrawDivider = true;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawDividerHeight(@IntRange(from = 0) int height) {
-		this.mRedrawDividerHeight = height;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawDividerWidth(@IntRange(from = 0) int width) {
-		this.mRedrawDividerWidth = width;
-		return this;
-	}
-
-	public DividerLinearItemDecoration redrawDividerDrawable(@DrawableRes int drawableId) {
-		this.mDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
-		if (mOrientation == VERTICAL) {
-			if (this.mRedrawDividerHeight == 0) {
-				this.mRedrawDividerHeight = mDividerDrawable.getIntrinsicHeight();
-			}
-		} else {
-			if (mRedrawDividerWidth == 0) {
-				this.mRedrawDividerWidth = mDividerDrawable.getIntrinsicWidth();
-			}
-		}
-		return this;
-	}
-
-	public DividerLinearItemDecoration subDivider(@IntRange(from = 0) int startIndex, @IntRange(from = 1) int endIndex) {
-		int subLen = endIndex - startIndex;
-		if (subLen < 0) {
-			throw new IndexOutOfBoundsException(startIndex + ">=" + endIndex);
-		}
-		this.mStartIndex = startIndex;
-		this.mEndIndex = endIndex;
-		this.isSubDivider = true;
-		return this;
-	}
-
-	public DividerLinearItemDecoration setSubDividerHeight(@IntRange(from = 0) int height) {
-		this.mSubDividerHeight = height;
-		return this;
-	}
-
-	public DividerLinearItemDecoration setSubDividerWidth(@IntRange(from = 0) int width) {
-		this.mSubDividerWidth = width;
-		return this;
-	}
-
-	public DividerLinearItemDecoration setSubDividerDrawable(@DrawableRes int drawableId) {
-		this.mSubDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
-		if (mOrientation == VERTICAL) {
-			if (this.mSubDividerHeight == 0) {
-				this.mSubDividerHeight = mSubDrawable.getIntrinsicHeight();
-			}
-		} else {
-			if (this.mSubDividerWidth == 0) {
-				this.mSubDividerWidth = mSubDrawable.getIntrinsicWidth();
-			}
-		}
-		return this;
-	}
-
 	private DividerLinearItemDecoration(Builder builder) {
 		super(builder);
 	}
@@ -192,14 +53,14 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
-			if (!noDrawLeftDivider) {
+			if (!noDrawLeftDivider) {//最左边分割线处理
 				if (leftPosHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (0 == adapterPosition) {
 						leftPosHandle = false;
-						Log.d(TAG, "drawHorizontal: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+						Log.d(TAG, "drawVertical: !noDrawLeftDivider:" + i + ",adapterPosition:" + adapterPosition);
 						right = child.getLeft() - params.rightMargin;
-						if (isRedrawLeftDivider) {
+						if (isRedrawLeftDivider) {//最左边分割线的定制
 							left = right - mLeftDividerWidth;
 							if (mLeftDividerDrawable != null) {
 								mLeftDividerDrawable.setBounds(left, top, right, bottom);
@@ -219,12 +80,12 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 			}
 			int rightDividerWidth = mDividerWidth;
-			if (noDrawRightDivider) {
+			if (noDrawRightDivider) {//最右边分割线处理
 				if (rightPosHandle) {
 					if (childCount - 1 == i) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						if (itemCount - 1 == adapterPosition) {
-							Log.d(TAG, "drawHorizontal: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+							Log.d(TAG, "drawVertical: noDrawRightDivider:" + i + ",adapterPosition:" + adapterPosition);
 							rightDividerWidth = 0;
 							rightPosHandle = false;
 						} else {
@@ -233,27 +94,29 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			} else {
-				if (rightPosHandle) {
-					if (childCount - 1 == i) {
-						int adapterPosition = parent.getChildAdapterPosition(child);
-						if (itemCount - 1 == adapterPosition) {
-							Log.d(TAG, "drawHorizontal: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
-							rightDividerWidth = mRightDividerWidth;
-							rightPosHandle = false;
-							if (mRightDividerDrawable != null) {
-								left = child.getRight() + params.rightMargin;
-								right = left + rightDividerWidth;
-								mRightDividerDrawable.setBounds(left, top, right, bottom);
-								mRightDividerDrawable.draw(c);
-								continue;
+				if (isRedrawRightDivider) {//最右边分割线的定制
+					if (rightPosHandle) {
+						if (childCount - 1 == i) {
+							int adapterPosition = parent.getChildAdapterPosition(child);
+							if (itemCount - 1 == adapterPosition) {
+								Log.d(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+								rightDividerWidth = mRightDividerWidth;
+								rightPosHandle = false;
+								if (mRightDividerDrawable != null) {
+									left = child.getRight() + params.rightMargin;
+									right = left + rightDividerWidth;
+									mRightDividerDrawable.setBounds(left, top, right, bottom);
+									mRightDividerDrawable.draw(c);
+									continue;
+								}
+							} else {
+								rightPosHandle = false;
 							}
-						} else {
-							rightPosHandle = false;
 						}
 					}
 				}
 			}
-			if (isRedrawDivider) {
+			if (isRedrawDivider) {//分割线的定制
 				if (isRedrawDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (Math.min(mDividerIndex, itemCount - 2) == adapterPosition) {
@@ -271,7 +134,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
-			if (isSubDivider) {
+			if (isSubDivider) {//分割线的截取
 				if (isSubDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (mStartIndex >= itemCount - 1) {
@@ -299,7 +162,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
-
 			left = child.getRight() + params.rightMargin;
 			right = left + rightDividerWidth;
 			mDivider.setBounds(left, top, right, bottom);
@@ -326,14 +188,14 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
-			if (!noDrawHeaderDivider) {
+			if (!noDrawHeaderDivider) {//顶部分割线处理
 				if (headerPosHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (0 == adapterPosition) {
 						headerPosHandle = false;
-						Log.d(TAG, "drawVertical: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+						Log.d(TAG, "drawHorizontal: !noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
 						bottom = child.getTop() - params.topMargin;
-						if (isRedrawHeaderDivider) {
+						if (isRedrawHeaderDivider) {//顶部分割线定制
 							top = bottom - mHeaderDividerHeight;
 							if (mHeaderDividerDrawable != null) {
 								mHeaderDividerDrawable.setBounds(left, top, right, bottom);
@@ -353,7 +215,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 			}
 			int bottomDividerHeight = mDividerHeight;
-			if (noDrawFooterDivider) {
+			if (noDrawFooterDivider) {//底部分割线处理
 				if (footerPosHandle) {
 					if (childCount - 1 == i) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -366,7 +228,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			} else {
-				if (isRedrawFooterDivider) {
+				if (isRedrawFooterDivider) {//底部分割线定制
 					if (footerPosHandle) {
 						if (childCount - 1 == i) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
@@ -387,7 +249,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
-			if (isRedrawDivider) {
+			if (isRedrawDivider) {//分割线的定制
 				if (isRedrawDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (Math.min(mDividerIndex, itemCount - 2) == adapterPosition) {
@@ -405,13 +267,12 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
-			if (isSubDivider) {
+			if (isSubDivider) {//分割线的截取
 				if (isSubDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (mStartIndex >= itemCount - 1) {
 						isSubDivider = false;
 					} else {
-						Log.d(TAG, "drawVertical: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",adapterPosition:" + adapterPosition);
 						if (adapterPosition >= mStartIndex) {
 							if (adapterPosition < Math.min(mEndIndex, itemCount - 1)) {
 								bottomDividerHeight = mSubDividerHeight;
@@ -432,7 +293,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
-
 			top = child.getBottom() + params.bottomMargin;
 			bottom = top + bottomDividerHeight;
 			mDivider.setBounds(left, top, right, bottom);
@@ -467,7 +327,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				if (isRedrawFooterDivider) {
 					int itemCount = parent.getAdapter().getItemCount();
 					if (itemPosition == itemCount - 1) {
-						Log.e(TAG, "getItemOffsets: mFooterDividerHeight" + mFooterDividerHeight);
+						Log.d(TAG, "getItemOffsets: mFooterDividerHeight" + mFooterDividerHeight);
 						bottom = mFooterDividerHeight;
 					}
 				}
@@ -478,11 +338,10 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					isSubDivider = false;
 				} else {
 					if (itemPosition >= mStartIndex && itemPosition < Math.min(mEndIndex, itemCount - 1)) {
-						Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
+						Log.d(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
 						bottom = mSubDividerHeight;
 					}
 				}
-
 			}
 			if (isRedrawDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
@@ -522,7 +381,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					isSubDivider = false;
 				} else {
 					if (itemPosition >= mStartIndex && itemPosition < Math.min(mEndIndex, itemCount - 1)) {
-						Log.e(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
+						Log.d(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
 						right = mSubDividerWidth;
 					}
 				}
