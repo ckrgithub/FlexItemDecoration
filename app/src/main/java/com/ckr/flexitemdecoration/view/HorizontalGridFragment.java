@@ -75,6 +75,37 @@ public class HorizontalGridFragment extends BaseFragment {
                     .removeRightDivider(is_checked[4])
             ;
         }
+        if (is_checked[5]) {
+            builder.subDivider(3, 7)
+                    .setSubDividerHeight(24)
+                    .setSubDividerWidth(24)
+                    .setSubDividerDrawable(R.drawable.bg_divider_offset_grid);
+        }
+        if (is_checked[6]) {
+            builder.redrawDivider(1)
+                    .redrawDividerWidth(30)
+                    .redrawDividerDrawable(R.drawable.bg_divider_redraw_grid);
+        }
+        if (is_checked[7]) {
+            builder.redrawHeaderDivider()
+                    .redrawHeaderDividerHeight(40)
+                    .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset_grid);
+        }
+        if (is_checked[8]) {
+            builder.redrawFooterDivider()
+                    .redrawFooterDividerHeight(40)
+                    .redrawFooterDividerDrawable(R.drawable.bg_divider_offset_grid);
+        }
+        if (is_checked[9]) {
+            builder.redrawLeftDivider().
+                    redrawLeftDividerWidth(40)
+                    .redrawLeftDividerDrawable(R.drawable.bg_divider_offset_grid);
+        }
+        if (is_checked[10]) {
+            builder.redrawRightDivider()
+                    .redrawRightDividerWidth(40)
+                    .redrawRightDividerDrawable(R.drawable.bg_divider_offset_grid);
+        }
         itemDecoration = builder.build();
         recyclerView.addItemDecoration(itemDecoration);
        /* itemDecoration = new DividerGridItemDecoration(getContext(), BaseItemDecoration.HORIZONTAL,SPAN_COUNT);

@@ -31,7 +31,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHorld> {
 
     @Override
     public int getItemCount() {
-        return 23;
+        return 13;
     }
 
     class MainHorld extends RecyclerView.ViewHolder {
