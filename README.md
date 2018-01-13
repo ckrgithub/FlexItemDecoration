@@ -84,7 +84,7 @@
 License
 -------
 
-    Copyright 2017 scwang90
+    Copyright 2018 ckrgithub
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
