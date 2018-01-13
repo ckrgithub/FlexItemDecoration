@@ -1,9 +1,9 @@
 # FlexItemDecoration
-灵活的分割线，可绘制头部、底部、最左边、最右边分割线，还可以定制一行的分割线和批量定制多个分割线(不过网格布局的分割线还没完成)。
+灵活的分割线，可绘制头部、底部、最左边、最右边分割线，还可以定制一行的分割线和批量定制多个分割线。
 
 ## 效果图
 
-![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_1.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_9.png)
+![](screenshot/Screenshot_1.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_9.png)
 
 ## Demo
 [下载 APK](apk/app-debug.apk)
@@ -80,3 +80,20 @@
                        .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
 		recyclerView.addItemDecoration(builder.build());
 ```
+
+License
+-------
+
+    Copyright 2017 scwang90
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
