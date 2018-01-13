@@ -1,21 +1,25 @@
 # FlexItemDecoration
 灵活的分割线，可绘制头部、底部、最左边、最右边分割线，还可以定制一行的分割线和批量定制多个分割线(不过网格布局的分割线还没完成)。
 
-#效果图
+## 效果图
 
 ![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_1.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_9.png)
 
-#依赖
+## Demo
+[下载 APK](apk/app-debug.apk)
 
-    ##添加依赖：
+## 依赖
+#### 添加依赖：
+```
 	dependencies {
 		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.0.1'//gradle plugin 3.0(包含)以上使用
 		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.0.1'//gradle plugin 3.0一下使用
 	}
+```
 
-#功能及使用
-
-	##网格分割线的使用
+## 功能及使用
+#### 1.网格分割线的使用
+```
 		DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(context,orientation,SPAN_COUNT);//SPAN_COUNT:列数,orientation:水平或竖直方向
 		builder.setDivider(R.drawable.bg_divider_list)//设置分割线的颜色及宽高
 		    .setShowOtherStyle(true)//另一种方式显示网格分割线
@@ -24,8 +28,10 @@
                 .removeLeftDivider(false)//是否移除最左边分割线
                 .removeRightDivider(false);//是否移除最右边分割线
 		recyclerView.addItemDecoration(builder.build());
+```
 
-	##线性分割线的使用
+#### 2.线性分割线的使用
+```
 		DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(context, orientation);//orientation:方向
 		builder.setDivider(R.drawable.bg_divider_list)//设置分割线的颜色及宽高
                 .removeHeaderDivider(false)//是否移除头部分割线，在竖直方向有效
@@ -53,3 +59,4 @@
                 .redrawRightDividerWidth(40)//定制最右边分割线的宽，在水平方向有效
                 .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
 		recyclerView.addItemDecoration(builder.build());
+```
