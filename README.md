@@ -26,7 +26,27 @@
 		       .removeHeaderDivider(false)//是否移除头部分割线
                        .removeFooterDivider(false)//是否移除底部分割线
                        .removeLeftDivider(false)//是否移除最左边分割线
-                       .removeRightDivider(false);//是否移除最右边分割线
+                       .removeRightDivider(false)//是否移除最右边分割线
+		       .subDivider(1, 4)//分割线截取绘制，1：开始下标，4：结束下标
+                       .setSubDividerHeight(24)//设置截取分割线的高度，在竖直方向有效
+                       .setSubDividerWidth(24)//设置截取分割线的宽度，在水平方向有效
+                       .setSubDividerDrawable(R.drawable.bg_divider_offset_grid)//设置截取分割线的样式
+		       .redrawDivider(2)//分割线定制的下标
+                       .redrawDividerHeight(30)//定制分割线的高度，在竖直方向有效
+		       .redrawDividerWidth(30)//定制分割线的宽度，在水平方向有效
+                       .redrawDividerDrawable(R.drawable.bg_divider_redraw_grid)//定制分割线的样式
+		       .redrawHeaderDivider()//头部分割线的定制，在竖直方向有效
+                       .redrawHeaderDividerHeight(40)//定制头部分割线的高度
+                       .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset_grid);//定制头部分割线的样式
+		       .redrawFooterDivider()//底部分割线的定制，在竖直方向有效
+                       .redrawFooterDividerHeight(40)//定制底部分割线的高度
+                       .redrawFooterDividerDrawable(R.drawable.bg_divider_offset_grid)//定制底部分割线的样式
+		       .redrawLeftDivider()//最左边分割线的定制，在水平方向有效
+                       .redrawLeftDividerWidth(40)//定制最左边分割线的宽度
+                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)//定制最左边分割线的样式
+		       .redrawRightDivider()//最右边分割线的定制，在水平方向有效
+                       .redrawRightDividerWidth(40)//定制最右边分割线的宽度
+                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
 		recyclerView.addItemDecoration(builder.build());
 ```
 
@@ -37,7 +57,7 @@
                        .removeHeaderDivider(false)//是否移除头部分割线，在竖直方向有效
                        .removeFooterDivider(false)//是否移除底部分割线，在竖直方向有效
                        .removeLeftDivider(false)//是否移除最左边分割线，在水平方向有效
-                       .removeRightDivider(false);//是否移除最右边分割线，在水平方向有效
+                       .removeRightDivider(false)//是否移除最右边分割线，在水平方向有效
 		       .subDivider(1, 4);//分割线截取绘制，1：开始下标，4：结束下标
 		       .setSubDividerHeight(24)//设置截取分割线的高度，在竖直方向有效
                        .setSubDividerWidth(24)//设置截取分割线的宽度，在水平方向有效
@@ -46,17 +66,17 @@
                        .redrawDividerHeight(30)//定制分割线的高度，在竖直方向有效
 		       .redrawDividerWidth(30)//定制分割线的宽度，在水平方向有效
                        .redrawDividerDrawable(R.drawable.bg_divider_redraw)//定制分割线的样式
-		       .redrawHeaderDivider()//头部分割线的定制
-                       .redrawHeaderDividerHeight(40)//定制头部分割线的高度，在竖直方向有效
+		       .redrawHeaderDivider()//头部分割线的定制，在竖直方向有效
+                       .redrawHeaderDividerHeight(40)//定制头部分割线的高度
                        .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset);//定制头部分割线的样式
-		       .redrawFooterDivider()//底部分割线的定制
-                       .redrawFooterDividerHeight(40)//定制底部分割线的高度，在竖直方向有效
+		       .redrawFooterDivider()//底部分割线的定制，在竖直方向有效
+                       .redrawFooterDividerHeight(40)//定制底部分割线的高度
                        .redrawFooterDividerDrawable(R.drawable.bg_divider_offset)//定制底部分割线的样式
-		       .redrawLeftDivider()//最左边分割线的定制
-                       .redrawLeftDividerWidth(40)//定制最左边分割线的宽，在水平方向有效
-                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)//定制最左边分割线的样式
-		       .redrawRightDivider()//最右边分割线的定制
-                       .redrawRightDividerWidth(40)//定制最右边分割线的宽，在水平方向有效
-                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
+		       .redrawLeftDivider()//最左边分割线的定制，在水平方向有效
+                       .redrawLeftDividerWidth(40)//定制最左边分割线的宽度
+                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)//定制最左边分割线的样式
+		       .redrawRightDivider()//最右边分割线的定制，在水平方向有效
+                       .redrawRightDividerWidth(40)//定制最右边分割线的宽度
+                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
 		recyclerView.addItemDecoration(builder.build());
 ```
