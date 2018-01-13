@@ -3,7 +3,7 @@
 
 #效果图
 
-![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_1.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)	![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)
+![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_1.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_9.png)
 
 #依赖
 
