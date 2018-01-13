@@ -3,7 +3,7 @@
 
 ## 效果图
 
-![](screenshot/Screenshot_1.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_2.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_3.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_4.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_5.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_6.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_7.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_8.png)		![](https://github.com/ckrgithub/FlexItemDecoration/blob/master/screenshot/Screenshot_9.png)
+![](screenshot/Screenshot_1.png)		![](screenshot/Screenshot_2.png)		![](screenshot/Screenshot_3.png)	![](screenshot/Screenshot_4.png)		![](screenshot/Screenshot_5.png)		![](screenshot/Screenshot_6.png)	![](screenshot/Screenshot_7.png)		![](screenshot/Screenshot_8.png)		![](screenshot/Screenshot_9.png)
 
 ## Demo
 [下载 APK](apk/app-debug.apk)
