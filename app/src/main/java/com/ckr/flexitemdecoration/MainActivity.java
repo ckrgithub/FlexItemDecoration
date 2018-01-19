@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         fragmentManager = getSupportFragmentManager();
         fragmentList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
-            String name = makeFragmentName(R.id.viewPager, currentPage);
+            String name = makeFragmentName(R.id.viewPager, i);
             BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentByTag(name);
             if (fragment == null) {
                 if (i == 0) {
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager.setAdapter(new MyFragmentPagerAdpater(fragmentManager, fragmentList, TITLES));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
+        viewPager.setCurrentItem(currentPage,false);
     }
 
     @Override
