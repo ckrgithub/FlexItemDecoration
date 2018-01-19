@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ckr.decoration.BaseItemDecoration;
-import com.ckr.flexitemdecoration.adapter.MyFragmentPagerAdpater;
+import com.ckr.flexitemdecoration.adapter.MyFragmentPagerAdapter;
 import com.ckr.flexitemdecoration.view.BaseFragment;
 import com.ckr.flexitemdecoration.view.HorizontalGridFragment;
 import com.ckr.flexitemdecoration.view.LinearFragment;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private void initView() {
         tabLayout.addTab(tabLayout.newTab().setText(TITLES[currentPage]), currentPage, true);
-        viewPager.setAdapter(new MyFragmentPagerAdpater(fragmentManager, fragmentList, TITLES));
+        viewPager.setAdapter(new MyFragmentPagerAdapter(fragmentManager, fragmentList, TITLES));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(currentPage,false);

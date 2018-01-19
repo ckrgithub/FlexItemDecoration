@@ -40,23 +40,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void init();
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            onVisible();
-        } else {
-            onInvisible();
-        }
-    }
-
-
-    protected void onVisible() {
-    }
-
-    protected void onInvisible() {
-    }
-
     public abstract void refreshFragment(boolean... params);
 
 }

@@ -8,15 +8,12 @@ import com.ckr.flexitemdecoration.view.BaseFragment;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/5/3.
- */
 
-public class MyFragmentPagerAdpater extends FragmentPagerAdapter {
+public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     List<BaseFragment> fragmentList;
     String[] titles;
 
-    public MyFragmentPagerAdpater(FragmentManager fm, List<BaseFragment> fragmentList, String[] titles) {
+    public MyFragmentPagerAdapter(FragmentManager fm, List<BaseFragment> fragmentList, String[] titles) {
         super(fm);
         this.fragmentList = fragmentList;
         this.titles = titles;
