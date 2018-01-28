@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+
+import static com.ckr.decoration.DecorationLog.Logd;
+import static com.ckr.decoration.DecorationLog.Loge;
 
 
 /**
@@ -58,7 +60,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (0 == adapterPosition) {
 						leftPosHandle = false;
-						Log.d(TAG, "drawVertical: !noDrawLeftDivider:" + i + ",adapterPosition:" + adapterPosition);
+						Logd(TAG, "drawVertical: !noDrawLeftDivider:" + i + ",adapterPosition:" + adapterPosition);
 						right = child.getLeft() - params.rightMargin;
 						if (isRedrawLeftDivider) {//最左边分割线的定制
 							left = right - mLeftDividerWidth;
@@ -85,7 +87,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					if (childCount - 1 == i) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						if (itemCount - 1 == adapterPosition) {
-							Log.d(TAG, "drawVertical: noDrawRightDivider:" + i + ",adapterPosition:" + adapterPosition);
+							Logd(TAG, "drawVertical: noDrawRightDivider:" + i + ",adapterPosition:" + adapterPosition);
 							rightDividerWidth = 0;
 							rightPosHandle = false;
 						} else {
@@ -99,7 +101,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						if (childCount - 1 == i) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
 							if (itemCount - 1 == adapterPosition) {
-								Log.d(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+								Logd(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
 								rightDividerWidth = mRightDividerWidth;
 								rightPosHandle = false;
 								if (mRightDividerDrawable != null) {
@@ -193,7 +195,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					if (0 == adapterPosition) {
 						headerPosHandle = false;
-						Log.d(TAG, "drawHorizontal: !noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+						Logd(TAG, "drawHorizontal: !noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
 						bottom = child.getTop() - params.topMargin;
 						if (isRedrawHeaderDivider) {//顶部分割线定制
 							top = bottom - mHeaderDividerHeight;
@@ -305,7 +307,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	 */
 	@Override
 	public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-		Log.e(TAG, "getItemOffsets: itemPosition:" + itemPosition);
+		Loge(TAG, "getItemOffsets: itemPosition:" + itemPosition);
 		if (mOrientation == VERTICAL) {
 			int top = 0;
 			int bottom = mDividerHeight;
@@ -327,7 +329,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				if (isRedrawFooterDivider) {
 					int itemCount = parent.getAdapter().getItemCount();
 					if (itemPosition == itemCount - 1) {
-						Log.d(TAG, "getItemOffsets: mFooterDividerHeight" + mFooterDividerHeight);
+						Logd(TAG, "getItemOffsets: mFooterDividerHeight" + mFooterDividerHeight);
 						bottom = mFooterDividerHeight;
 					}
 				}
@@ -338,7 +340,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					isSubDivider = false;
 				} else {
 					if (itemPosition >= mStartIndex && itemPosition < Math.min(mEndIndex, itemCount - 1)) {
-						Log.d(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
+						Logd(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
 						bottom = mSubDividerHeight;
 					}
 				}
@@ -381,7 +383,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					isSubDivider = false;
 				} else {
 					if (itemPosition >= mStartIndex && itemPosition < Math.min(mEndIndex, itemCount - 1)) {
-						Log.d(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
+						Logd(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
 						right = mSubDividerWidth;
 					}
 				}

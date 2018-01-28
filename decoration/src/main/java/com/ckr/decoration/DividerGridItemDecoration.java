@@ -7,8 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+
+import static com.ckr.decoration.DecorationLog.Logd;
+import static com.ckr.decoration.DecorationLog.Loge;
 
 /**
  * @author zhy
@@ -51,7 +53,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 	protected void drawHorizontal(Canvas c, RecyclerView parent) {
 		int childCount = parent.getChildCount();//可视item的个数
 		int itemCount = parent.getAdapter().getItemCount();//item总个数
-		Log.d(TAG, "drawHorizontal: childCount:" + childCount + ",itemCount:" + itemCount);
+		Logd(TAG, "drawHorizontal: childCount:" + childCount + ",itemCount:" + itemCount);
 		int left = 0;
 		int top = 0;
 		int right = 0;
@@ -87,7 +89,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					if (headerPosHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						if (mSpanCount > adapterPosition) {
-							Log.d(TAG, "drawHorizontal: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+							Logd(TAG, "drawHorizontal: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
 							topDividerHeight = 0;
 							if (adapterPosition == mSpanCount - 1) {
 								headerPosHandle = false;
@@ -101,7 +103,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						if (headerPosHandle) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
 							if (mSpanCount > adapterPosition) {
-								Log.d(TAG, "drawHorizontal: isRedrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+								Logd(TAG, "drawHorizontal: isRedrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
 								topDividerHeight = mHeaderDividerHeight;
 								if (adapterPosition == mSpanCount - 1) {
 									headerPosHandle = false;
@@ -122,7 +124,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						if (startNum <= i) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
 							if (rowNum * mSpanCount <= adapterPosition) {
-								Log.d(TAG, "drawHorizontal: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+								Logd(TAG, "drawHorizontal: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
 								bottomDividerHeight = 0;
 								if (adapterPosition == itemCount - 1) {
 									footerPosHandle = false;
@@ -140,7 +142,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 							if (startNum <= i) {
 								int adapterPosition = parent.getChildAdapterPosition(child);
 								if (rowNum * mSpanCount <= adapterPosition) {
-									Log.d(TAG, "drawHorizontal: isRedrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+									Logd(TAG, "drawHorizontal: isRedrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
 									bottomDividerHeight = mFooterDividerHeight;
 									if (adapterPosition == itemCount - 1) {
 										footerPosHandle = false;
@@ -219,13 +221,13 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				right = child.getRight() + params.rightMargin;//计算分割线的右边
 				if (noDrawHeaderDivider) {//顶部分割线处理
 					if (i % mSpanCount == 0) {
-						Log.e(TAG, "drawHorizontal: noDrawHeaderDivider:" + i);
+						Loge(TAG, "drawHorizontal: noDrawHeaderDivider:" + i);
 						topDividerHeight = 0;
 					}
 				}
 				if (noDrawFooterDivider) {//底部分割线处理
 					if (i % mSpanCount == mSpanCount - 1) {
-						Log.e(TAG, "drawHorizontal: noDrawFooterDivider:" + i);
+						Loge(TAG, "drawHorizontal: noDrawFooterDivider:" + i);
 						bottomDividerHeight = 0;
 					}
 				}
@@ -310,7 +312,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					if (leftPosHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						if (mSpanCount > adapterPosition) {
-							Log.e(TAG, "drawVertical: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
+							Loge(TAG, "drawVertical: noDrawHeaderDivider:" + i + ",adapterPosition:" + adapterPosition);
 							leftDividerWidth = 0;
 							if (adapterPosition == mSpanCount - 1) {
 								leftPosHandle = false;
@@ -344,7 +346,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						if (startNum <= i) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
 							if (columnNum * mSpanCount <= adapterPosition) {
-								Log.d(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+								Logd(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
 								rightDividerWidth = 0;
 								if (adapterPosition == itemCount - 1) {
 									rightPosHandle = false;
@@ -362,7 +364,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 							if (startNum <= i) {
 								int adapterPosition = parent.getChildAdapterPosition(child);
 								if (columnNum * mSpanCount <= adapterPosition) {
-									Log.d(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
+									Logd(TAG, "drawVertical: noDrawFooterDivider:" + i + ",adapterPosition:" + adapterPosition);
 									rightDividerWidth = mRightDividerWidth;
 									if (adapterPosition == itemCount - 1) {
 										rightPosHandle = false;
@@ -383,7 +385,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;
 						int rowNum = (adapterPosition + 1) % mSpanCount == 0 ? (adapterPosition + 1) / mSpanCount - 1 : (adapterPosition + 1) / mSpanCount;
 						if (rowNum > mStartIndex) {
-							Log.e(TAG, "drawVertical: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",adapterPosition:" + adapterPosition);
+							Loge(TAG, "drawVertical: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",adapterPosition:" + adapterPosition);
 							int maxRow = Math.min(mEndIndex, rowCount - 1);
 							if (rowNum < maxRow) {
 								leftDividerWidth = mSubDividerWidth;
@@ -447,7 +449,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 	@Override
 	public void getItemOffsets(Rect outRect, int itemPosition,
 							   RecyclerView parent) {
-		Log.e(TAG, "getItemOffsets: pos:" + itemPosition);
+		Loge(TAG, "getItemOffsets: pos:" + itemPosition);
 		int left = mDividerWidth;
 		int top = mDividerHeight;
 		int right = mDividerWidth;
@@ -455,13 +457,13 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 		if (mOrientation == VERTICAL) {
 			if (noDrawHeaderDivider) {
 				if (mSpanCount > itemPosition) {
-					Log.d(TAG, "getItemOffsets: noDrawHeaderDivider:" + itemPosition);
+					Logd(TAG, "getItemOffsets: noDrawHeaderDivider:" + itemPosition);
 					top = 0;
 				}
 			} else {
 				if (isRedrawHeaderDivider) {
 					if (mSpanCount > itemPosition) {
-						Log.e(TAG, "getItemOffsets: isRedrawHeaderDivider:" + itemPosition);
+						Loge(TAG, "getItemOffsets: isRedrawHeaderDivider:" + itemPosition);
 						top = mHeaderDividerHeight;
 					}
 				}
@@ -470,7 +472,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				int itemCount = parent.getAdapter().getItemCount();
 				int rowNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
 				if (rowNum * mSpanCount <= itemPosition) {
-					Log.d(TAG, "getItemOffsets: noDrawFooterDivider:" + itemPosition);
+					Logd(TAG, "getItemOffsets: noDrawFooterDivider:" + itemPosition);
 					bottom = 0;
 				}
 			} else {
@@ -528,25 +530,25 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 		} else {
 			if (noDrawHeaderDivider) {
 				if (itemPosition % mSpanCount == 0) {
-					Log.d(TAG, "getItemOffsets: noDrawHeaderDivider:" + itemPosition);
+					Logd(TAG, "getItemOffsets: noDrawHeaderDivider:" + itemPosition);
 					top = 0;
 				}
 			}
 			if (noDrawFooterDivider) {
 				if (itemPosition % mSpanCount == mSpanCount - 1) {
-					Log.e(TAG, "getItemOffsets: noDrawFooterDivider:" + itemPosition);
+					Loge(TAG, "getItemOffsets: noDrawFooterDivider:" + itemPosition);
 					bottom = 0;
 				}
 			}
 			if (noDrawLeftDivider) {
 				if (mSpanCount > itemPosition) {
-					Log.e(TAG, "getItemOffsets: noDrawLeftDivider:" + itemPosition);
+					Loge(TAG, "getItemOffsets: noDrawLeftDivider:" + itemPosition);
 					left = 0;
 				}
 			}else {
 				if (isRedrawLeftDivider) {
 					if (mSpanCount > itemPosition) {
-						Log.e(TAG, "getItemOffsets: isRedrawLeftDivider:" + itemPosition);
+						Loge(TAG, "getItemOffsets: isRedrawLeftDivider:" + itemPosition);
 						left = mLeftDividerWidth;
 					}
 				}
