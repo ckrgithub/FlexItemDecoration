@@ -31,7 +31,7 @@
 ```
 		DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(context,orientation,SPAN_COUNT);//SPAN_COUNT:列数,orientation:水平或竖直方向
 		builder.setDivider(R.drawable.bg_divider_list)//设置分割线的颜色及宽高
-		       .setShowOtherStyle(true)//另一种方式显示网格分割线
+		       .setShowOtherStyle(false)//另一种方式显示网格分割线
 		       .removeHeaderDivider(false)//是否移除头部分割线
                        .removeFooterDivider(false)//是否移除底部分割线
                        .removeLeftDivider(false)//是否移除最左边分割线

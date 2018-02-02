@@ -31,7 +31,7 @@ FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing
 ```
 		DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(context,orientation,SPAN_COUNT);
 		builder.setDivider(R.drawable.bg_divider_list)//set the drawable of the dividing line
-		       .setShowOtherStyle(true)
+		       .setShowOtherStyle(false)
 		       .removeHeaderDivider(false)
                        .removeFooterDivider(false)
                        .removeLeftDivider(false)
