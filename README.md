@@ -15,7 +15,7 @@ FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing
 | ![](screenshot/Screenshot_9.png) | ![](screenshot/Screenshot_8.png) | ![](screenshot/Screenshot_7.png) |
 
 ## Demo
-[下载 APK](apk/app-debug.apk)
+[Download APK](apk/app-debug.apk)
 
 ## Dependencies
 #### add dependencies：
