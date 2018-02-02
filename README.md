@@ -1,83 +1,92 @@
 # FlexItemDecoration
-灵活的分割线，可绘制头部、底部、最左边、最右边分割线，还可以定制一行的分割线和批量定制多个分割线。
+FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing line, but also customize any one of the dividing lines and batch custom multiple dividing lines [中文文档](README-ZH.md).
 
-## 效果图
+## Effect
+| vertical-grid                    | horizontal-grid                  | vertical-grid-2                  |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| ![](screenshot/Screenshot_1.png) | ![](screenshot/Screenshot_2.png) | ![](screenshot/Screenshot_3.png) |
 
-![](screenshot/Screenshot_1.png)		![](screenshot/Screenshot_2.png)		![](screenshot/Screenshot_3.png)	![](screenshot/Screenshot_4.png)		![](screenshot/Screenshot_5.png)		![](screenshot/Screenshot_6.png)	![](screenshot/Screenshot_7.png)		![](screenshot/Screenshot_8.png)		![](screenshot/Screenshot_9.png)
+| vertical-linear                  | horizontal-linear                | custom-line-linear               |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| ![](screenshot/Screenshot_4.png) | ![](screenshot/Screenshot_5.png) | ![](screenshot/Screenshot_6.png) | 
+
+| custom-line-grid                 | no-draw-linear                   | no-draw-grid                     |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| ![](screenshot/Screenshot_9.png) | ![](screenshot/Screenshot_8.png) | ![](screenshot/Screenshot_7.png) |
 
 ## Demo
 [下载 APK](apk/app-debug.apk)
 
-## 依赖
-#### 添加依赖：
+## Dependencies
+#### add dependencies：
 ```
 	dependencies {
-		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.0.2'//gradle plugin 3.0(包含)以上使用
-		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.0.2'//gradle plugin 3.0一下使用
+		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.0.2'//gradle plugin 3.0(inclusive) above used
+		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.0.2'//gradle plugin 3.0 below used
 	}
 ```
 
-## 功能及使用
-#### 1.网格分割线的使用
+## Function And Use
+#### 1.DividerGridItemDecoration
 ```
-		DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(context,orientation,SPAN_COUNT);//SPAN_COUNT:列数,orientation:水平或竖直方向
-		builder.setDivider(R.drawable.bg_divider_list)//设置分割线的颜色及宽高
-		       .setShowOtherStyle(true)//另一种方式显示网格分割线
-		       .removeHeaderDivider(false)//是否移除头部分割线
-                       .removeFooterDivider(false)//是否移除底部分割线
-                       .removeLeftDivider(false)//是否移除最左边分割线
-                       .removeRightDivider(false)//是否移除最右边分割线
-		       .subDivider(1, 4)//分割线截取绘制，1：开始下标，4：结束下标
-                       .setSubDividerHeight(24)//设置截取分割线的高度，在竖直方向有效
-                       .setSubDividerWidth(24)//设置截取分割线的宽度，在水平方向有效
-                       .setSubDividerDrawable(R.drawable.bg_divider_offset_grid)//设置截取分割线的样式
-		       .redrawDivider(2)//分割线定制的下标
-                       .redrawDividerHeight(30)//定制分割线的高度，在竖直方向有效
-		       .redrawDividerWidth(30)//定制分割线的宽度，在水平方向有效
-                       .redrawDividerDrawable(R.drawable.bg_divider_redraw_grid)//定制分割线的样式
-		       .redrawHeaderDivider()//头部分割线的定制，在竖直方向有效
-                       .redrawHeaderDividerHeight(40)//定制头部分割线的高度
-                       .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset_grid);//定制头部分割线的样式
-		       .redrawFooterDivider()//底部分割线的定制，在竖直方向有效
-                       .redrawFooterDividerHeight(40)//定制底部分割线的高度
-                       .redrawFooterDividerDrawable(R.drawable.bg_divider_offset_grid)//定制底部分割线的样式
-		       .redrawLeftDivider()//最左边分割线的定制，在水平方向有效
-                       .redrawLeftDividerWidth(40)//定制最左边分割线的宽度
-                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)//定制最左边分割线的样式
-		       .redrawRightDivider()//最右边分割线的定制，在水平方向有效
-                       .redrawRightDividerWidth(40)//定制最右边分割线的宽度
-                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
+		DividerGridItemDecoration.Builder builder = new DividerGridItemDecoration.Builder(context,orientation,SPAN_COUNT);
+		builder.setDivider(R.drawable.bg_divider_list)//set the drawable of the dividing line
+		       .setShowOtherStyle(true)
+		       .removeHeaderDivider(false)
+                       .removeFooterDivider(false)
+                       .removeLeftDivider(false)
+                       .removeRightDivider(false)
+		       .subDivider(1, 4)//custom multiple lines
+                       .setSubDividerHeight(24)//valid in vertical direction
+                       .setSubDividerWidth(24)//valid in horizontal direction
+                       .setSubDividerDrawable(R.drawable.bg_divider_offset_grid)//set the drawable of the multiple dividing lines
+		       .redrawDivider(2)//custom any one of the dividing lines(exclude the head,bottom,leftmost,rightmost dividing line)
+                       .redrawDividerHeight(30)//valid in vertical direction
+		       .redrawDividerWidth(30)//valid in horizontal direction
+                       .redrawDividerDrawable(R.drawable.bg_divider_redraw_grid)//set the drawable of the dividing line
+		       .redrawHeaderDivider()//custom the head dividing line，valid in vertical direction
+                       .redrawHeaderDividerHeight(40)
+                       .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset_grid);
+		       .redrawFooterDivider()//custom the bottom dividing line，valid in vertical direction
+                       .redrawFooterDividerHeight(40)
+                       .redrawFooterDividerDrawable(R.drawable.bg_divider_offset_grid)
+		       .redrawLeftDivider()//custom the leftmost dividing line，valid in horizontal direction
+                       .redrawLeftDividerWidth(40)
+                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)
+		       .redrawRightDivider()//custom the rightmost dividing line，valid in horizontal direction
+                       .redrawRightDividerWidth(40)
+                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);
 		recyclerView.addItemDecoration(builder.build());
 ```
 
-#### 2.线性分割线的使用
+#### 2.DividerLinearItemDecoration
 ```
 		DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(context, orientation);//orientation:方向
-		builder.setDivider(R.drawable.bg_divider_list)//设置分割线的颜色及宽高
-                       .removeHeaderDivider(false)//是否移除头部分割线，在竖直方向有效
-                       .removeFooterDivider(false)//是否移除底部分割线，在竖直方向有效
-                       .removeLeftDivider(false)//是否移除最左边分割线，在水平方向有效
-                       .removeRightDivider(false)//是否移除最右边分割线，在水平方向有效
-		       .subDivider(1, 4);//分割线截取绘制，1：开始下标，4：结束下标
-		       .setSubDividerHeight(24)//设置截取分割线的高度，在竖直方向有效
-                       .setSubDividerWidth(24)//设置截取分割线的宽度，在水平方向有效
-                       .setSubDividerDrawable(R.drawable.bg_divider_offset)//设置截取分割线的样式
-		       .redrawDivider(2)//分割线定制的下标
-                       .redrawDividerHeight(30)//定制分割线的高度，在竖直方向有效
-		       .redrawDividerWidth(30)//定制分割线的宽度，在水平方向有效
-                       .redrawDividerDrawable(R.drawable.bg_divider_redraw)//定制分割线的样式
-		       .redrawHeaderDivider()//头部分割线的定制，在竖直方向有效
-                       .redrawHeaderDividerHeight(40)//定制头部分割线的高度
-                       .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset);//定制头部分割线的样式
-		       .redrawFooterDivider()//底部分割线的定制，在竖直方向有效
-                       .redrawFooterDividerHeight(40)//定制底部分割线的高度
-                       .redrawFooterDividerDrawable(R.drawable.bg_divider_offset)//定制底部分割线的样式
-		       .redrawLeftDivider()//最左边分割线的定制，在水平方向有效
-                       .redrawLeftDividerWidth(40)//定制最左边分割线的宽度
-                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)//定制最左边分割线的样式
-		       .redrawRightDivider()//最右边分割线的定制，在水平方向有效
-                       .redrawRightDividerWidth(40)//定制最右边分割线的宽度
-                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
+		builder.setDivider(R.drawable.bg_divider_list)//set the drawable of the dividing line
+                       .removeHeaderDivider(false)//valid in vertical direction
+                       .removeFooterDivider(false)//valid in vertical direction
+                       .removeLeftDivider(false)//valid in horizontal direction
+                       .removeRightDivider(false)//valid in horizontal direction
+		       .subDivider(1, 4);//custom multiple lines
+		       .setSubDividerHeight(24)//valid in vertical direction
+                       .setSubDividerWidth(24)//valid in horizontal direction
+                       .setSubDividerDrawable(R.drawable.bg_divider_offset)
+		       .redrawDivider(2)//custom any one of the dividing lines(exclude the head,bottom,leftmost,rightmost dividing line)
+                       .redrawDividerHeight(30)//valid in vertical direction
+		       .redrawDividerWidth(30)//valid in horizontal direction
+                       .redrawDividerDrawable(R.drawable.bg_divider_redraw)
+		       .redrawHeaderDivider()//custom the head dividing line，valid in vertical direction
+                       .redrawHeaderDividerHeight(40)
+                       .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset);
+		       .redrawFooterDivider()//custom the bottom dividing line，valid in vertical direction
+                       .redrawFooterDividerHeight(40)
+                       .redrawFooterDividerDrawable(R.drawable.bg_divider_offset)
+		       .redrawLeftDivider()//custom the leftmost dividing line，valid in horizontal direction
+                       .redrawLeftDividerWidth(40)
+                       .redrawLeftDividerDrawable(R.drawable.bg_divider_list)
+		       .redrawRightDivider()custom the rightmost dividing line，valid in horizontal direction
+                       .redrawRightDividerWidth(40)
+                       .redrawRightDividerDrawable(R.drawable.bg_divider_list);
 		recyclerView.addItemDecoration(builder.build());
 ```
 
