@@ -13,7 +13,7 @@ import static com.ckr.decoration.DecorationLog.Logd;
 import static com.ckr.decoration.DecorationLog.Loge;
 
 /**
- * @author zhy
+ * Created by PC大佬 on 2018/1/6.
  */
 public class DividerGridItemDecoration extends BaseItemDecoration {
 	private static final String TAG = "GridItemDecoration";

@@ -12,9 +12,7 @@ import static com.ckr.decoration.DecorationLog.Loge;
 
 
 /**
- * Created by Administrator on 2017/3/10 0010.
- * <p>
- * 支持recyclerview的下划线的类
+ * Created by PC大佬 on 2018/1/6.
  */
 
 public class DividerLinearItemDecoration extends BaseItemDecoration {
