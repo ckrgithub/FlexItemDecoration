@@ -296,19 +296,19 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 			} else {
 				int topDividerWidth = mDividerHeight;
 				int bottomDividerWidth = mDividerHeight;
-				if (noDrawHeaderDivider) {
+				if (noDrawHeaderDivider) {//头部分割线处理
 					if (i % mSpanCount == 0) {
 						topDividerWidth = 0;
 					}
 				}
-				if (noDrawFooterDivider) {
+				if (noDrawFooterDivider) {//底部分割线处理
 					if (i % mSpanCount == mSpanCount - 1) {
 						bottomDividerWidth = 0;
 					}
 				}
 				top = child.getTop() - params.topMargin - topDividerWidth;
 				bottom = child.getBottom() + params.bottomMargin + bottomDividerWidth;
-				if (noDrawLeftDivider) {
+				if (noDrawLeftDivider) {//左边分割线处理
 					if (leftPosHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						if (mSpanCount > adapterPosition) {
@@ -322,7 +322,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				} else {
-					if (isRedrawLeftDivider) {
+					if (isRedrawLeftDivider) {//左边分割线定制
 						if (leftPosHandle) {
 							int adapterPosition = parent.getChildAdapterPosition(child);
 							if (mSpanCount > adapterPosition) {
@@ -339,7 +339,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				if (noDrawRightDivider) {
+				if (noDrawRightDivider) {//右边分割线处理
 					if (rightPosHandle) {
 						int columnNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
 						int startNum = childCount - (itemCount - columnNum * mSpanCount);
@@ -357,7 +357,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				} else {
-					if (isRedrawRightDivider) {
+					if (isRedrawRightDivider) {//右边分割线定制
 						if (rightPosHandle) {
 							int columnNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
 							int startNum = childCount - (itemCount - columnNum * mSpanCount);
@@ -379,7 +379,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				if (isSubDivider) {
+				if (isSubDivider) {//分割线的截取
 					if (isSubDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;
@@ -410,7 +410,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				if (isRedrawDivider) {
+				if (isRedrawDivider) {//分割线的定制
 					if (isRedrawDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						int rowNum = (adapterPosition + 1) % mSpanCount == 0 ? (adapterPosition + 1) / mSpanCount : (adapterPosition + 1) / mSpanCount + 1;
