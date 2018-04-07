@@ -89,6 +89,10 @@ FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing
                        .redrawRightDividerDrawable(R.drawable.bg_divider_list);
 		recyclerView.addItemDecoration(builder.build());
 ```
+## My Other Project
+[PageRecyclerView](https://github.com/ckrgithub/PageRecyclerView)
+
+[FlexItemDecoration](https://github.com/ckrgithub/FlexItemDecoration)
 
 License
 -------

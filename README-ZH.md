@@ -89,6 +89,10 @@
                        .redrawRightDividerDrawable(R.drawable.bg_divider_list);//定制最右边分割线的样式
 		recyclerView.addItemDecoration(builder.build());
 ```
+## 我的开源项目
+[PageRecyclerView](https://github.com/ckrgithub/PageRecyclerView)：自定义RecyclerView实现翻页功能及无限轮播
+
+[FlexItemDecoration](https://github.com/ckrgithub/FlexItemDecoration)：AppBarLayout+ViewPager+RecyclerView的刷新功能
 
 License
 -------
