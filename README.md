@@ -92,7 +92,7 @@ FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing
 ## My Other Project
 [PageRecyclerView](https://github.com/ckrgithub/PageRecyclerView)
 
-[FlexItemDecoration](https://github.com/ckrgithub/FlexItemDecoration)
+[CollapsingRefresh](https://github.com/ckrgithub/CollapsingRefresh)
 
 License
 -------
