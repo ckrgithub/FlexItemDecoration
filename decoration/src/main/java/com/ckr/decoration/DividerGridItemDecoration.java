@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -640,16 +639,6 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 		public BaseBuilder setShowOtherStyle(boolean showOtherStyle) {
 			this.isShowOtherStyle = showOtherStyle;
 			return this;
-		}
-
-		/**
-		 * @param startIndex 当mOrientation==Vertical时，startIndex代表起始行的下标；否则，startIndex代表起始列的下标
-		 * @param endIndex   当mOrientation==Vertical时，endIndex代表末尾行的下标；否则，endIndex代表末尾列的下标
-		 * @return
-		 */
-		@Override
-		public BaseBuilder subDivider(@IntRange(from = 0) int startIndex, @IntRange(from = 1) int endIndex) {
-			return super.subDivider(startIndex, endIndex);
 		}
 
 		public DividerGridItemDecoration build() {

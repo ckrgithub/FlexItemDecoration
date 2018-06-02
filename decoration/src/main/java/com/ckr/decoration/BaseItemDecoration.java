@@ -313,7 +313,7 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
     public static abstract class BaseBuilder {
         private Context mContext;
         private Drawable mDivider;
-        private int mFlag;//标记网格分割线还是线性分割线
+        private int mFlag;//标记网格布局还是线性布局
         private int mOrientation = VERTICAL;
         private boolean noDrawHeaderDivider;//头部部分割线是否绘制
         private boolean noDrawFooterDivider;//底部分割线是否绘制
@@ -348,12 +348,22 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
         protected boolean isShowOtherStyle;//仅适用于网格分割线
 
-
+        /**
+         *
+         * @param context   用于资源文件访问
+         * @param flag      布局方式，如：{@link #LINEAR} or {@link #GRID}
+         */
         protected BaseBuilder(Context context, int flag) {
             this.mContext = context;
             this.mFlag = flag;
         }
 
+        /**
+         *
+         * @param context   用于资源文件访问
+         * @param flag      布局方式，如：{@link #LINEAR} or {@link #GRID}
+         * @param mOrientation  布局方向，如：{@link #HORIZONTAL} or {@link #VERTICAL}
+         */
         protected BaseBuilder(Context context, int flag, int mOrientation) {
             if (mOrientation != HORIZONTAL && mOrientation != VERTICAL) {
                 throw new IllegalArgumentException("invalid orientation");
@@ -363,36 +373,70 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             this.mOrientation = mOrientation;
         }
 
+        /**
+         * 设置分割线的样式
+         * @param drawableId    drawable资源id
+         * @return
+         */
         public BaseBuilder setDivider(@DrawableRes int drawableId) {
             this.mDivider = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             return this;
         }
 
+        /**
+         *
+         * @param noDrawHeaderDivider   是否绘制头部分割线
+         * @return
+         */
         public BaseBuilder removeHeaderDivider(boolean noDrawHeaderDivider) {
             this.noDrawHeaderDivider = noDrawHeaderDivider;
             return this;
         }
 
+        /**
+         *
+         * @param noDrawFooterDivider   是否绘制底部分割线
+         * @return
+         */
         public BaseBuilder removeFooterDivider(boolean noDrawFooterDivider) {
             this.noDrawFooterDivider = noDrawFooterDivider;
             return this;
         }
 
+        /**
+         *
+         * @param noDrawLeftDivider     是否绘制最左边分割线
+         * @return
+         */
         public BaseBuilder removeLeftDivider(boolean noDrawLeftDivider) {
             this.noDrawLeftDivider = noDrawLeftDivider;
             return this;
         }
 
+        /**
+         *
+         * @param noDrawRightDivider    是否绘制最右边分割线
+         * @return
+         */
         public BaseBuilder removeRightDivider(boolean noDrawRightDivider) {
             this.noDrawRightDivider = noDrawRightDivider;
             return this;
         }
 
+        /**
+         * 头部分割线的定制
+         * @return
+         */
         public BaseBuilder redrawHeaderDivider() {
             this.isRedrawHeaderDivider = true;
             return this;
         }
 
+        /**
+         *
+         * @param drawableId    头部分割线drawable资源id
+         * @return
+         */
         public BaseBuilder redrawHeaderDividerDrawable(@DrawableRes int drawableId) {
             this.mHeaderDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             if (this.mHeaderDividerHeight == 0) {
@@ -401,16 +445,30 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
+        /**
+         *
+         * @param height    头部分割线高度
+         * @return
+         */
         public BaseBuilder redrawHeaderDividerHeight(@IntRange(from = 0) int height) {
             this.mHeaderDividerHeight = height;
             return this;
         }
 
+        /**
+         * 底部分割线的定制
+         * @return
+         */
         public BaseBuilder redrawFooterDivider() {
             this.isRedrawFooterDivider = true;
             return this;
         }
 
+        /**
+         *
+         * @param drawableId    底部分割线的drawable资源id
+         * @return
+         */
         public BaseBuilder redrawFooterDividerDrawable(@DrawableRes int drawableId) {
             this.mFooterDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             if (this.mFooterDividerHeight == 0) {
@@ -419,16 +477,30 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
+        /**
+         *
+         * @param height    底部分割线的高度
+         * @return
+         */
         public BaseBuilder redrawFooterDividerHeight(@IntRange(from = 0) int height) {
             this.mFooterDividerHeight = height;
             return this;
         }
 
+        /**
+         * 最左边分割线的定制
+         * @return
+         */
         public BaseBuilder redrawLeftDivider() {
             this.isRedrawLeftDivider = true;
             return this;
         }
 
+        /**
+         *
+         * @param drawableId    最左边分割线的drawable资源id
+         * @return
+         */
         public BaseBuilder redrawLeftDividerDrawable(@DrawableRes int drawableId) {
             this.mLeftDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             if (this.mLeftDividerWidth == 0) {
@@ -437,16 +509,30 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
+        /**
+         *
+         * @param width     最左边分割线的宽度
+         * @return
+         */
         public BaseBuilder redrawLeftDividerWidth(@IntRange(from = 0) int width) {
             this.mLeftDividerWidth = width;
             return this;
         }
 
+        /**
+         * 最右边分割线的定制
+         * @return
+         */
         public BaseBuilder redrawRightDivider() {
             this.isRedrawRightDivider = true;
             return this;
         }
 
+        /**
+         *
+         * @param drawableId    最右边分割线的drawable资源id
+         * @return
+         */
         public BaseBuilder redrawRightDividerDrawable(@DrawableRes int drawableId) {
             this.mRightDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             if (this.mRightDividerWidth == 0) {
@@ -455,27 +541,52 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
+        /**
+         *
+         * @param width     最右边分割线的宽度
+         * @return
+         */
         public BaseBuilder redrawRightDividerWidth(@IntRange(from = 0) int width) {
             this.mRightDividerWidth = width;
             return this;
         }
 
+        /**
+         * 分割线的定制
+         * @param dividerLineIndex      分割线的下标
+         * @return
+         */
         public BaseBuilder redrawDivider(@IntRange(from = 0) int dividerLineIndex) {
             this.mDividerIndex = dividerLineIndex;
             this.isRedrawDivider = true;
             return this;
         }
 
+        /**
+         *
+         * @param height    定制分割线的高度
+         * @return
+         */
         public BaseBuilder redrawDividerHeight(@IntRange(from = 0) int height) {
             this.mRedrawDividerHeight = height;
             return this;
         }
 
+        /**
+         *
+         * @param width     定制分割线的宽度
+         * @return
+         */
         public BaseBuilder redrawDividerWidth(@IntRange(from = 0) int width) {
             this.mRedrawDividerWidth = width;
             return this;
         }
 
+        /**
+         *
+         * @param drawableId    定制分割线的drawable资源id
+         * @return
+         */
         public BaseBuilder redrawDividerDrawable(@DrawableRes int drawableId) {
             this.mDividerDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             if (mOrientation == VERTICAL) {
@@ -490,6 +601,12 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
+        /**
+         * 分割线的批量定制
+         * @param startIndex    当mOrientation==Vertical时，startIndex代表起始行的下标；否则，startIndex代表起始列的下标
+         * @param endIndex      当mOrientation==Vertical时，endIndex代表末尾行的下标；否则，endIndex代表末尾列的下标
+         * @return
+         */
         public BaseBuilder subDivider(@IntRange(from = 0) int startIndex, @IntRange(from = 1) int endIndex) {
             int subLen = endIndex - startIndex;
             if (subLen <= 0) {
@@ -501,16 +618,31 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
             return this;
         }
 
+        /**
+         *
+         * @param height    分割线的高度
+         * @return
+         */
         public BaseBuilder setSubDividerHeight(@IntRange(from = 0) int height) {
             this.mSubDividerHeight = height;
             return this;
         }
 
+        /**
+         *
+         * @param width     分割线的宽度
+         * @return
+         */
         public BaseBuilder setSubDividerWidth(@IntRange(from = 0) int width) {
             this.mSubDividerWidth = width;
             return this;
         }
 
+        /**
+         *
+         * @param drawableId    分割线的drawable资源id
+         * @return
+         */
         public BaseBuilder setSubDividerDrawable(@DrawableRes int drawableId) {
             this.mSubDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
             if (mOrientation == VERTICAL) {
