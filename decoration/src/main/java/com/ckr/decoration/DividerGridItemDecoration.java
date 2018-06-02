@@ -17,10 +17,10 @@ import static com.ckr.decoration.DecorationLog.Loge;
 public class DividerGridItemDecoration extends BaseItemDecoration {
 	private static final String TAG = "GridItemDecoration";
 	protected int mSpanCount = 1;
-	private Drawable mTopDivider;		//item上方分割线的drawable
-	private Drawable mBottomDivider;	//item下方分割线的drawable
-	private Drawable mLeftDivider;		//item左边方分割线的drawable
-	private Drawable mRightDivider;		//item右方分割线的drawable
+	private Drawable mTopDivider;        //item上方分割线的drawable
+	private Drawable mBottomDivider;    //item下方分割线的drawable
+	private Drawable mLeftDivider;        //item左边方分割线的drawable
+	private Drawable mRightDivider;        //item右方分割线的drawable
 
 	public DividerGridItemDecoration(Context context, int mSpanCount) {
 		super(context, GRID, VERTICAL);
@@ -108,7 +108,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 									headerPosHandle = false;
 								}
 								if (mHeaderDividerDrawable != null) {
-									mTopDivider=mHeaderDividerDrawable;
+									mTopDivider = mHeaderDividerDrawable;
 								}
 							} else {
 								headerPosHandle = false;
@@ -147,7 +147,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 										footerPosHandle = false;
 									}
 									if (mFooterDividerDrawable != null) {
-										mBottomDivider=mFooterDividerDrawable;
+										mBottomDivider = mFooterDividerDrawable;
 									}
 								} else {
 									footerPosHandle = false;
@@ -330,7 +330,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 									leftPosHandle = false;
 								}
 								if (mLeftDividerDrawable != null) {
-									mLeftDivider=mLeftDividerDrawable;
+									mLeftDivider = mLeftDividerDrawable;
 								}
 							} else {
 								leftPosHandle = false;
@@ -369,7 +369,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 										rightPosHandle = false;
 									}
 									if (mRightDividerDrawable != null) {
-										mRightDivider=mRightDividerDrawable;
+										mRightDivider = mRightDividerDrawable;
 									}
 								} else {
 									rightPosHandle = false;
@@ -544,7 +544,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					Loge(TAG, "getItemOffsets: noDrawLeftDivider:" + itemPosition);
 					left = 0;
 				}
-			}else {
+			} else {
 				if (isRedrawLeftDivider) {
 					if (mSpanCount > itemPosition) {
 						Loge(TAG, "getItemOffsets: isRedrawLeftDivider:" + itemPosition);
@@ -558,7 +558,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				if (columnCount * mSpanCount <= itemPosition) {
 					right = 0;
 				}
-			}else {
+			} else {
 				if (isRedrawRightDivider) {
 					int itemCount = parent.getAdapter().getItemCount();
 					int columnCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
@@ -582,7 +582,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						} else if (rowNum == maxRow) {
 							left = mSubDividerWidth;
 						}
-					}else if (rowNum == mStartIndex) {
+					} else if (rowNum == mStartIndex) {
 						right = mSubDividerWidth;
 					}
 				}
