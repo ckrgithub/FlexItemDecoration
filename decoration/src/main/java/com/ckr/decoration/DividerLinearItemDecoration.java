@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,6 +18,10 @@ import static com.ckr.decoration.DecorationLog.Loge;
 
 public class DividerLinearItemDecoration extends BaseItemDecoration {
 	private static final String TAG = "LinearItemDecoration";
+	private int mDividerPaddingLeft;
+	private int mDividerPaddingTop;
+	private int mDividerPaddingRight;
+	private int mDividerPaddingBottom;
 
 	public DividerLinearItemDecoration(Context context) {
 		super(context, LINEAR, VERTICAL);
@@ -32,6 +37,46 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 
 	private DividerLinearItemDecoration(Builder builder) {
 		super(builder);
+		this.mDividerPaddingLeft = builder.mDividerPaddingLeft;
+		this.mDividerPaddingTop = builder.mDividerPaddingTop;
+		this.mDividerPaddingRight = builder.mDividerPaddingRight;
+		this.mDividerPaddingBottom = builder.mDividerPaddingBottom;
+	}
+
+	public BaseItemDecoration setDividerPaddingLeft(@IntRange(from = 0) int paddingLeft) {
+		this.mDividerPaddingLeft = paddingLeft;
+		return this;
+	}
+
+	public BaseItemDecoration setDividerPaddingRight(@IntRange(from = 0) int paddingRight) {
+		this.mDividerPaddingRight = paddingRight;
+		return this;
+	}
+
+	public BaseItemDecoration setDividerPaddingTop(@IntRange(from = 0) int paddingTop) {
+		this.mDividerPaddingTop = paddingTop;
+		return this;
+	}
+
+	public BaseItemDecoration setDividerPaddingBottom(@IntRange(from = 0) int paddingBottom) {
+		this.mDividerPaddingBottom = paddingBottom;
+		return this;
+	}
+
+	public BaseItemDecoration setDividerPadding(@IntRange(from = 0) int... padding) {
+		for (int i = 0; i < padding.length; i++) {
+			if (i == 0) {
+				this.mDividerPaddingLeft = padding[i];
+			} else if (i == 1) {
+				this.mDividerPaddingTop = padding[i];
+			} else if (i == 2) {
+				this.mDividerPaddingRight = padding[i];
+			} else if (i == 3) {
+				this.mDividerPaddingBottom = padding[i];
+				break;
+			}
+		}
+		return this;
 	}
 
 	//绘制竖直分割线
@@ -43,8 +88,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		int top = 0;
 		int right = 0;
 		int bottom = 0;
-		top = parent.getPaddingTop();
-		bottom = parent.getHeight() - parent.getPaddingBottom();
+		top = parent.getPaddingTop() + mDividerPaddingTop;
+		bottom = parent.getHeight() - parent.getPaddingBottom() - mDividerPaddingBottom;
 		boolean leftPosHandle = true;
 		boolean rightPosHandle = true;
 		boolean isSubDividerHandle = true;
@@ -186,8 +231,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		int top = 0;
 		int right = 0;
 		int bottom = 0;
-		left = parent.getPaddingLeft();
-		right = parent.getWidth() - parent.getPaddingRight();
+		left = parent.getPaddingLeft() + mDividerPaddingLeft;
+		right = parent.getWidth() - parent.getPaddingRight() - mDividerPaddingRight;
 		boolean headerPosHandle = true;
 		boolean footerPosHandle = true;
 		boolean isSubDividerHandle = true;
@@ -429,6 +474,10 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	}
 
 	public static class Builder extends BaseBuilder {
+		private int mDividerPaddingLeft;//分割线左边距，仅适用于竖直方向
+		private int mDividerPaddingTop;//分割线上边距，仅适用于水平方向
+		private int mDividerPaddingRight;//分割线右边距，仅适用于竖直方向
+		private int mDividerPaddingBottom;//分割线下边距，仅适用于水平方向
 
 		public Builder(Context context) {
 			super(context, LINEAR);
@@ -436,6 +485,42 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 
 		public Builder(Context context, int mOrientation) {
 			super(context, LINEAR, mOrientation);
+		}
+
+		public BaseBuilder setDividerPaddingLeft(@IntRange(from = 0) int paddingLeft) {
+			this.mDividerPaddingLeft = paddingLeft;
+			return this;
+		}
+
+		public BaseBuilder setDividerPaddingRight(@IntRange(from = 0) int paddingRight) {
+			this.mDividerPaddingRight = paddingRight;
+			return this;
+		}
+
+		public BaseBuilder setDividerPaddingTop(@IntRange(from = 0) int paddingTop) {
+			this.mDividerPaddingTop = paddingTop;
+			return this;
+		}
+
+		public BaseBuilder setDividerPaddingBottom(@IntRange(from = 0) int paddingBottom) {
+			this.mDividerPaddingBottom = paddingBottom;
+			return this;
+		}
+
+		public BaseBuilder setDividerPadding(@IntRange(from = 0) int... padding) {
+			for (int i = 0; i < padding.length; i++) {
+				if (i == 0) {
+					this.mDividerPaddingLeft = padding[i];
+				} else if (i == 1) {
+					this.mDividerPaddingTop = padding[i];
+				} else if (i == 2) {
+					this.mDividerPaddingRight = padding[i];
+				} else if (i == 3) {
+					this.mDividerPaddingBottom = padding[i];
+					break;
+				}
+			}
+			return this;
 		}
 
 		public DividerLinearItemDecoration build() {
