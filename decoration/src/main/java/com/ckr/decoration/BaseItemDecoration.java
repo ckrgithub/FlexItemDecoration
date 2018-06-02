@@ -311,38 +311,42 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
     protected abstract void drawHorizontal(Canvas c, RecyclerView parent);
 
     public static abstract class BaseBuilder {
-        protected Context mContext;
-        protected Drawable mDivider;
-        protected int mFlag;
-        protected int mOrientation = VERTICAL;
-        protected boolean noDrawHeaderDivider;
-        protected boolean noDrawFooterDivider;
-        protected boolean noDrawLeftDivider;
-        protected boolean noDrawRightDivider;
-        protected boolean isSubDivider = false;//分割线截取绘制
-        protected int mStartIndex;//分割线开始绘制的下标
-        protected int mEndIndex;//分割线停止绘制的下标
-        private int mSubDividerHeight;
-        private int mSubDividerWidth;
+        private Context mContext;
+        private Drawable mDivider;
+        private int mFlag;//标记网格分割线还是线性分割线
+        private int mOrientation = VERTICAL;
+        private boolean noDrawHeaderDivider;//头部部分割线是否绘制
+        private boolean noDrawFooterDivider;//底部分割线是否绘制
+        protected boolean noDrawLeftDivider;//最左边分割线是否绘制
+        protected boolean noDrawRightDivider;//最右边分割线是否绘制
+
+        private boolean isSubDivider = false;//分割线截取绘制
+        private int mStartIndex;//分割线开始绘制的下标
+        private int mEndIndex;//分割线停止绘制的下标
+        private int mSubDividerHeight;//分割线的高度，仅适用于竖直方向
+        private int mSubDividerWidth;//分割线的宽带，仅适用于水平方向
         private Drawable mSubDrawable;
-        private boolean isRedrawDivider = false;
+
+        private boolean isRedrawDivider = false;//分割线的定制(注：不包括头部、底部、最左边、最右边分割线定制)
         private int mDividerIndex = -1;//分割线定制的下标，优先级高于分割线截取绘制
         private Drawable mDividerDrawable;
         private int mRedrawDividerHeight;
         private int mRedrawDividerWidth;
-        private boolean isRedrawHeaderDivider = false;//头部分割线是否定制
+
+        private boolean isRedrawHeaderDivider = false;//头部分割线是否定制，仅适用于竖直方向
         private Drawable mHeaderDividerDrawable;
         private int mHeaderDividerHeight;
-        private boolean isRedrawFooterDivider = false;//底部分割线是否定制
+        private boolean isRedrawFooterDivider = false;//底部分割线是否定制，仅适用于竖直方向
         private Drawable mFooterDividerDrawable;
         private int mFooterDividerHeight;
-        private boolean isRedrawLeftDivider = false;//最左边分割线是否定制
+        private boolean isRedrawLeftDivider = false;//最左边分割线是否定制，仅适用于水平方向
         private Drawable mLeftDividerDrawable;
         private int mLeftDividerWidth;
-        private boolean isRedrawRightDivider = false;//最右边分割线是否定制
+        private boolean isRedrawRightDivider = false;//最右边分割线是否定制，仅适用于水平方向
         private Drawable mRightDividerDrawable;
         private int mRightDividerWidth;
-        private boolean isShowOtherStyle;
+
+        protected boolean isShowOtherStyle;//仅适用于网格分割线
 
 
         protected BaseBuilder(Context context, int flag) {
@@ -381,11 +385,6 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
         public BaseBuilder removeRightDivider(boolean noDrawRightDivider) {
             this.noDrawRightDivider = noDrawRightDivider;
-            return this;
-        }
-
-        public BaseBuilder setShowOtherStyle(boolean showOtherStyle) {
-            isShowOtherStyle = showOtherStyle;
             return this;
         }
 

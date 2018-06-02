@@ -637,6 +637,11 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 			}
 		}
 
+		public BaseBuilder setShowOtherStyle(boolean showOtherStyle) {
+			this.isShowOtherStyle = showOtherStyle;
+			return this;
+		}
+
 		/**
 		 * @param startIndex 当mOrientation==Vertical时，startIndex代表起始行的下标；否则，startIndex代表起始列的下标
 		 * @param endIndex   当mOrientation==Vertical时，endIndex代表末尾行的下标；否则，endIndex代表末尾列的下标
