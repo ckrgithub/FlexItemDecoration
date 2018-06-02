@@ -84,6 +84,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				}
 				left = child.getLeft() - params.leftMargin - leftDividerWidth;//计算分割线的左边
 				right = child.getRight() + params.rightMargin + rightDividerWidth;//计算分割线的右边
+				//<editor-fold desc="顶部分割线绘制与定制">
 				if (noDrawHeaderDivider) {//顶部分割线处理
 					if (headerPosHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -116,6 +117,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
+				//</editor-fold>
+				//<editor-fold desc="底部分割线绘制与定制">
 				if (noDrawFooterDivider) {//底部分割线处理
 					if (footerPosHandle) {
 						int rowNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
@@ -156,6 +159,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
+				//</editor-fold>
+				//<editor-fold desc="分割线批量定制">
 				if (isSubDivider) {//分割线的截取
 					if (isSubDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -186,6 +191,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
+				//</editor-fold>
+				//<editor-fold desc="分割线定制">
 				if (isRedrawDivider) {//分割线的定制
 					if (isRedrawDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -203,18 +210,19 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				//---------item的上方的分割线绘制---------
+				//</editor-fold>
+				//<editor-fold desc="---item的上方的分割线绘制---">
 				bottom = child.getTop() - params.topMargin;//计算分割线的下边
 				top = bottom - topDividerHeight;//计算分割线的上边
 				mTopDivider.setBounds(left, top, right, bottom);
 				mTopDivider.draw(c);
-				//------------------end-------------------
-				//---------item的下方的分割线绘制---------
+				//</editor-fold>
+				//<editor-fold desc="---item的下方的分割线绘制---">
 				top = child.getBottom() + params.bottomMargin;//计算分割线的上边
 				bottom = top + bottomDividerHeight;//计算分割线的下边
 				mBottomDivider.setBounds(left, top, right, bottom);
 				mBottomDivider.draw(c);
-				//------------------end-------------------
+				//</editor-fold>
 			} else {
 				left = child.getLeft() - params.leftMargin;//计算分割线的左边
 				right = child.getRight() + params.rightMargin;//计算分割线的右边
@@ -230,18 +238,18 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						bottomDividerHeight = 0;
 					}
 				}
-				//---------item的上方的分割线绘制---------
+				//<editor-fold desc="---item的上方的分割线绘制---">
 				bottom = child.getTop() - params.topMargin;//计算分割线的下边
 				top = bottom - topDividerHeight;//计算分割线的上边
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
-				//------------------end-------------------
-				//---------item的下方的分割线绘制---------
+				//</editor-fold>
+				//<editor-fold desc="---item的下方的分割线绘制---">
 				top = child.getBottom() + params.bottomMargin;//计算分割线的上边
 				bottom = top + bottomDividerHeight;//计算分割线的下边
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
-				//------------------end-------------------
+				//</editor-fold>
 			}
 		}
 	}
@@ -280,18 +288,18 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						rightDividerWidth = 0;
 					}
 				}
-				//---------item的左边的分割线绘制---------
+				//<editor-fold desc="---item的左边的分割线绘制---">
 				right = child.getLeft() - params.leftMargin;
 				left = right - leftDividerWidth;
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
-				//------------------end-------------------
-				//---------item的右边的分割线绘制---------
+				//</editor-fold>
+				//<editor-fold desc="---item的右边的分割线绘制---">
 				left = child.getRight() + params.rightMargin;
 				right = left + rightDividerWidth;
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
-				//------------------end-------------------
+				//</editor-fold>
 			} else {
 				int topDividerWidth = mDividerHeight;
 				int bottomDividerWidth = mDividerHeight;
@@ -307,6 +315,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 				}
 				top = child.getTop() - params.topMargin - topDividerWidth;
 				bottom = child.getBottom() + params.bottomMargin + bottomDividerWidth;
+				//<editor-fold desc="最左边分割线绘制与定制">
 				if (noDrawLeftDivider) {//左边分割线处理
 					if (leftPosHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -338,6 +347,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
+				//</editor-fold>
+				//<editor-fold desc="最右边分割线绘制与定制">
 				if (noDrawRightDivider) {//右边分割线处理
 					if (rightPosHandle) {
 						int columnNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
@@ -378,6 +389,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
+				//</editor-fold>
+				//<editor-fold desc="分割线批量定制">
 				if (isSubDivider) {//分割线的截取
 					if (isSubDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -409,6 +422,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
+				//</editor-fold>
+				//<editor-fold desc="分割线定制">
 				if (isRedrawDivider) {//分割线的定制
 					if (isRedrawDividerHandle) {
 						int adapterPosition = parent.getChildAdapterPosition(child);
@@ -426,18 +441,19 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-				//---------item的左边的分割线绘制---------
+				//</editor-fold>
+				//<editor-fold desc="---item的左边的分割线绘制---">
 				right = child.getLeft() - params.leftMargin;
 				left = right - leftDividerWidth;
 				mLeftDivider.setBounds(left, top, right, bottom);
 				mLeftDivider.draw(c);
-				//------------------end-------------------
-				//---------item的右边的分割线绘制---------
+				//</editor-fold>
+				//<editor-fold desc="---item的右边的分割线绘制---">
 				left = child.getRight() + params.rightMargin;
 				right = left + rightDividerWidth;
 				mRightDivider.setBounds(left, top, right, bottom);
 				mRightDivider.draw(c);
-				//------------------end-------------------
+				//</editor-fold>
 			}
 		}
 	}
@@ -454,6 +470,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 		int right = mDividerWidth;
 		int bottom = mDividerHeight;
 		if (mOrientation == VERTICAL) {
+			//<editor-fold desc="顶部分割线绘制与定制">
 			if (noDrawHeaderDivider) {
 				if (mSpanCount > itemPosition) {
 					Logd(TAG, "getItemOffsets: noDrawHeaderDivider:" + itemPosition);
@@ -467,6 +484,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="底部分割线绘制与定制">
 			if (noDrawFooterDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				int rowNum = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
@@ -483,6 +502,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
 			if (noDrawLeftDivider) {
 				if (itemPosition % mSpanCount == 0) {
 					left = 0;
@@ -493,6 +513,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					right = 0;
 				}
 			}
+			//<editor-fold desc="分割线批量定制">
 			if (isSubDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;
@@ -513,6 +534,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线定制">
 			if (isRedrawDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;//计算总行数
@@ -526,6 +549,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					top = mRedrawDividerHeight;
 				}
 			}
+			//</editor-fold>
 		} else {
 			if (noDrawHeaderDivider) {
 				if (itemPosition % mSpanCount == 0) {
@@ -539,6 +563,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					bottom = 0;
 				}
 			}
+			//<editor-fold desc="最左边分割线绘制与定制">
 			if (noDrawLeftDivider) {
 				if (mSpanCount > itemPosition) {
 					Loge(TAG, "getItemOffsets: noDrawLeftDivider:" + itemPosition);
@@ -552,6 +577,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="最右边分割线绘制与定制">
 			if (noDrawRightDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				int columnCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount - 1 : itemCount / mSpanCount;
@@ -567,6 +594,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线批量定制">
 			if (isSubDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;
@@ -587,6 +616,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线定制">
 			if (isRedrawDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				int rowCount = itemCount % mSpanCount == 0 ? itemCount / mSpanCount : itemCount / mSpanCount + 1;//计算总行数
@@ -600,6 +631,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 					left = mRedrawDividerWidth;
 				}
 			}
+			//</editor-fold>
 		}
 
         /*

@@ -53,6 +53,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
+			//<editor-fold desc="最左边分割线绘制与定制">
 			if (!noDrawLeftDivider) {//最左边分割线处理
 				if (leftPosHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
@@ -79,7 +80,9 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
 			int rightDividerWidth = mDividerWidth;
+			//<editor-fold desc="最右边分割线绘制与定制">
 			if (noDrawRightDivider) {//最右边分割线处理
 				if (rightPosHandle) {
 					if (childCount - 1 == i) {
@@ -116,6 +119,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线定制">
 			if (isRedrawDivider) {//分割线的定制
 				if (isRedrawDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
@@ -134,6 +139,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线批量定制">
 			if (isSubDivider) {//分割线的截取
 				if (isSubDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
@@ -162,6 +169,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
 			left = child.getRight() + params.rightMargin;
 			right = left + rightDividerWidth;
 			mDivider.setBounds(left, top, right, bottom);
@@ -188,6 +196,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
+			//<editor-fold desc="顶部分割线绘制与定制">
 			if (!noDrawHeaderDivider) {//顶部分割线处理
 				if (headerPosHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
@@ -214,7 +223,9 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
 			int bottomDividerHeight = mDividerHeight;
+			//<editor-fold desc="底部分割线绘制与定制">
 			if (noDrawFooterDivider) {//底部分割线处理
 				if (footerPosHandle) {
 					if (childCount - 1 == i) {
@@ -249,6 +260,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线定制">
 			if (isRedrawDivider) {//分割线的定制
 				if (isRedrawDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
@@ -267,6 +280,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线批量定制">
 			if (isSubDivider) {//分割线的截取
 				if (isSubDividerHandle) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
@@ -293,6 +308,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
 			top = child.getBottom() + params.bottomMargin;
 			bottom = top + bottomDividerHeight;
 			mDivider.setBounds(left, top, right, bottom);
@@ -309,6 +325,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		if (mOrientation == VERTICAL) {
 			int top = 0;
 			int bottom = mDividerHeight;
+			//<editor-fold desc="顶部分割线绘制与定制">
 			if (!noDrawHeaderDivider) {
 				if (itemPosition == 0) {
 					if (isRedrawHeaderDivider) {
@@ -318,6 +335,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="底部分割线绘制与定制">
 			if (noDrawFooterDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				if (itemPosition == itemCount - 1) {
@@ -332,6 +351,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线批量定制">
 			if (isSubDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				if (mStartIndex >= itemCount - 1) {
@@ -343,16 +364,20 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线定制">
 			if (isRedrawDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				if (Math.min(mDividerIndex, itemCount - 2) == itemPosition) {
 					bottom = mRedrawDividerHeight;
 				}
 			}
+			//</editor-fold>
 			outRect.set(0, top, 0, bottom);
 		} else {
 			int left = 0;
 			int right = mDividerWidth;
+			//<editor-fold desc="最左边分割线绘制与定制">
 			if (!noDrawLeftDivider) {
 				if (itemPosition == 0) {
 					if (isRedrawLeftDivider) {
@@ -362,6 +387,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="最右边分割线绘制与定制">
 			if (noDrawRightDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				if (itemPosition == itemCount - 1) {
@@ -375,6 +402,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线批量定制">
 			if (isSubDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				if (mStartIndex >= itemCount - 1) {
@@ -386,12 +415,15 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					}
 				}
 			}
+			//</editor-fold>
+			//<editor-fold desc="分割线定制">
 			if (isRedrawDivider) {
 				int itemCount = parent.getAdapter().getItemCount();
 				if (Math.min(mDividerIndex, itemCount - 2) == itemPosition) {
 					right = mRedrawDividerWidth;
 				}
 			}
+			//</editor-fold>
 			outRect.set(left, 0, right, 0);
 		}
 	}
