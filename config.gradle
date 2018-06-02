@@ -1,17 +1,16 @@
 //全局参数
 ext {
     appConfig = [
-            versionCode  : 3,
-            versionName  : "1.0.3",
+            versionCode  : 4,
+            versionName  : "1.0.4",
             applicationId: "com.ckr.flexitemdecoration",
     ]
 
     androidConfig = [
-            compileSdkVersion: 25,
-            buildToolsVersion: "25.0.3",
-            minSdkVersion    : 15,
-            targetSdkVersion : 25,
+            compileSdkVersion: 26,
+            minSdkVersion    : 16,
+            targetSdkVersion : 26,
     ]
 
-    supportVersion = "25.3.1"
+    supportVersion = "26.1.0"
 }
