@@ -30,6 +30,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	private int mDividerPaddingRight;
 	private int mDividerPaddingBottom;
 	private Drawable drawable;
+	private int bottom;
 
 	public DividerLinearItemDecoration(Context context) {
 		super(context, LINEAR, VERTICAL);
@@ -391,18 +392,24 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					int right = parent.getWidth() - parent.getPaddingRight() - 60;
 					drawable.setBounds(left, top, right, bottom);
 					drawable.draw(c);
+					if (top <= this.bottom) {
+						c.save();
+						c.translate(0, top-this.bottom);
+						TextView textView = map.get(adapterPosition / 4-1);
+						textView.draw(c);
+						c.restore();
+					}
 				} else {
 					isFirst = true;
 					TextView textView = map.get(adapterPosition / 4);
 					if (textView == null) {
-						int bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
+						this.bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
 						int top = bottom - 60;
 						int left = 0;
 						int right = parent.getWidth();
 //					drawable.setBounds(left, top, right, bottom);
 //					drawable.draw(c);
 						Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
-//					headerView.setText(adapterPosition/4+"");
 						textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
 						textView.setText(adapterPosition / 4 + "");
 						textView.layout(left, top, right, bottom);
@@ -414,14 +421,13 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				isFirst = true;
 				TextView textView = map.get(adapterPosition / 4);
 				if (textView == null) {
-					int bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
+					this.bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
 					int top = bottom - 60;
 					int left = 0;
 					int right = parent.getWidth();
 //					drawable.setBounds(left, top, right, bottom);
 //					drawable.draw(c);
 					Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
-//					headerView.setText(adapterPosition/4+"");
 					textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
 					textView.setText(adapterPosition / 4 + "");
 					textView.layout(left, top, right, bottom);
