@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ckr.flexitemdecoration.R;
 
@@ -13,32 +14,35 @@ import com.ckr.flexitemdecoration.R;
  */
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHorld> {
-    private Context mContext;
+	private Context mContext;
 
-    public MainAdapter(Context context) {
-        mContext = context;
-    }
+	public MainAdapter(Context context) {
+		mContext = context;
+	}
 
-    @Override
-    public MainHorld onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainHorld(LayoutInflater.from(mContext).inflate(R.layout.item_picture, parent, false));
-    }
+	@Override
+	public MainHorld onCreateViewHolder(ViewGroup parent, int viewType) {
+		return new MainHorld(LayoutInflater.from(mContext).inflate(R.layout.item_picture, parent, false));
+	}
 
-    @Override
-    public void onBindViewHolder(MainHorld holder, int position) {
+	@Override
+	public void onBindViewHolder(MainHorld holder, int position) {
+		holder.titleView.setText("item " + position);
+	}
 
-    }
+	@Override
+	public int getItemCount() {
+		return 13;
+	}
 
-    @Override
-    public int getItemCount() {
-        return 13;
-    }
+	class MainHorld extends RecyclerView.ViewHolder {
 
-    class MainHorld extends RecyclerView.ViewHolder {
+		private TextView titleView;
 
-        public MainHorld(View itemView) {
-            super(itemView);
-        }
-    }
+		public MainHorld(View itemView) {
+			super(itemView);
+			titleView = (TextView) itemView.findViewById(R.id.title);
+		}
+	}
 
 }

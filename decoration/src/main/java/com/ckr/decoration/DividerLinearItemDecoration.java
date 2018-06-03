@@ -8,7 +8,12 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.ckr.decoration.DecorationLog.Logd;
 import static com.ckr.decoration.DecorationLog.Loge;
@@ -365,14 +370,66 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		}
 	}
 
+	Map<Integer, TextView> map = new HashMap<>(8);
+
 	@Override
 	public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
 		super.onDrawOver(c, parent, state);
-		Logd(TAG, "onDrawOver: state:"+state);
-//		int left = parent.getPaddingLeft() + 60;
-//		int right = parent.getWidth() - parent.getPaddingRight() - 60;
-//		drawable.setBounds(left,30,right,30);
-//		drawable.draw(c);
+		Logd(TAG, "onDrawOver: state:" + state);
+		final int childCount = parent.getChildCount();
+		boolean isFirst = false;
+		for (int i = 0; i < childCount; i++) {
+
+			final View child = parent.getChildAt(i);
+			int adapterPosition = parent.getChildAdapterPosition(child);
+			Loge(TAG, "onDrawOver: adapterPos:" + adapterPosition + ",isFirst:" + isFirst);
+			if (adapterPosition % 4 == 0) {
+				if (isFirst) {
+					int bottom = child.getTop() + mDividerHeight * 2;
+					int top = bottom - 60;
+					int left = parent.getPaddingLeft() + 60;
+					int right = parent.getWidth() - parent.getPaddingRight() - 60;
+					drawable.setBounds(left, top, right, bottom);
+					drawable.draw(c);
+				} else {
+					isFirst = true;
+					TextView textView = map.get(adapterPosition / 4);
+					if (textView == null) {
+						int bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
+						int top = bottom - 60;
+						int left = 0;
+						int right = parent.getWidth();
+//					drawable.setBounds(left, top, right, bottom);
+//					drawable.draw(c);
+						Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
+//					headerView.setText(adapterPosition/4+"");
+						textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
+						textView.setText(adapterPosition / 4 + "");
+						textView.layout(left, top, right, bottom);
+						map.put(0, textView);
+					}
+					textView.draw(c);
+				}
+			} else if (!isFirst) {
+				isFirst = true;
+				TextView textView = map.get(adapterPosition / 4);
+				if (textView == null) {
+					int bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
+					int top = bottom - 60;
+					int left = 0;
+					int right = parent.getWidth();
+//					drawable.setBounds(left, top, right, bottom);
+//					drawable.draw(c);
+					Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
+//					headerView.setText(adapterPosition/4+"");
+					textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
+					textView.setText(adapterPosition / 4 + "");
+					textView.layout(left, top, right, bottom);
+					map.put(0, textView);
+				}
+				textView.draw(c);
+			}
+		}
 	}
 
 	/**
