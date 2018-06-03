@@ -3,8 +3,10 @@ package com.ckr.decoration;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -22,6 +24,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	private int mDividerPaddingTop;
 	private int mDividerPaddingRight;
 	private int mDividerPaddingBottom;
+	private Drawable drawable;
 
 	public DividerLinearItemDecoration(Context context) {
 		super(context, LINEAR, VERTICAL);
@@ -41,6 +44,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		this.mDividerPaddingTop = builder.mDividerPaddingTop;
 		this.mDividerPaddingRight = builder.mDividerPaddingRight;
 		this.mDividerPaddingBottom = builder.mDividerPaddingBottom;
+		drawable = ContextCompat.getDrawable(mContext, R.drawable.bg_decoration);
 	}
 
 	public BaseItemDecoration setDividerPaddingLeft(@IntRange(from = 0) int paddingLeft) {
@@ -361,11 +365,22 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		}
 	}
 
+	@Override
+	public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+		super.onDrawOver(c, parent, state);
+		Logd(TAG, "onDrawOver: state:"+state);
+//		int left = parent.getPaddingLeft() + 60;
+//		int right = parent.getWidth() - parent.getPaddingRight() - 60;
+//		drawable.setBounds(left,30,right,30);
+//		drawable.draw(c);
+	}
+
 	/**
 	 * 要想清楚outRect作用,请看{@link android.support.v7.widget.LinearLayoutManager}源码，如：measureChild().
 	 */
 	@Override
-	public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+	public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+		int itemPosition = parent.getChildAdapterPosition(view);
 		Loge(TAG, "getItemOffsets: itemPosition:" + itemPosition);
 		if (mOrientation == VERTICAL) {
 			int top = 0;
