@@ -95,7 +95,7 @@ public class LinearFragment extends BaseFragment {
 		}
 		DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(getContext(), orientation);
 		builder.setDivider(R.drawable.bg_divider_list);
-		builder.setDividerPadding(padding8, padding5, padding8, padding5);
+		builder.setDividerPadding(padding8, padding5, 0, padding5);
 		if (orientation == LinearLayoutManager.VERTICAL) {
 			builder.setStickyHeader(true)
 					.setStickyHeaderDrawable(R.drawable.bg_decoration)
