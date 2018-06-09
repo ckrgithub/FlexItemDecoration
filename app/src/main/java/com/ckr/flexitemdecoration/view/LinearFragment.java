@@ -78,7 +78,7 @@ public class LinearFragment extends BaseFragment {
 		isInit = true;
 		setItemDecoration();
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));
-		recyclerView.setPadding(padding, padding, padding, padding);
+		recyclerView.setPadding(padding, 0, padding, 0);
 		mainAdapter = new MainAdapter(getContext());
 		recyclerView.setAdapter(mainAdapter);
 		if (orientation == LinearLayoutManager.VERTICAL) {
