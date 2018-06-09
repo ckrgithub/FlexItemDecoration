@@ -2,6 +2,7 @@ package com.ckr.flexitemdecoration.view;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +12,22 @@ import android.util.Log;
 import com.ckr.decoration.DividerLinearItemDecoration;
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.adapter.MainAdapter;
+import com.ckr.flexitemdecoration.model.Header;
+import com.ckr.flexitemdecoration.model.UserInfo;
+import com.google.gson.Gson;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
 
 import static com.ckr.decoration.BaseItemDecoration.HORIZONTAL;
 import static com.ckr.decoration.BaseItemDecoration.VERTICAL;
+import static com.ckr.decoration.DecorationLog.Logd;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +82,9 @@ public class LinearFragment extends BaseFragment {
 		recyclerView.setPadding(padding, padding, padding, padding);
 		mainAdapter = new MainAdapter(getContext());
 		recyclerView.setAdapter(mainAdapter);
+		if (orientation == LinearLayoutManager.VERTICAL) {
+			new MyTask().execute();
+		}
 	}
 
 	private void setItemDecoration() {
@@ -125,7 +137,7 @@ public class LinearFragment extends BaseFragment {
 					.redrawRightDividerDrawable(R.drawable.bg_divider_list);
 		}
 	  /*  builder
-                .redrawHeaderDivider().
+				.redrawHeaderDivider().
                 redrawHeaderDividerHeight(40)
                 .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset)
                 .redrawFooterDivider()
@@ -140,8 +152,8 @@ public class LinearFragment extends BaseFragment {
         ;*/
 		itemDecoration = builder.build();
 		recyclerView.addItemDecoration(itemDecoration);
-       /* itemDecoration = new DividerLinearItemDecoration(getContext(), orientation,R.drawable.bg_divider_list);
-        if (is_checked[0]) {
+	   /* itemDecoration = new DividerLinearItemDecoration(getContext(), orientation,R.drawable.bg_divider_list);
+		if (is_checked[0]) {
         } else {
             itemDecoration.removeHeaderDivider(is_checked[1])
                     .removeFooterDivider(is_checked[2])
@@ -196,6 +208,25 @@ public class LinearFragment extends BaseFragment {
 				setItemDecoration();
 			}
 
+		}
+	}
+
+	class MyTask extends AsyncTask<Void, Void, List<Header>> {
+
+		@Override
+		protected List<Header> doInBackground(Void... voids) {
+			InputStream inputStream = getResources().openRawResource(R.raw.user);
+			Reader reader = new InputStreamReader(inputStream);
+			UserInfo userInfo = new Gson().fromJson(reader, UserInfo.class);
+			List<Header> data = userInfo.getData();
+			return data;
+		}
+
+		@Override
+		protected void onPostExecute(List<Header> headers) {
+			if (mainAdapter != null) {
+				mainAdapter.updateAll(headers);
+			}
 		}
 	}
 }
