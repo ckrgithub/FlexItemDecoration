@@ -2,13 +2,14 @@ package com.ckr.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,8 +30,15 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	private int mDividerPaddingTop;
 	private int mDividerPaddingRight;
 	private int mDividerPaddingBottom;
-	private Drawable drawable;
-	private int bottom;
+	private boolean isStickyHeader;
+	private int mStickyHeaderHeight;
+	private Drawable mStickyHeaderDrawable;
+	private int textPaddingLeft = 48;//头部文本左边距
+	private Paint mHeaderTextPaint;//头部文本画笔
+	private float axis;
+
+	//	private Drawable drawable;
+//	private int bottom;
 
 	public DividerLinearItemDecoration(Context context) {
 		super(context, LINEAR, VERTICAL);
@@ -50,7 +58,19 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		this.mDividerPaddingTop = builder.mDividerPaddingTop;
 		this.mDividerPaddingRight = builder.mDividerPaddingRight;
 		this.mDividerPaddingBottom = builder.mDividerPaddingBottom;
-		drawable = ContextCompat.getDrawable(mContext, R.drawable.bg_decoration);
+		this.isStickyHeader = builder.isStickyHeader;
+		this.mStickyHeaderHeight = builder.mStickyHeaderHeight;
+		this.mStickyHeaderDrawable = builder.mStickyHeaderDrawable;
+//		drawable = ContextCompat.getDrawable(mContext, R.drawable.bg_decoration);
+		if (isStickyHeader) {
+			mHeaderTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mHeaderTextPaint.setColor(0xccc);
+			mHeaderTextPaint.setTextSize(40);
+			mHeaderTextPaint.setTextAlign(Paint.Align.LEFT);
+			Paint.FontMetrics fontMetrics = mHeaderTextPaint.getFontMetrics();
+			float total = -fontMetrics.ascent + fontMetrics.descent;
+			axis = total / 2 - fontMetrics.descent;
+		}
 	}
 
 	public BaseItemDecoration setDividerPaddingLeft(@IntRange(from = 0) int paddingLeft) {
@@ -251,6 +271,31 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
+			if (isStickyHeader) {
+				RecyclerView.Adapter adapter = parent.getAdapter();
+				if (adapter instanceof OnHeaderListener) {
+					int adapterPosition = parent.getChildAdapterPosition(child);
+					OnHeaderListener listener = ((OnHeaderListener) adapter);
+					String headerName = listener.getHeaderName(adapterPosition);
+					if (!TextUtils.isEmpty(headerName)) {
+						if (adapterPosition != 0 && headerName.equals(listener.getHeaderName(adapterPosition - 1))) {
+							bottom = child.getTop() - params.topMargin;//计算分割线的下边
+							top = bottom - mStickyHeaderHeight;//计算分割线的上边
+//							top = child.getBottom() + params.bottomMargin;
+//							bottom = top + mStickyHeaderHeight;
+							if (mStickyHeaderDrawable != null) {
+								mStickyHeaderDrawable.setBounds(left, top, right, bottom);
+								mStickyHeaderDrawable.draw(c);
+							} else {
+								mDivider.setBounds(left, top, right, bottom);
+								mDivider.draw(c);
+							}
+							return;
+						}
+					}
+				}
+
+			}
 			//<editor-fold desc="顶部分割线绘制与定制">
 			if (!noDrawHeaderDivider) {//顶部分割线处理
 				if (headerPosHandle) {
@@ -376,64 +421,105 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	@Override
 	public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
 		super.onDrawOver(c, parent, state);
-		Logd(TAG, "onDrawOver: state:" + state);
-		final int childCount = parent.getChildCount();
-		boolean isFirst = false;
-		for (int i = 0; i < childCount; i++) {
+		if (isStickyHeader) {
+			RecyclerView.Adapter adapter = parent.getAdapter();
+			if (adapter instanceof OnHeaderListener) {
+				OnHeaderListener listener = ((OnHeaderListener) adapter);
+				final int childCount = parent.getChildCount();
+				View child = parent.getChildAt(0);
+				int adapterPosition = parent.getChildAdapterPosition(child);
+				String headerName = listener.getHeaderName(adapterPosition);
 
-			final View child = parent.getChildAt(i);
-			int adapterPosition = parent.getChildAdapterPosition(child);
-			Loge(TAG, "onDrawOver: adapterPos:" + adapterPosition + ",isFirst:" + isFirst);
-			if (adapterPosition % 4 == 0) {
-				if (isFirst) {
-					int bottom = child.getTop() + mDividerHeight * 2;
-					int top = bottom - 60;
-					int left = parent.getPaddingLeft() + 60;
-					int right = parent.getWidth() - parent.getPaddingRight() - 60;
-					drawable.setBounds(left, top, right, bottom);
-					drawable.draw(c);
-					if (top <= this.bottom) {
-						c.save();
-						c.translate(0, top-this.bottom);
-						TextView textView = map.get(adapterPosition / 4-1);
-						textView.draw(c);
-						c.restore();
+				final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+						.getLayoutParams();
+				int bottom = child.getTop() - params.topMargin;
+				int top = bottom - mStickyHeaderHeight;
+				int stickyTop = parent.getPaddingTop();
+				int stickyBottom = parent.getTop() + stickyTop + mStickyHeaderHeight;
+				int left = parent.getPaddingLeft() + mDividerPaddingLeft;
+				int right = parent.getWidth() - parent.getPaddingRight() - mDividerPaddingRight;
+				if (stickyBottom >= top && top > stickyTop) {
+					int dy = stickyBottom - top;
+					bottom = top;
+					top = top - mStickyHeaderHeight;
+					if (mStickyHeaderDrawable != null) {
+						mStickyHeaderDrawable.setBounds(left, top, right, bottom);
+						mStickyHeaderDrawable.draw(c);
+					} else {
+						mDivider.setBounds(left, top, right, bottom);
+						mDivider.draw(c);
+					}
+					if (!TextUtils.isEmpty(headerName)) {
+						c.drawText(headerName, left + textPaddingLeft, -dy + mStickyHeaderHeight / 2 + axis, mHeaderTextPaint);
 					}
 				} else {
-					isFirst = true;
-					TextView textView = map.get(adapterPosition / 4);
-					if (textView == null) {
-						this.bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
-						int top = bottom - 60;
-						int left = 0;
-						int right = parent.getWidth();
-//					drawable.setBounds(left, top, right, bottom);
-//					drawable.draw(c);
-						Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
-						textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
-						textView.setText(adapterPosition / 4 + "");
-						textView.layout(left, top, right, bottom);
-						map.put(0, textView);
+					bottom = stickyBottom;
+					top = stickyTop;
+					if (mStickyHeaderDrawable != null) {
+						mStickyHeaderDrawable.setBounds(left, top, right, bottom);
+						mStickyHeaderDrawable.draw(c);
+					} else {
+						mDivider.setBounds(left, top, right, bottom);
+						mDivider.draw(c);
 					}
-					textView.draw(c);
+					if (!TextUtils.isEmpty(headerName)) {
+						c.drawText(headerName, left + textPaddingLeft, mStickyHeaderHeight / 2 + axis, mHeaderTextPaint);
+					}
 				}
-			} else if (!isFirst) {
-				isFirst = true;
-				TextView textView = map.get(adapterPosition / 4);
-				if (textView == null) {
-					this.bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
-					int top = bottom - 60;
-					int left = 0;
-					int right = parent.getWidth();
-//					drawable.setBounds(left, top, right, bottom);
-//					drawable.draw(c);
-					Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
-					textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
-					textView.setText(adapterPosition / 4 + "");
-					textView.layout(left, top, right, bottom);
-					map.put(0, textView);
-				}
-				textView.draw(c);
+
+//				for (int i = 0; i < childCount; i++) {
+//				if (adapterPosition % 4 == 0) {
+//					if (isFirst) {
+//						int bottom = child.getTop() + mDividerHeight * 2;
+//						int top = bottom - 60;
+//						int left = parent.getPaddingLeft() + 60;
+//						int right = parent.getWidth() - parent.getPaddingRight() - 60;
+//						drawable.setBounds(left, top, right, bottom);
+//						drawable.draw(c);
+//						if (top <= this.bottom) {
+//							c.save();
+//							c.translate(0, top - this.bottom);
+//							TextView textView = map.get(adapterPosition / 4 - 1);
+//							textView.draw(c);
+//							c.restore();
+//						}
+//					} else {
+//						isFirst = true;
+//						TextView textView = map.get(adapterPosition / 4);
+//						if (textView == null) {
+//							this.bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
+//							int top = bottom - 60;
+//							int left = 0;
+//							int right = parent.getWidth();
+////					drawable.setBounds(left, top, right, bottom);
+////					drawable.draw(c);
+//							Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
+//							textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
+//							textView.setText(adapterPosition / 4 + "");
+//							textView.layout(left, top, right, bottom);
+//							map.put(0, textView);
+//						}
+//						textView.draw(c);
+//					}
+//				} else if (!isFirst) {
+//					isFirst = true;
+//					TextView textView = map.get(adapterPosition / 4);
+//					if (textView == null) {
+//						this.bottom = parent.getTop() + parent.getPaddingTop() + mDividerHeight * 2;
+//						int top = bottom - 60;
+//						int left = 0;
+//						int right = parent.getWidth();
+////					drawable.setBounds(left, top, right, bottom);
+////					drawable.draw(c);
+//						Logd(TAG, "onDrawOver: left:" + left + ",right:" + right);
+//						textView = (TextView) View.inflate(mContext, R.layout.item_header, null);
+//						textView.setText(adapterPosition / 4 + "");
+//						textView.layout(left, top, right, bottom);
+//						map.put(0, textView);
+//					}
+//					textView.draw(c);
+//				}
+//				}
 			}
 		}
 	}
@@ -448,6 +534,21 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		if (mOrientation == VERTICAL) {
 			int top = 0;
 			int bottom = mDividerHeight;
+			if (isStickyHeader) {//固定头部
+				RecyclerView.Adapter adapter = parent.getAdapter();
+				if (adapter instanceof OnHeaderListener) {
+					OnHeaderListener listener = ((OnHeaderListener) adapter);
+					String headerName = listener.getHeaderName(itemPosition);
+					if (!TextUtils.isEmpty(headerName)) {
+						if (itemPosition == 0 || !headerName.equals(listener.getHeaderName(itemPosition - 1))) {
+							top = mStickyHeaderHeight;
+//							bottom = 0;
+							outRect.set(0, top, 0, bottom);
+							return;
+						}
+					}
+				}
+			}
 			//<editor-fold desc="顶部分割线绘制与定制">
 			if (!noDrawHeaderDivider) {
 				if (itemPosition == 0) {
@@ -556,6 +657,9 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		private int mDividerPaddingTop;//分割线上边距，仅适用于水平方向
 		private int mDividerPaddingRight;//分割线右边距，仅适用于竖直方向
 		private int mDividerPaddingBottom;//分割线下边距，仅适用于水平方向
+		private boolean isStickyHeader;//固定头部
+		private int mStickyHeaderHeight;//固定头部高度
+		private Drawable mStickyHeaderDrawable;//固定头部样式
 
 		public Builder(Context context) {
 			super(context, LINEAR);
@@ -565,27 +669,27 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			super(context, LINEAR, mOrientation);
 		}
 
-		public BaseBuilder setDividerPaddingLeft(@IntRange(from = 0) int paddingLeft) {
+		public Builder setDividerPaddingLeft(@IntRange(from = 0) int paddingLeft) {
 			this.mDividerPaddingLeft = paddingLeft;
 			return this;
 		}
 
-		public BaseBuilder setDividerPaddingRight(@IntRange(from = 0) int paddingRight) {
+		public Builder setDividerPaddingRight(@IntRange(from = 0) int paddingRight) {
 			this.mDividerPaddingRight = paddingRight;
 			return this;
 		}
 
-		public BaseBuilder setDividerPaddingTop(@IntRange(from = 0) int paddingTop) {
+		public Builder setDividerPaddingTop(@IntRange(from = 0) int paddingTop) {
 			this.mDividerPaddingTop = paddingTop;
 			return this;
 		}
 
-		public BaseBuilder setDividerPaddingBottom(@IntRange(from = 0) int paddingBottom) {
+		public Builder setDividerPaddingBottom(@IntRange(from = 0) int paddingBottom) {
 			this.mDividerPaddingBottom = paddingBottom;
 			return this;
 		}
 
-		public BaseBuilder setDividerPadding(@IntRange(from = 0) int... padding) {
+		public Builder setDividerPadding(@IntRange(from = 0) int... padding) {
 			for (int i = 0; i < padding.length; i++) {
 				if (i == 0) {
 					this.mDividerPaddingLeft = padding[i];
@@ -597,6 +701,25 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					this.mDividerPaddingBottom = padding[i];
 					break;
 				}
+			}
+			return this;
+		}
+
+		public Builder setStickyHeader(boolean stickyHeader) {
+			isStickyHeader = stickyHeader;
+			return this;
+		}
+
+		public Builder setStickyHeaderHeight(@IntRange(from = 0) int stickyHeaderHeight) {
+			this.mStickyHeaderHeight = stickyHeaderHeight;
+			return this;
+		}
+
+		public Builder setStickyHeaderDrawable(@DrawableRes int drawableId) {
+			this.mStickyHeaderDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+			;
+			if (this.mStickyHeaderHeight == 0) {
+				this.mStickyHeaderHeight = mStickyHeaderDrawable.getIntrinsicHeight();
 			}
 			return this;
 		}

@@ -27,7 +27,6 @@ import butterknife.BindView;
 
 import static com.ckr.decoration.BaseItemDecoration.HORIZONTAL;
 import static com.ckr.decoration.BaseItemDecoration.VERTICAL;
-import static com.ckr.decoration.DecorationLog.Logd;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,6 +96,11 @@ public class LinearFragment extends BaseFragment {
 		DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(getContext(), orientation);
 		builder.setDivider(R.drawable.bg_divider_list);
 		builder.setDividerPadding(padding8, padding5, padding8, padding5);
+		if (orientation == LinearLayoutManager.VERTICAL) {
+			builder.setStickyHeader(true)
+					.setStickyHeaderDrawable(R.drawable.bg_decoration)
+					.setStickyHeaderHeight(90);
+		}
 		if (is_checked[0]) {
 		} else {
 			builder.removeHeaderDivider(is_checked[1])

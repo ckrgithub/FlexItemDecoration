@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ckr.decoration.OnHeaderListener;
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.model.Header;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by PC大佬 on 2018/1/4.
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> implements OnHeaderListener{
 	private Context mContext;
 	private List<Header> headerList;
 
@@ -57,6 +58,19 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> {
 			return 13;
 		}
 		return headerList.size();
+	}
+
+	@Override
+	public String getHeaderName(int position) {
+		if (headerList == null||headerList.size()==0) {
+			return null;
+		}
+		return headerList.get(position).getFirstLetter();
+	}
+
+	@Override
+	public String getHeaderView(int position) {
+		return null;
 	}
 
 	class MainHolder extends RecyclerView.ViewHolder {
