@@ -279,16 +279,16 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						if (adapterPosition != 0 && !headerName.equals(listener.getHeaderName(adapterPosition - 1))) {
 							bottom = child.getTop() - params.topMargin;//计算分割线的下边
 							top = bottom - mStickyHeaderHeight;//计算分割线的上边
-							left -= mDividerPaddingLeft;
-							right -= mDividerPaddingRight;
+							int stickyLeft = left - mDividerPaddingLeft;
+							int stickyRight = right - mDividerPaddingRight;
 							if (mStickyHeaderDrawable != null) {
-								mStickyHeaderDrawable.setBounds(left, top, right, bottom);
+								mStickyHeaderDrawable.setBounds(stickyLeft, top, stickyRight, bottom);
 								mStickyHeaderDrawable.draw(c);
 							} else {
-								mDivider.setBounds(left, top, right, bottom);
+								mDivider.setBounds(stickyLeft, top, stickyRight, bottom);
 								mDivider.draw(c);
 							}
-							int x = left + textPaddingLeft;
+							int x = stickyLeft + textPaddingLeft;
 							float y = top + mStickyHeaderHeight / 2 + mMoveY;
 							c.drawText(headerName, x, y, mHeaderTextPaint);
 							continue;
@@ -338,17 +338,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			int bottomDividerHeight = mDividerHeight;
 			//<editor-fold desc="底部分割线绘制与定制">
 			if (noDrawFooterDivider) {//底部分割线处理
-				/*if (footerPosHandle) {
-					if (childCount - 1 == i) {
-						int adapterPosition = parent.getChildAdapterPosition(child);
-						if (itemCount - 1 == adapterPosition) {
-							bottomDividerHeight = 0;
-							footerPosHandle = false;
-						} else {
-							footerPosHandle = false;
-						}
-					}
-				}*/
 			} else {
 				if (isRedrawFooterDivider) {//底部分割线定制
 					if (footerPosHandle) {
@@ -362,7 +351,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 									bottom = top + bottomDividerHeight;
 									mFooterDividerDrawable.setBounds(left, top, right, bottom);
 									mFooterDividerDrawable.draw(c);
-//									continue;
 								}
 							} else {
 								footerPosHandle = false;
@@ -381,7 +369,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 								bottom = top + bottomDividerHeight;
 								mDivider.setBounds(left, top, right, bottom);
 								mDivider.draw(c);
-//									continue;
 							} else {
 								footerPosHandle = false;
 							}
@@ -397,9 +384,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					if (Math.min(mDividerIndex, itemCount - 2) == adapterPosition) {
 						isRedrawDividerHandle = false;
 						bottom = child.getTop() - params.topMargin;
-//						top = child.getBottom() + params.bottomMargin;
 						top = bottom - mRedrawDividerHeight;
-//						bottom = top + mRedrawDividerHeight;
 						if (mDividerDrawable != null) {
 							mDividerDrawable.setBounds(left, top, right, bottom);
 							mDividerDrawable.draw(c);
@@ -427,8 +412,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 								}
 								if (mSubDrawable != null) {
 									bottom = child.getTop() - params.topMargin;
-//									top = child.getBottom() + params.bottomMargin;
-//									bottom = top + bottomDividerHeight;
 									top = bottom - bottomDividerHeight;
 									mSubDrawable.setBounds(left, top, right, bottom);
 									mSubDrawable.draw(c);
@@ -442,14 +425,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 			}
 			//</editor-fold>
-//			top = child.getBottom() + params.bottomMargin;
-//			bottom = top + bottomDividerHeight;
-//			mDivider.setBounds(left, top, right, bottom);
-//			mDivider.draw(c);
 			bottom = child.getTop() - params.topMargin;
 			top = bottom - bottomDividerHeight;
-//			top = child.getBottom() + params.bottomMargin;
-//			bottom = top + bottomDividerHeight;
 			mDivider.setBounds(left, top, right, bottom);
 			mDivider.draw(c);
 		}
@@ -480,7 +457,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						int top = bottom - mStickyHeaderHeight;//分割线的顶部
 						Logd(TAG, "onDrawOver: stickyBottom:" + stickyBottom + ",stickyTop:" + stickyTop + ",top:" + top + ",bottom:" + bottom);
 						if (stickyBottom >= top && top > stickyTop) {//分割线的顶部是否与悬浮的头部重叠
-							int dy = stickyBottom - top;
 							bottom = top;
 							top = top - mStickyHeaderHeight;
 							if (mStickyHeaderDrawable != null) {
@@ -494,7 +470,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 							float y = top + mStickyHeaderHeight / 2 + mMoveY;
 							String lastHeaderName = listener.getHeaderName(adapterPosition - 1);
 							if (!TextUtils.isEmpty(lastHeaderName)) {//得到上一个item的头部文本
-								c.drawText(lastHeaderName, x, -dy + y, mHeaderTextPaint);
+								c.drawText(lastHeaderName, x, y, mHeaderTextPaint);
 							}
 							return;
 						}
