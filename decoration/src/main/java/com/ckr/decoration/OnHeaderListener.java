@@ -6,6 +6,4 @@ package com.ckr.decoration;
 
 public interface OnHeaderListener {
 	String getHeaderName(int position);
-
-	String getHeaderView(int position);
 }

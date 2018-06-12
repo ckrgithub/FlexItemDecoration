@@ -68,11 +68,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> im
 		return headerList.get(position).getFirstLetter();
 	}
 
-	@Override
-	public String getHeaderView(int position) {
-		return null;
-	}
-
 	class MainHolder extends RecyclerView.ViewHolder {
 
 		private TextView titleView;
