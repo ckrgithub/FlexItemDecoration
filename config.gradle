@@ -1,8 +1,8 @@
 //全局参数
 ext {
     appConfig = [
-            versionCode  : 4,
-            versionName  : "1.0.4",
+            versionCode  : 10,
+            versionName  : "1.1.0",
             applicationId: "com.ckr.flexitemdecoration",
     ]
 

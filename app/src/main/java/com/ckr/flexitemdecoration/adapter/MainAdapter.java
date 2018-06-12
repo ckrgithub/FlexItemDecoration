@@ -18,7 +18,7 @@ import java.util.List;
  * Created by PC大佬 on 2018/1/4.
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> implements OnHeaderListener{
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> implements OnHeaderListener {
 	private Context mContext;
 	private List<Header> headerList;
 
