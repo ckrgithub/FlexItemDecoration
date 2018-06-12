@@ -560,7 +560,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				if (mStartIndex > itemCount - 1) {
 					isSubDivider = false;
 				} else {
-					if (itemPosition != 0 && itemPosition >= mStartIndex && itemPosition <= Math.min(mEndIndex, itemCount - 1)) {
+					if (itemPosition != 0 && itemPosition >= mStartIndex && itemPosition <= Math.min(mEndIndex-1, itemCount - 1)) {
 						Logd(TAG, "getItemOffsets: mStartIndex:" + mStartIndex + ",mEndIndex:" + mEndIndex + ",itemPosition:" + itemPosition);
 						top = mSubDividerHeight;
 					}
