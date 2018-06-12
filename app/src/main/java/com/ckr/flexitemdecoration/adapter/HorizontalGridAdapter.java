@@ -12,7 +12,7 @@ import com.ckr.flexitemdecoration.R;
  * Created by PC大佬 on 2018/1/4.
  */
 
-public class HorizontalGridAdapter extends RecyclerView.Adapter<HorizontalGridAdapter.MainHorld> {
+public class HorizontalGridAdapter extends RecyclerView.Adapter<HorizontalGridAdapter.MainHolder> {
     private Context mContext;
 
     public HorizontalGridAdapter(Context context) {
@@ -20,12 +20,12 @@ public class HorizontalGridAdapter extends RecyclerView.Adapter<HorizontalGridAd
     }
 
     @Override
-    public MainHorld onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainHorld(LayoutInflater.from(mContext).inflate(R.layout.item_picture_horizontal, parent, false));
+    public MainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new MainHolder(LayoutInflater.from(mContext).inflate(R.layout.item_picture_horizontal, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MainHorld holder, int position) {
+    public void onBindViewHolder(MainHolder holder, int position) {
 
     }
 
@@ -34,9 +34,9 @@ public class HorizontalGridAdapter extends RecyclerView.Adapter<HorizontalGridAd
         return 13;
     }
 
-    class MainHorld extends RecyclerView.ViewHolder {
+    class MainHolder extends RecyclerView.ViewHolder {
 
-        public MainHorld(View itemView) {
+        public MainHolder(View itemView) {
             super(itemView);
         }
     }

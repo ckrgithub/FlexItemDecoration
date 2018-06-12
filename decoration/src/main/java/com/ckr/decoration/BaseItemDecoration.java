@@ -294,7 +294,7 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
 	}
 
 	@Override
-	public void onDraw(Canvas c, RecyclerView parent) {
+	public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 		if (mFlag == LINEAR) {
 			if (mOrientation == VERTICAL) {
 				drawHorizontal(c, parent);
@@ -312,7 +312,7 @@ public abstract class BaseItemDecoration extends RecyclerView.ItemDecoration {
 	protected abstract void drawHorizontal(Canvas c, RecyclerView parent);
 
 	public static abstract class BaseBuilder {
-		private Context mContext;
+		protected Context mContext;
 		private Drawable mDivider;
 		private int mFlag;//标记网格布局还是线性布局
 		private int mOrientation = VERTICAL;

@@ -462,8 +462,8 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 	 * 要想清楚outRect作用，请看{@link android.support.v7.widget.GridLayoutManager}源码，如：measureChild().
 	 */
 	@Override
-	public void getItemOffsets(Rect outRect, int itemPosition,
-							   RecyclerView parent) {
+	public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+		int itemPosition = parent.getChildAdapterPosition(view);
 		Loge(TAG, "getItemOffsets: pos:" + itemPosition);
 		int left = mDividerWidth;
 		int top = mDividerHeight;

@@ -2,6 +2,7 @@ package com.ckr.flexitemdecoration.view;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +12,15 @@ import android.util.Log;
 import com.ckr.decoration.DividerLinearItemDecoration;
 import com.ckr.flexitemdecoration.R;
 import com.ckr.flexitemdecoration.adapter.MainAdapter;
+import com.ckr.flexitemdecoration.model.Header;
+import com.ckr.flexitemdecoration.model.UserInfo;
+import com.google.gson.Gson;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -70,9 +78,12 @@ public class LinearFragment extends BaseFragment {
 		isInit = true;
 		setItemDecoration();
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));
-		recyclerView.setPadding(padding, padding, padding, padding);
+		recyclerView.setPadding(padding, 0, padding, 0);
 		mainAdapter = new MainAdapter(getContext());
 		recyclerView.setAdapter(mainAdapter);
+		if (orientation == LinearLayoutManager.VERTICAL) {
+			new MyTask().execute();
+		}
 	}
 
 	private void setItemDecoration() {
@@ -84,7 +95,12 @@ public class LinearFragment extends BaseFragment {
 		}
 		DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(getContext(), orientation);
 		builder.setDivider(R.drawable.bg_divider_list);
-		builder.setDividerPadding(padding8, padding5, padding8, padding5);
+		builder.setDividerPadding(padding8, padding5, 0, padding5);
+		if (orientation == LinearLayoutManager.VERTICAL) {
+			builder.setStickyHeader(true)
+					.setStickyHeaderDrawable(R.drawable.bg_decoration)
+					.setStickyHeaderHeight(90);
+		}
 		if (is_checked[0]) {
 		} else {
 			builder.removeHeaderDivider(is_checked[1])
@@ -125,7 +141,7 @@ public class LinearFragment extends BaseFragment {
 					.redrawRightDividerDrawable(R.drawable.bg_divider_list);
 		}
 	  /*  builder
-                .redrawHeaderDivider().
+				.redrawHeaderDivider().
                 redrawHeaderDividerHeight(40)
                 .redrawHeaderDividerDrawable(R.drawable.bg_divider_offset)
                 .redrawFooterDivider()
@@ -140,8 +156,8 @@ public class LinearFragment extends BaseFragment {
         ;*/
 		itemDecoration = builder.build();
 		recyclerView.addItemDecoration(itemDecoration);
-       /* itemDecoration = new DividerLinearItemDecoration(getContext(), orientation,R.drawable.bg_divider_list);
-        if (is_checked[0]) {
+	   /* itemDecoration = new DividerLinearItemDecoration(getContext(), orientation,R.drawable.bg_divider_list);
+		if (is_checked[0]) {
         } else {
             itemDecoration.removeHeaderDivider(is_checked[1])
                     .removeFooterDivider(is_checked[2])
@@ -196,6 +212,25 @@ public class LinearFragment extends BaseFragment {
 				setItemDecoration();
 			}
 
+		}
+	}
+
+	class MyTask extends AsyncTask<Void, Void, List<Header>> {
+
+		@Override
+		protected List<Header> doInBackground(Void... voids) {
+			InputStream inputStream = getResources().openRawResource(R.raw.user);
+			Reader reader = new InputStreamReader(inputStream);
+			UserInfo userInfo = new Gson().fromJson(reader, UserInfo.class);
+			List<Header> data = userInfo.getData();
+			return data;
+		}
+
+		@Override
+		protected void onPostExecute(List<Header> headers) {
+			if (mainAdapter != null) {
+				mainAdapter.updateAll(headers);
+			}
 		}
 	}
 }

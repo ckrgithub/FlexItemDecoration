@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ckr.decoration.BaseItemDecoration;
+import com.ckr.decoration.DecorationLog;
 import com.ckr.flexitemdecoration.adapter.MyFragmentPagerAdapter;
 import com.ckr.flexitemdecoration.view.BaseFragment;
 import com.ckr.flexitemdecoration.view.HorizontalGridFragment;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DecorationLog.debug();
         if (savedInstanceState == null) {
         } else {
             currentPage = savedInstanceState.getInt(PAGE);
