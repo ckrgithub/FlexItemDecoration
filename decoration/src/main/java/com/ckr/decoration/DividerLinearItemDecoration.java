@@ -36,8 +36,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	private Drawable mStickyHeaderDrawable;
 	private Paint mHeaderTextPaint;
 	private int mHeaderTextPaddingLeft = 48;
-	private int textColor = Color.WHITE;
-	private int textSize = 42;
+	private int mHeaderTextColor = Color.WHITE;
+	private int mHeaderTextSize = 42;
 	private float mMoveY;
 
 	public DividerLinearItemDecoration(Context context) {
@@ -61,10 +61,13 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		this.isStickyHeader = builder.isStickyHeader;
 		this.mStickyHeaderHeight = builder.mStickyHeaderHeight;
 		this.mStickyHeaderDrawable = builder.mStickyHeaderDrawable;
+		this.mHeaderTextPaddingLeft = builder.mHeaderTextPaddingLeft;
+		this.mHeaderTextColor = builder.mHeaderTextColor;
+		this.mHeaderTextSize = builder.mHeaderTextSize;
 		if (isStickyHeader) {
 			mHeaderTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mHeaderTextPaint.setColor(textColor);//注意：颜色需为argb，否则，绘制不出
-			mHeaderTextPaint.setTextSize(textSize);
+			mHeaderTextPaint.setColor(mHeaderTextColor);//注意：颜色需为argb，否则，绘制不出
+			mHeaderTextPaint.setTextSize(mHeaderTextSize);
 			Paint.FontMetricsInt mFontMetricsInt = mHeaderTextPaint.getFontMetricsInt();
 			float textCenter = (mFontMetricsInt.descent - mFontMetricsInt.ascent) / 2.0f;
 			mMoveY = -mFontMetricsInt.ascent - textCenter;//中间线到基准线baseline的距离
@@ -104,6 +107,26 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				break;
 			}
 		}
+		return this;
+	}
+
+	public BaseItemDecoration setHeaderTextPaddingLeft(int textPaddingLeft) {
+		this.mHeaderTextPaddingLeft = textPaddingLeft;
+		return this;
+	}
+
+	/**
+	 *
+	 * @param textColor	颜色需为argb，否则不生效
+	 * @return
+	 */
+	public BaseItemDecoration setHeaderTextColor(int textColor) {
+		this.mHeaderTextColor = textColor;
+		return this;
+	}
+
+	public BaseItemDecoration setHeaderTextSize(int textSize) {
+		this.mHeaderTextSize = textSize;
 		return this;
 	}
 
@@ -615,6 +638,9 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		private boolean isStickyHeader;//固定头部
 		private int mStickyHeaderHeight;//固定头部高度
 		private Drawable mStickyHeaderDrawable;//固定头部样式
+		private int mHeaderTextPaddingLeft = 48;
+		private int mHeaderTextColor = Color.WHITE;
+		private int mHeaderTextSize = 42;
 
 		public Builder(Context context) {
 			super(context, LINEAR);
@@ -676,6 +702,26 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			if (this.mStickyHeaderHeight == 0) {
 				this.mStickyHeaderHeight = mStickyHeaderDrawable.getIntrinsicHeight();
 			}
+			return this;
+		}
+
+		public Builder setHeaderTextPaddingLeft(int textPaddingLeft) {
+			this.mHeaderTextPaddingLeft = textPaddingLeft;
+			return this;
+		}
+
+		/**
+		 *
+		 * @param textColor	颜色需为argb，否则不生效
+		 * @return
+		 */
+		public Builder setHeaderTextColor(int textColor) {
+			this.mHeaderTextColor = textColor;
+			return this;
+		}
+
+		public Builder setHeaderTextSize(int textSize) {
+			this.mHeaderTextSize = textSize;
 			return this;
 		}
 
