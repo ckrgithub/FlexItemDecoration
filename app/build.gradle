@@ -31,6 +31,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.google.code.gson:gson:2.8.5'
-//    compile project(':decoration')
-    compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.0'
+    compile project(':decoration')
+//    compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.0'
 }
