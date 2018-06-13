@@ -500,25 +500,25 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}else {
-					int top = parent.getPaddingTop();
-					int bottom = parent.getHeight()-parent.getPaddingBottom();
-					int stickyLeft = parent.getPaddingLeft();
-					int stickyRight =stickyLeft+mStickyHeaderHeight;
-					if (!headerName.equals(listener.getHeaderName(adapterPosition - 1))) {//判断与上一个的头部文本是否不同
-						final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-								.getLayoutParams();
-						int right = child.getLeft() - params.leftMargin;
-						int left = right-mStickyHeaderHeight;
-						if (stickyRight >= left && left > stickyLeft) {//分割线的顶部是否与悬浮的头部重叠
-							right=left;
-							left=left-mStickyHeaderHeight;
-							if (mStickyHeaderDrawable != null) {
-								mStickyHeaderDrawable.setBounds(left, top, right, bottom);
-								mStickyHeaderDrawable.draw(c);
-							} else {
-								mDivider.setBounds(left, top, right, bottom);
-								mDivider.draw(c);
-							}
+//					int top = parent.getPaddingTop();
+//					int bottom = parent.getHeight()-parent.getPaddingBottom();
+//					int stickyLeft = parent.getPaddingLeft();
+//					int stickyRight =stickyLeft+mStickyHeaderHeight;
+//					if (!headerName.equals(listener.getHeaderName(adapterPosition - 1))) {//判断与上一个的头部文本是否不同
+//						final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+//								.getLayoutParams();
+//						int right = child.getLeft() - params.leftMargin;
+//						int left = right-mStickyHeaderHeight;
+//						if (stickyRight >= left && left > stickyLeft) {//分割线的顶部是否与悬浮的头部重叠
+//							right=left;
+//							left=left-mStickyHeaderHeight;
+//							if (mStickyHeaderDrawable != null) {
+//								mStickyHeaderDrawable.setBounds(left, top, right, bottom);
+//								mStickyHeaderDrawable.draw(c);
+//							} else {
+//								mDivider.setBounds(left, top, right, bottom);
+//								mDivider.draw(c);
+//							}
 							// todo 未完成
 //							int x = left + mHeaderTextPaddingLeft;
 //							float y = top + mStickyHeaderHeight / 2 + mMoveY;
@@ -526,9 +526,9 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 //							if (!TextUtils.isEmpty(lastHeaderName)) {//得到上一个item的头部文本
 //								c.drawText(lastHeaderName, x, y, mHeaderTextPaint);
 //							}
-							return;
-						}
-					}
+//							return;
+//						}
+//					}
 				}
 			}
 		}
@@ -613,7 +613,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			int left = mDividerWidth;
 			int right = 0;
 			//<editor-folder desc="悬浮左边">
-			if (isStickyHeader) {//悬浮左边
+			/*if (isStickyHeader) {//悬浮左边
 				RecyclerView.Adapter adapter = parent.getAdapter();
 				if (adapter instanceof OnHeaderListener) {
 					OnHeaderListener listener = ((OnHeaderListener) adapter);
@@ -627,7 +627,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						}
 					}
 				}
-			}
+			}*/
 			//</editor-folder>
 			//<editor-fold desc="最左边分割线绘制与定制">
 			if (noDrawLeftDivider) {
