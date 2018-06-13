@@ -118,6 +118,7 @@ public class LinearFragment extends BaseFragment {
 		if (is_checked[6]) {
 			builder.redrawDivider(2)
 					.redrawDividerHeight(30)
+					.redrawDividerWidth(30)
 					.redrawDividerDrawable(R.drawable.bg_divider_redraw);
 		}
 		if (is_checked[7]) {
