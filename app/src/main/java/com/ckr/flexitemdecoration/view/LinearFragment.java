@@ -78,12 +78,12 @@ public class LinearFragment extends BaseFragment {
 		isInit = true;
 		setItemDecoration();
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));
-		recyclerView.setPadding(padding, 0, padding, 0);
+		recyclerView.setPadding(0, 0, 0, 0);
 		mainAdapter = new MainAdapter(getContext());
 		recyclerView.setAdapter(mainAdapter);
-		if (orientation == LinearLayoutManager.VERTICAL) {
+//		if (orientation == LinearLayoutManager.VERTICAL) {
 			new MyTask().execute();
-		}
+//		}
 	}
 
 	private void setItemDecoration() {
@@ -96,11 +96,11 @@ public class LinearFragment extends BaseFragment {
 		DividerLinearItemDecoration.Builder builder = new DividerLinearItemDecoration.Builder(getContext(), orientation);
 		builder.setDivider(R.drawable.bg_divider_list);
 		builder.setDividerPadding(padding8, padding5, 0, padding5);
-		if (orientation == LinearLayoutManager.VERTICAL) {
+//		if (orientation == LinearLayoutManager.VERTICAL) {
 			builder.setStickyHeader(true)
 					.setStickyHeaderDrawable(R.drawable.bg_decoration)
 					.setStickyHeaderHeight(90);
-		}
+//		}
 		if (is_checked[0]) {
 		} else {
 			builder.removeHeaderDivider(is_checked[1])
