@@ -68,7 +68,9 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			mStickyTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mStickyTextPaint.setColor(mStickyTextColor);//注意：颜色需为argb，否则，绘制不出
 			mStickyTextPaint.setTextSize(mStickyTextSize);
-			mStickyTextPaint.setTextAlign(Paint.Align.CENTER);
+			if (mOrientation == HORIZONTAL) {
+				mStickyTextPaint.setTextAlign(Paint.Align.CENTER);
+			}
 			Paint.FontMetricsInt mFontMetricsInt = mStickyTextPaint.getFontMetricsInt();
 			float textCenter = (mFontMetricsInt.descent - mFontMetricsInt.ascent) / 2.0f;
 			mMoveY = -mFontMetricsInt.ascent - textCenter;//中间线到基准线baseline的距离
@@ -181,7 +183,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 
 			}
 			//<editor-fold desc="最左边分割线绘制与定制">
-			if (!noDrawLeftDivider&& !isSticky) {//最左边分割线处理
+			if (!noDrawLeftDivider && !isSticky) {//最左边分割线处理
 				if (i == 0) {
 					if (leftPosHandle) {
 						leftPosHandle = false;
@@ -484,8 +486,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				OnHeaderListener listener = ((OnHeaderListener) adapter);
 				View child = parent.getChildAt(1);//得到第二个可视item
 				int adapterPosition = parent.getChildAdapterPosition(child);
-				adapterPosition=Math.max(0,adapterPosition);
-				String headerName =listener.getHeaderName(adapterPosition);
+				adapterPosition = Math.max(0, adapterPosition);
+				String headerName = listener.getHeaderName(adapterPosition);
 				Loge(TAG, "onDrawOver: headerName:" + headerName + ",adapterPosition:" + adapterPosition);
 				if (!TextUtils.isEmpty(headerName)) {
 					if (mOrientation == VERTICAL) {
@@ -493,7 +495,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						int stickyBottom = stickyTop + mStickyHeightOrWidth;
 						int left = parent.getPaddingLeft();
 						int right = parent.getWidth() - parent.getPaddingRight();
-						if (!headerName.equals(listener.getHeaderName(Math.max(0,adapterPosition - 1)))) {//判断与上一个的头部文本是否不同
+						if (!headerName.equals(listener.getHeaderName(Math.max(0, adapterPosition - 1)))) {//判断与上一个的头部文本是否不同
 							final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 									.getLayoutParams();
 							int bottom = child.getTop() - params.topMargin;//分割线的底部
@@ -527,7 +529,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						}
 						int x = left + mStickyTextPaddingLeft;
 						float baseline = stickyTop + mStickyHeightOrWidth / 2 + mMoveY;
-						String lastHeaderName = listener.getHeaderName(Math.max(0,adapterPosition - 1));//得到上一个item的头部文本
+						String lastHeaderName = listener.getHeaderName(Math.max(0, adapterPosition - 1));//得到上一个item的头部文本
 						if (!TextUtils.isEmpty(lastHeaderName)) {
 							c.drawText(lastHeaderName, x, baseline, mStickyTextPaint);
 						}
@@ -536,7 +538,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						int bottom = parent.getHeight() - parent.getPaddingBottom();
 						int stickyLeft = parent.getPaddingLeft();
 						int stickyRight = stickyLeft + mStickyHeightOrWidth;
-						if (adapterPosition!=0&&!headerName.equals(listener.getHeaderName(Math.max(0,adapterPosition - 1)))) {//判断与上一个的头部文本是否不同
+						if (adapterPosition != 0 && !headerName.equals(listener.getHeaderName(Math.max(0, adapterPosition - 1)))) {//判断与上一个的头部文本是否不同
 							final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 									.getLayoutParams();
 							int right = child.getLeft() - params.leftMargin;
@@ -552,12 +554,10 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 									mDivider.setBounds(left, top, right, bottom);
 									mDivider.draw(c);
 								}
-//							int x = left + mStickyTextPaddingLeft;
 								int x = left + mStickyHeightOrWidth / 2;
 								float y = top + mStickyTextPaddingLeft;
-//							float y = top + mStickyHeightOrWidth / 2 + mMoveY;
 								String lastHeaderName = listener.getHeaderName(adapterPosition - 1);
-								if (!TextUtils.isEmpty(lastHeaderName)) {//得到上一个item的头部文本
+								if (!TextUtils.isEmpty(lastHeaderName)) {//得到上一个item的头部文本'
 									c.drawText(lastHeaderName, x, y, mStickyTextPaint);
 								}
 								return;
@@ -572,12 +572,25 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						}
 						int x = stickyLeft + mStickyHeightOrWidth / 2;
 						float baseline = top + mStickyTextPaddingLeft;
-						String lastHeaderName = listener.getHeaderName(Math.max(0,adapterPosition - 1));//得到上一个item的头部文本
+						String lastHeaderName = listener.getHeaderName(Math.max(0, adapterPosition - 1));//得到上一个item的头部文本
 						if (!TextUtils.isEmpty(lastHeaderName)) {
+//							char[] array = headerName.toCharArray();
+//							int length = array.length;
+//							StringBuilder sb = new StringBuilder(length * 2 - 1);
+//							for (int i = 0; i < length; i++) {
+//								char c1 = array[i];
+//								Logd(TAG, "onDrawOver: c:" + c1);
+//								sb.append(c1);
+//								if (i != length - 1) {
+//									sb.append("\n");
+//								}
+//							}
+//							String text = sb.toString();
+//							Logd(TAG, "onDrawOver: text:" + text);
 							c.drawText(lastHeaderName, x, baseline, mStickyTextPaint);
 						}
 					}
-				}else {
+				} else {
 
 				}
 			}
