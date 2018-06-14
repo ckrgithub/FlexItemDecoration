@@ -97,9 +97,9 @@ public class LinearFragment extends BaseFragment {
 		builder.setDivider(R.drawable.bg_divider_list);
 		builder.setDividerPadding(padding8, padding5, 0, padding5);
 //		if (orientation == LinearLayoutManager.VERTICAL) {
-			builder.setStickyHeader(true)
-					.setStickyHeaderDrawable(R.drawable.bg_decoration)
-					.setStickyHeaderHeight(90);
+			builder.setSticky(true)
+					.setStickyDrawable(R.drawable.bg_decoration)
+					.setStickyHeightOrWidth(90);
 //		}
 		if (is_checked[0]) {
 		} else {
