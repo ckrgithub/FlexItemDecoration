@@ -8,7 +8,7 @@ publish{
     userOrg = 'ckrjfrog'
     groupId = 'ckrjfrog.FlexItemDecoration'
     artifactId = 'Decoration'
-    publishVersion = '1.1.1'
+    publishVersion = '1.1.2'
     desc = '列表分割线'
     website = siteUrl
 }
@@ -24,8 +24,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.androidConfig.minSdkVersion
         targetSdkVersion rootProject.ext.androidConfig.targetSdkVersion
-        versionCode 11
-        versionName "1.1.1"
+        versionCode 12
+        versionName "1.1.2"
     }
 
     buildTypes {
