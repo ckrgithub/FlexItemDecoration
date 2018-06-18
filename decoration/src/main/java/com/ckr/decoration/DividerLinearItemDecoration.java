@@ -674,7 +674,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 							mStickyDrawable.setBounds(stickyLeft, top, stickyRight, bottom);
 							mStickyDrawable.draw(c);
 						} else {
-							mStickyDrawable.setBounds(stickyLeft, top, stickyRight, bottom);
+							mDivider.setBounds(stickyLeft, top, stickyRight, bottom);
 							mDivider.draw(c);
 						}
 						int x = stickyLeft + mStickyHeightOrWidth / 2;
