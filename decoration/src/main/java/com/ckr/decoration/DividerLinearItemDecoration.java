@@ -12,10 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.ckr.decoration.DecorationLog.Logd;
 import static com.ckr.decoration.DecorationLog.Loge;
@@ -117,8 +113,32 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		return this;
 	}
 
-	public BaseItemDecoration setHeaderTextPaddingLeft(int textPaddingLeft) {
+	public BaseItemDecoration setSticky(boolean sticky) {
+		isSticky = sticky;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyHeightOrWidth(@IntRange(from = 0) int stickyHeaderHeight) {
+		this.mStickyHeightOrWidth = stickyHeaderHeight;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyDrawable(@DrawableRes int drawableId) {
+		this.mStickyDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+		;
+		if (this.mStickyHeightOrWidth == 0) {
+			this.mStickyHeightOrWidth = mStickyDrawable.getIntrinsicHeight();
+		}
+		return this;
+	}
+
+	public BaseItemDecoration setStickyTextPaddingLeft(int textPaddingLeft) {
 		this.mStickyTextPaddingLeft = textPaddingLeft;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyTextPaddingTop(int textPaddingTop) {
+		this.mStickyTextPaddingTop = textPaddingTop;
 		return this;
 	}
 
@@ -126,12 +146,12 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	 * @param textColor 颜色需为argb，否则不生效
 	 * @return
 	 */
-	public BaseItemDecoration setHeaderTextColor(int textColor) {
+	public BaseItemDecoration setStickyTextColor(int textColor) {
 		this.mStickyTextColor = textColor;
 		return this;
 	}
 
-	public BaseItemDecoration setHeaderTextSize(int textSize) {
+	public BaseItemDecoration setStickyTextSize(int textSize) {
 		this.mStickyTextSize = textSize;
 		return this;
 	}
@@ -575,8 +595,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 			mDivider.draw(c);
 		}
 	}
-
-	Map<Integer, TextView> map = new HashMap<>(8);
 
 	@Override
 	public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
