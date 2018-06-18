@@ -135,26 +135,20 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	//绘制竖直分割线
 	@Override
 	public void drawVertical(Canvas c, RecyclerView parent) {
-		final int childCount = parent.getChildCount();
-		int itemCount = parent.getAdapter().getItemCount();
-		boolean clipToPadding = parent.getClipToPadding();
-		int left = 0;
-		int top = 0;
-		int right = 0;
-		int bottom = 0;
+		final int childCount = parent.getChildCount();//可视item的个数
+		RecyclerView.Adapter adapter = parent.getAdapter();
+		int itemCount = adapter.getItemCount();//item个数
+		boolean clipToPadding = isClipToPadding(parent);
+		int left = 0, top = 0, right = 0, bottom = 0;
 		top = parent.getPaddingTop() + mDividerPaddingTop;
 		bottom = parent.getHeight() - parent.getPaddingBottom() - mDividerPaddingBottom;
-		boolean leftPosHandle = true;
-		boolean rightPosHandle = true;
-		boolean isSubDividerHandle = true;
-		boolean isRedrawDividerHandle = true;
+		boolean leftPosHandle = true, rightPosHandle = true, isSubDividerHandle = true, isRedrawDividerHandle = true;
 		for (int i = 0; i < childCount; i++) {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
 			//<editor-fold desc="悬浮左部样式的分割线">
 			if (isSticky) {
-				RecyclerView.Adapter adapter = parent.getAdapter();
 				if (adapter instanceof OnHeaderListener) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					OnHeaderListener listener = ((OnHeaderListener) adapter);
@@ -171,19 +165,19 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 									left = paddingLeft;
 								}
 								if (paddingLeft > right) {
-									right = paddingLeft;
+									continue;
 								}
 							}
 							if (mStickyDrawable != null) {
 								mStickyDrawable.setBounds(left, stickTop, right, stickyBottom);
 								mStickyDrawable.draw(c);
 							} else {
-								mStickyDrawable.setBounds(left, stickTop, right, stickyBottom);
+								mDivider.setBounds(left, stickTop, right, stickyBottom);
 								mDivider.draw(c);
 							}
 							int x = left + mStickyHeightOrWidth / 2;
-							float y = stickTop + mStickyTextPaddingLeft;
-							c.drawText(headerName, x, y, mStickyTextPaint);
+							float baseline = stickTop + mStickyTextPaddingLeft;
+							c.drawText(headerName, x, baseline, mStickyTextPaint);
 							continue;
 						}
 					}
@@ -197,7 +191,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						int adapterPosition = parent.getChildAdapterPosition(child);
 						if (0 == adapterPosition) {
 							Logd(TAG, "drawVertical: adapterPosition:" + adapterPosition);
-							right = child.getLeft() - params.rightMargin;
+							right = child.getLeft() - params.leftMargin;
 							if (isRedrawLeftDivider) {//最左边分割线的定制
 								left = right - mLeftDividerWidth;
 								if (clipToPadding) {
@@ -206,7 +200,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 										left = paddingLeft;
 									}
 									if (paddingLeft > right) {
-										right = paddingLeft;
+										continue;
 									}
 								}
 								if (mLeftDividerDrawable != null) {
@@ -224,7 +218,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 										left = paddingLeft;
 									}
 									if (paddingLeft > right) {
-										right = paddingLeft;
+										continue;
 									}
 								}
 								mDivider.setBounds(left, top, right, bottom);
@@ -243,7 +237,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 			}
 			//</editor-fold>
-//			int rightDividerWidth = mDividerWidth;
 			//<editor-fold desc="最右边分割线绘制与定制">
 			if (!noDrawRightDivider) {//最右边分割线处理
 				if (childCount - 1 == i) {
@@ -286,7 +279,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 								left = paddingLeft;
 							}
 							if (paddingLeft > right) {
-								right = paddingLeft;
+								continue;
 							}
 						}
 						if (mDividerDrawable != null) {
@@ -322,7 +315,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 										left = paddingLeft;
 									}
 									if (paddingLeft > right) {
-										right = paddingLeft;
+										continue;
 									}
 								}
 								if (mSubDrawable != null) {
@@ -349,7 +342,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					left = paddingLeft;
 				}
 				if (paddingLeft > right) {
-					right = paddingLeft;
+					continue;
 				}
 			}
 			mDivider.setBounds(left, top, right, bottom);
@@ -357,29 +350,27 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		}
 	}
 
+	private boolean isClipToPadding(RecyclerView parent) {
+		return parent.getClipToPadding();
+	}
+
 	//绘制水平分割线
 	@Override
 	public void drawHorizontal(Canvas c, RecyclerView parent) {
 		int childCount = parent.getChildCount();//可视item的个数
-		int itemCount = parent.getAdapter().getItemCount();//item个数
-		boolean clipToPadding = parent.getClipToPadding();
-		int left = 0;
-		int top = 0;
-		int right = 0;
-		int bottom = 0;
+		RecyclerView.Adapter adapter = parent.getAdapter();
+		int itemCount = adapter.getItemCount();//item个数
+		boolean clipToPadding = isClipToPadding(parent);
+		int left = 0, top = 0, right = 0, bottom = 0;
 		left = parent.getPaddingLeft() + mDividerPaddingLeft;
 		right = parent.getWidth() - parent.getPaddingRight() - mDividerPaddingRight;
-		boolean headerPosHandle = true;
-		boolean footerPosHandle = true;
-		boolean isSubDividerHandle = true;
-		boolean isRedrawDividerHandle = true;
+		boolean headerPosHandle = true, footerPosHandle = true, isSubDividerHandle = true, isRedrawDividerHandle = true;
 		for (int i = 0; i < childCount; i++) {
 			final View child = parent.getChildAt(i);
 			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
 					.getLayoutParams();
 			//<editor-fold desc="悬浮头部样式的分割线">
 			if (isSticky) {
-				RecyclerView.Adapter adapter = parent.getAdapter();
 				if (adapter instanceof OnHeaderListener) {
 					int adapterPosition = parent.getChildAdapterPosition(child);
 					OnHeaderListener listener = ((OnHeaderListener) adapter);
@@ -396,7 +387,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 									top = paddingTop;
 								}
 								if (paddingTop > bottom) {
-									bottom = paddingTop;
+									continue;
 								}
 							}
 							if (mStickyDrawable != null) {
@@ -407,8 +398,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 								mDivider.draw(c);
 							}
 							int x = stickyLeft + mStickyTextPaddingLeft;
-							float y = top + mStickyHeightOrWidth / 2 + mOffsetY;
-							c.drawText(headerName, x, y, mStickyTextPaint);
+							float baseline = top + mStickyHeightOrWidth / 2 + mOffsetY;
+							c.drawText(headerName, x, baseline, mStickyTextPaint);
 							continue;
 						}
 					}
@@ -432,7 +423,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 										top = paddingTop;
 									}
 									if (paddingTop > bottom) {
-										bottom = paddingTop;
+										continue;
 									}
 								}
 								if (mHeaderDividerDrawable != null) {
@@ -450,7 +441,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 										top = paddingTop;
 									}
 									if (paddingTop > bottom) {
-										bottom = paddingTop;
+										continue;
 									}
 								}
 								mDivider.setBounds(left, top, right, bottom);
@@ -492,7 +483,6 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 								mDivider.draw(c);
 							}
 						}
-//						continue;
 					}
 				}
 			}
@@ -511,7 +501,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 								top = paddingTop;
 							}
 							if (paddingTop > bottom) {
-								bottom = paddingTop;
+								continue;
 							}
 						}
 						if (mDividerDrawable != null) {
@@ -547,7 +537,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 										top = paddingTop;
 									}
 									if (paddingTop > bottom) {
-										bottom = paddingTop;
+										continue;
 									}
 								}
 								if (mSubDrawable != null) {
@@ -574,7 +564,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 					top = paddingTop;
 				}
 				if (paddingTop > bottom) {
-					bottom = paddingTop;
+					continue;
 				}
 			}
 			mDivider.setBounds(left, top, right, bottom);
@@ -597,7 +587,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				String headerName = listener.getHeaderName(adapterPosition);
 				Loge(TAG, "onDrawOver: headerName:" + headerName + ",adapterPosition:" + adapterPosition);
 				if (!TextUtils.isEmpty(headerName)) {
-					boolean clipToPadding = parent.getClipToPadding();
+					boolean clipToPadding = isClipToPadding(parent);
 					boolean flag = false;
 					if (mOrientation == VERTICAL) {
 						int stickyTop = !clipToPadding ? parent.getTop() : parent.getPaddingTop();
@@ -674,7 +664,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 									c.drawText(lastHeaderName, x, baseline, mStickyTextPaint);
 								}
 								return;
-							}else {
+							} else {
 								if (left <= stickyLeft) {
 									flag = true;
 								}
