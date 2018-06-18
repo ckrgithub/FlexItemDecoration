@@ -34,11 +34,13 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 	private boolean isSticky;//固定头部
 	private int mStickyHeightOrWidth;//固定头部高度或宽度
 	private Drawable mStickyDrawable;//固定头部样式
-	private int mStickyTextPaddingLeft = 48;//固定头部的文本
+	private int mStickyTextPaddingLeft = 48;//固定头部的文本左边距
+	private int mStickyTextPaddingTop = 60;//固定头部的文本上边距
 	private int mStickyTextColor = Color.WHITE;//固定头部的文本的字体颜色
 	private int mStickyTextSize = 42;//固定头部的文本的字体大小
 	private Paint mStickyTextPaint;
 	private float mOffsetY;//字体中间线到基准线baseline的偏移量
+	private float mTextHeight;
 
 	public DividerLinearItemDecoration(Context context) {
 		super(context, LINEAR, VERTICAL);
@@ -62,6 +64,7 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		this.mStickyHeightOrWidth = builder.mStickyHeightOrWidth;
 		this.mStickyDrawable = builder.mStickyDrawable;
 		this.mStickyTextPaddingLeft = builder.mStickyTextPaddingLeft;
+		this.mStickyTextPaddingTop = builder.mStickyTextPaddingTop;
 		this.mStickyTextColor = builder.mStickyTextColor;
 		this.mStickyTextSize = builder.mStickyTextSize;
 		if (isSticky) {
@@ -72,7 +75,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				mStickyTextPaint.setTextAlign(Paint.Align.CENTER);
 			}
 			Paint.FontMetricsInt mFontMetricsInt = mStickyTextPaint.getFontMetricsInt();
-			float textCenter = (mFontMetricsInt.descent - mFontMetricsInt.ascent) / 2.0f;
+			mTextHeight = (mFontMetricsInt.descent - mFontMetricsInt.ascent);
+			float textCenter = mTextHeight / 2.0f;
 			mOffsetY = -mFontMetricsInt.ascent - textCenter;
 		}
 	}
@@ -678,27 +682,24 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 							mDivider.draw(c);
 						}
 						int x = stickyLeft + mStickyHeightOrWidth / 2;
-						float baseline = top + mStickyTextPaddingLeft;
+						float baseline = top + mStickyTextPaddingTop;
 						String lastHeaderName = listener.getHeaderName(flag ? adapterPosition : Math.max(0, adapterPosition - 1));//得到上一个item的头部文本
 						if (!TextUtils.isEmpty(lastHeaderName)) {
-//							char[] array = headerName.toCharArray();
-//							int length = array.length;
-//							StringBuilder sb = new StringBuilder(length * 2 - 1);
-//							for (int i = 0; i < length; i++) {
-//								char c1 = array[i];
-//								Logd(TAG, "onDrawOver: c:" + c1);
-//								sb.append(c1);
-//								if (i != length - 1) {
-//									sb.append("\n");
-//								}
-//							}
-//							String text = sb.toString();
-//							Logd(TAG, "onDrawOver: text:" + text);
-							c.drawText(lastHeaderName, x, baseline, mStickyTextPaint);
+							int len = lastHeaderName.length();
+							if (len > 1) {
+								char[] array = lastHeaderName.toCharArray();
+								int length = array.length;
+								for (int i = 0; i < length; i++) {
+									char c1 = array[i];
+									c.drawText(String.valueOf(c1), x, baseline, mStickyTextPaint);
+									baseline += mTextHeight;
+								}
+							} else {
+								c.drawText(lastHeaderName, x, baseline, mStickyTextPaint);
+							}
+
 						}
 					}
-				} else {
-
 				}
 			}
 		}
@@ -857,7 +858,8 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 		private boolean isSticky;//固定头部
 		private int mStickyHeightOrWidth;//固定头部高度或宽度
 		private Drawable mStickyDrawable;//固定头部样式
-		private int mStickyTextPaddingLeft = 48;//固定头部的文本
+		private int mStickyTextPaddingLeft = 48;//固定头部的文本左边距
+		private int mStickyTextPaddingTop = 60;//固定头部的文本上边距
 		private int mStickyTextColor = Color.WHITE;//固定头部的文本的字体颜色
 		private int mStickyTextSize = 42;//固定头部的文本的字体大小
 
@@ -926,6 +928,11 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 
 		public Builder setStickyTextPaddingLeft(int textPaddingLeft) {
 			this.mStickyTextPaddingLeft = textPaddingLeft;
+			return this;
+		}
+
+		public Builder setStickyTextPaddingTop(int textPaddingTop) {
+			this.mStickyTextPaddingTop = textPaddingTop;
 			return this;
 		}
 
