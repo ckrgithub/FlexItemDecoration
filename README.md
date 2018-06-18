@@ -21,8 +21,8 @@ FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing
 #### add dependencies：
 ```
 	dependencies {
-		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.1.1'//gradle plugin 3.0(inclusive) above used
-		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.1'//gradle plugin 3.0 below used
+		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.1.2'//gradle plugin 3.0(inclusive) above used
+		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.2'//gradle plugin 3.0 below used
 	}
 ```
 
