@@ -2,10 +2,15 @@ package com.ckr.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntRange;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import static com.ckr.decoration.DecorationLog.Logd;
@@ -21,6 +26,16 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 	private Drawable mBottomDivider;    //item下方分割线的drawable
 	private Drawable mLeftDivider;        //item左边方分割线的drawable
 	private Drawable mRightDivider;        //item右方分割线的drawable
+	private boolean isSticky;//固定头部
+	private int mStickyHeightOrWidth;//固定头部高度或宽度
+	private Drawable mStickyDrawable;//固定头部样式
+	private int mStickyTextPaddingLeft = 48;//固定头部的文本左边距
+	private int mStickyTextPaddingTop = 60;//固定头部的文本上边距
+	private int mStickyTextColor = Color.WHITE;//固定头部的文本的字体颜色
+	private int mStickyTextSize = 42;//固定头部的文本的字体大小
+	private Paint mStickyTextPaint;
+	private float mOffsetY;//字体中间线到基准线baseline的偏移量
+	private float mTextHeight;
 
 	public DividerGridItemDecoration(Context context, int mSpanCount) {
 		super(context, GRID, VERTICAL);
@@ -40,10 +55,72 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 	private DividerGridItemDecoration(Builder builder) {
 		super(builder);
 		this.mSpanCount = builder.mSpanCount;
+		this.isSticky = builder.isSticky;
+		this.mStickyHeightOrWidth = builder.mStickyHeightOrWidth;
+		this.mStickyDrawable = builder.mStickyDrawable;
+		this.mStickyTextPaddingLeft = builder.mStickyTextPaddingLeft;
+		this.mStickyTextPaddingTop = builder.mStickyTextPaddingTop;
+		this.mStickyTextColor = builder.mStickyTextColor;
+		this.mStickyTextSize = builder.mStickyTextSize;
+		if (isSticky) {
+			mStickyTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mStickyTextPaint.setColor(mStickyTextColor);//注意：颜色需为argb，否则，绘制不出
+			mStickyTextPaint.setTextSize(mStickyTextSize);
+			if (mOrientation == HORIZONTAL) {
+				mStickyTextPaint.setTextAlign(Paint.Align.CENTER);
+			}
+			Paint.FontMetricsInt mFontMetricsInt = mStickyTextPaint.getFontMetricsInt();
+			mTextHeight = (mFontMetricsInt.descent - mFontMetricsInt.ascent);
+			float textCenter = mTextHeight / 2.0f;
+			mOffsetY = -mFontMetricsInt.ascent - textCenter;
+		}
 	}
 
 	public DividerGridItemDecoration setShowOtherStyle(boolean showOtherStyle) {
 		isShowOtherStyle = showOtherStyle;
+		return this;
+	}
+
+	public BaseItemDecoration setSticky(boolean sticky) {
+		isSticky = sticky;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyHeightOrWidth(@IntRange(from = 0) int stickyHeaderHeight) {
+		this.mStickyHeightOrWidth = stickyHeaderHeight;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyDrawable(@DrawableRes int drawableId) {
+		this.mStickyDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+		;
+		if (this.mStickyHeightOrWidth == 0) {
+			this.mStickyHeightOrWidth = mStickyDrawable.getIntrinsicHeight();
+		}
+		return this;
+	}
+
+	public BaseItemDecoration setStickyTextPaddingLeft(int textPaddingLeft) {
+		this.mStickyTextPaddingLeft = textPaddingLeft;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyTextPaddingTop(int textPaddingTop) {
+		this.mStickyTextPaddingTop = textPaddingTop;
+		return this;
+	}
+
+	/**
+	 * @param textColor 颜色需为argb，否则不生效
+	 * @return
+	 */
+	public BaseItemDecoration setStickyTextColor(int textColor) {
+		this.mStickyTextColor = textColor;
+		return this;
+	}
+
+	public BaseItemDecoration setStickyTextSize(int textSize) {
+		this.mStickyTextSize = textSize;
 		return this;
 	}
 
@@ -470,6 +547,23 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 		int right = mDividerWidth;
 		int bottom = mDividerHeight;
 		if (mOrientation == VERTICAL) {
+			//<editor-folder desc="悬浮头部">
+			if (isSticky) {//悬浮头部
+				RecyclerView.Adapter adapter = parent.getAdapter();
+				if (adapter instanceof OnHeaderListener) {
+					OnHeaderListener listener = ((OnHeaderListener) adapter);
+					String headerName = listener.getHeaderName(itemPosition);
+					if (!TextUtils.isEmpty(headerName)) {
+						if (itemPosition == 0 || !headerName.equals(listener.getHeaderName(itemPosition - 1))) {
+							Logd(TAG, "getItemOffsets: headerName:" + headerName + ",itemPosition:" + itemPosition);
+							top = mStickyHeightOrWidth;
+							outRect.set(0, top, 0, bottom);
+							return;
+						}
+					}
+				}
+			}
+			//</editor-folder>
 			//<editor-fold desc="顶部分割线绘制与定制">
 			if (noDrawHeaderDivider) {
 				if (mSpanCount > itemPosition) {
@@ -641,7 +735,7 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
         * bottom：代表item的底部分割线占有的y轴长度
         * */
 		if (isShowOtherStyle) {
-			outRect.set(0, 0, right, bottom);
+			outRect.set(0, top, right, 0);
 		} else {
 			outRect.set(left, top, right, bottom);
 		}
@@ -649,6 +743,13 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 
 	public static class Builder extends BaseBuilder {
 		private int mSpanCount = 1;
+		private boolean isSticky;//固定头部
+		private int mStickyHeightOrWidth;//固定头部高度或宽度
+		private Drawable mStickyDrawable;//固定头部样式
+		private int mStickyTextPaddingLeft = 48;//固定头部的文本左边距
+		private int mStickyTextPaddingTop = 60;//固定头部的文本上边距
+		private int mStickyTextColor = Color.WHITE;//固定头部的文本的字体颜色
+		private int mStickyTextSize = 42;//固定头部的文本的字体大小
 
 		public Builder(Context context, int mSpanCount) {
 			super(context, GRID);
@@ -670,6 +771,49 @@ public class DividerGridItemDecoration extends BaseItemDecoration {
 
 		public BaseBuilder setShowOtherStyle(boolean showOtherStyle) {
 			this.isShowOtherStyle = showOtherStyle;
+			return this;
+		}
+
+		public Builder setSticky(boolean sticky) {
+			isSticky = sticky;
+			return this;
+		}
+
+		public Builder setStickyHeightOrWidth(@IntRange(from = 0) int stickyHeaderHeight) {
+			this.mStickyHeightOrWidth = stickyHeaderHeight;
+			return this;
+		}
+
+		public Builder setStickyDrawable(@DrawableRes int drawableId) {
+			this.mStickyDrawable = ContextCompat.getDrawable(mContext.getApplicationContext(), drawableId);
+			;
+			if (this.mStickyHeightOrWidth == 0) {
+				this.mStickyHeightOrWidth = mStickyDrawable.getIntrinsicHeight();
+			}
+			return this;
+		}
+
+		public Builder setStickyTextPaddingLeft(int textPaddingLeft) {
+			this.mStickyTextPaddingLeft = textPaddingLeft;
+			return this;
+		}
+
+		public Builder setStickyTextPaddingTop(int textPaddingTop) {
+			this.mStickyTextPaddingTop = textPaddingTop;
+			return this;
+		}
+
+		/**
+		 * @param textColor 颜色需为argb，否则不生效
+		 * @return
+		 */
+		public Builder setStickyTextColor(int textColor) {
+			this.mStickyTextColor = textColor;
+			return this;
+		}
+
+		public Builder setStickyTextSize(int textSize) {
+			this.mStickyTextSize = textSize;
 			return this;
 		}
 
