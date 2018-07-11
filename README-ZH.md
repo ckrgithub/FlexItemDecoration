@@ -2,17 +2,12 @@
 灵活的分割线，可绘制头部、底部、最左边、最右边分割线，还可以定制某一行的分割线和批量定制多行分割线。
 
 ## 效果图
-| 垂直网格                          | 水平网格                          | 垂直网格2                         |
-| -------------------------------- | -------------------------------- | -------------------------------- |
-| ![](screenshot/Screenshot_1.png) | ![](screenshot/Screenshot_2.png) | ![](screenshot/Screenshot_3.png) |
-
-| 垂直线性                          | 水平线性                          | 定制分割线-线性布局				 |
-| -------------------------------- | -------------------------------- | -------------------------------- |
-| ![](screenshot/Screenshot_4.png) | ![](screenshot/Screenshot_5.png) | ![](screenshot/Screenshot_6.png) | 
-
-| 定制分割线-网格布局				   | 移除分割线-线性布局				  | 移除分割线-网格布局				 |
-| -------------------------------- | -------------------------------- | -------------------------------- |
-| ![](screenshot/Screenshot_9.png) | ![](screenshot/Screenshot_8.png) | ![](screenshot/Screenshot_7.png) |
+| vertical-grid                    | vertical-grid-2                  | vertical-linear                   |
+| -------------------------------- | -------------------------------- | --------------------------------  |
+| ![](screenshot/Screenshot_1.png) | ![](screenshot/Screenshot_3.png) | ![](screenshot/Screenshot_4.png)  |
+| custom-line-linear               | custom-line-grid                 | stiky-header                      |
+| -------------------------------- | -------------------------------- | --------------------------------  |
+| ![](screenshot/Screenshot_6.png) | ![](screenshot/Screenshot_9.png) | ![](screenshot/Screenshot_10.png) | 
 
 ## Demo
 [下载 APK](apk/app-debug.apk)
@@ -21,8 +16,8 @@
 #### 添加依赖：
 ```
 	dependencies {
-		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.1.1'//gradle plugin 3.0(包含)以上使用
-		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.1'//gradle plugin 3.0一下使用
+		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.1.2'//gradle plugin 3.0(包含)以上使用
+		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.2'//gradle plugin 3.0一下使用
 	}
 ```
 

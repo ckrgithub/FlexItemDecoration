@@ -270,19 +270,44 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						if (itemCount - 1 == adapterPosition) {
 							Logd(TAG, "drawVertical: adapterPosition:" + adapterPosition);
 							left = child.getRight() + params.rightMargin;
+							boolean isDraw = true;
 							if (isRedrawRightDivider) {//最右边分割线的定制
 								right = left + mRightDividerWidth;
-								if (mRightDividerDrawable != null) {
-									mRightDividerDrawable.setBounds(left, top, right, bottom);
-									mRightDividerDrawable.draw(c);
-								} else {
-									mDivider.setBounds(left, top, right, bottom);
-									mDivider.draw(c);
+								if (clipToPadding) {//兼容该属性的绘制方式
+									int paddingRight = parent.getWidth() - parent.getPaddingRight();
+									if (left > paddingRight) {
+										isDraw = false;
+									} else {
+										if (right > paddingRight) {
+											right = paddingRight;
+										}
+									}
+								}
+								if (isDraw) {
+									if (mRightDividerDrawable != null) {
+										mRightDividerDrawable.setBounds(left, top, right, bottom);
+										mRightDividerDrawable.draw(c);
+									} else {
+										mDivider.setBounds(left, top, right, bottom);
+										mDivider.draw(c);
+									}
 								}
 							} else {
 								right = left + mDividerWidth;
-								mDivider.setBounds(left, top, right, bottom);
-								mDivider.draw(c);
+								if (clipToPadding) {//兼容该属性的绘制方式
+									int paddingRight = parent.getWidth() - parent.getPaddingRight();
+									if (left > paddingRight) {
+										isDraw = false;
+									} else {
+										if (right > paddingRight) {
+											right = paddingRight;
+										}
+									}
+								}
+								if (isDraw) {
+									mDivider.setBounds(left, top, right, bottom);
+									mDivider.draw(c);
+								}
 							}
 						}
 					}
@@ -367,6 +392,15 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 				if (paddingLeft > right) {
 					continue;
+				}
+				if (clipToPadding) {//兼容该属性的绘制方式
+					int paddingRight = parent.getWidth() - parent.getPaddingRight();
+					if (left > paddingRight) {
+						continue;
+					}
+					if (right > paddingRight) {
+						right = paddingRight;
+					}
 				}
 			}
 			mDivider.setBounds(left, top, right, bottom);
@@ -492,19 +526,44 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						footerPosHandle = false;
 						if (itemCount - 1 == adapterPosition) {
 							top = child.getBottom() + params.bottomMargin;
+							boolean isDraw = true;
 							if (isRedrawFooterDivider) {//底部分割线定制
 								bottom = top + mFooterDividerHeight;
-								if (mFooterDividerDrawable != null) {
-									mFooterDividerDrawable.setBounds(left, top, right, bottom);
-									mFooterDividerDrawable.draw(c);
-								} else {
-									mDivider.setBounds(left, top, right, bottom);
-									mDivider.draw(c);
+								if (clipToPadding) {//兼容该属性的绘制方式
+									int paddingBottom = parent.getHeight() - parent.getPaddingBottom();
+									if (top > paddingBottom) {
+										isDraw = false;
+									} else {
+										if (bottom > paddingBottom) {
+											bottom = paddingBottom;
+										}
+									}
+								}
+								if (isDraw) {
+									if (mFooterDividerDrawable != null) {
+										mFooterDividerDrawable.setBounds(left, top, right, bottom);
+										mFooterDividerDrawable.draw(c);
+									} else {
+										mDivider.setBounds(left, top, right, bottom);
+										mDivider.draw(c);
+									}
 								}
 							} else {
 								bottom = top + mDividerHeight;
-								mDivider.setBounds(left, top, right, bottom);
-								mDivider.draw(c);
+								if (clipToPadding) {
+									int paddingBottom = parent.getHeight() - parent.getPaddingBottom();
+									if (top > paddingBottom) {
+										isDraw = false;
+									} else {
+										if (bottom > paddingBottom) {
+											bottom = paddingBottom;
+										}
+									}
+								}
+								if (isDraw) {
+									mDivider.setBounds(left, top, right, bottom);
+									mDivider.draw(c);
+								}
 							}
 						}
 					}
@@ -589,6 +648,13 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 				if (paddingTop > bottom) {
 					continue;
+				}
+				int paddingBottom = parent.getHeight() - parent.getPaddingBottom();
+				if (top > paddingBottom) {
+					continue;
+				}
+				if (bottom > paddingBottom) {
+					bottom = paddingBottom;
 				}
 			}
 			mDivider.setBounds(left, top, right, bottom);
