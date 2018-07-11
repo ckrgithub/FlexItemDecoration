@@ -492,19 +492,44 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 						footerPosHandle = false;
 						if (itemCount - 1 == adapterPosition) {
 							top = child.getBottom() + params.bottomMargin;
+							boolean isDraw = true;
 							if (isRedrawFooterDivider) {//底部分割线定制
 								bottom = top + mFooterDividerHeight;
-								if (mFooterDividerDrawable != null) {
-									mFooterDividerDrawable.setBounds(left, top, right, bottom);
-									mFooterDividerDrawable.draw(c);
-								} else {
-									mDivider.setBounds(left, top, right, bottom);
-									mDivider.draw(c);
+								if (clipToPadding) {//兼容该属性的绘制方式
+									int paddingBottom = parent.getHeight() - parent.getPaddingBottom();
+									if (top > paddingBottom) {
+										isDraw = false;
+									} else {
+										if (bottom > paddingBottom) {
+											bottom = paddingBottom;
+										}
+									}
+								}
+								if (isDraw) {
+									if (mFooterDividerDrawable != null) {
+										mFooterDividerDrawable.setBounds(left, top, right, bottom);
+										mFooterDividerDrawable.draw(c);
+									} else {
+										mDivider.setBounds(left, top, right, bottom);
+										mDivider.draw(c);
+									}
 								}
 							} else {
 								bottom = top + mDividerHeight;
-								mDivider.setBounds(left, top, right, bottom);
-								mDivider.draw(c);
+								if (clipToPadding) {
+									int paddingBottom = parent.getHeight() - parent.getPaddingBottom();
+									if (top > paddingBottom) {
+										isDraw = false;
+									} else {
+										if (bottom > paddingBottom) {
+											bottom = paddingBottom;
+										}
+									}
+								}
+								if (isDraw) {
+									mDivider.setBounds(left, top, right, bottom);
+									mDivider.draw(c);
+								}
 							}
 						}
 					}
@@ -589,6 +614,13 @@ public class DividerLinearItemDecoration extends BaseItemDecoration {
 				}
 				if (paddingTop > bottom) {
 					continue;
+				}
+				int paddingBottom = parent.getHeight() - parent.getPaddingBottom();
+				if (top > paddingBottom) {
+					continue;
+				}
+				if (bottom > paddingBottom) {
+					bottom = paddingBottom;
 				}
 			}
 			mDivider.setBounds(left, top, right, bottom);
