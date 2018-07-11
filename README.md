@@ -2,17 +2,13 @@
 FlexItemDecoration, can customize the head, bottom, leftmost, rightmost dividing line, but also customize any one of the dividing lines and batch custom multiple dividing lines [中文文档](README-ZH.md).
 
 ## Effect
-| vertical-grid                    | vertical-grid-2                  |
-| -------------------------------- | -------------------------------- |
-| ![](screenshot/Screenshot_1.png) | ![](screenshot/Screenshot_3.png) |
+| vertical-grid                    | vertical-grid-2                  | vertical-linear                  |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| ![](screenshot/Screenshot_1.png) | ![](screenshot/Screenshot_3.png) | ![](screenshot/Screenshot_4.png) |
 
-| vertical-linear                  | custom-line-linear               |
-| -------------------------------- | -------------------------------- |
-| ![](screenshot/Screenshot_4.png) | ![](screenshot/Screenshot_6.png) | 
-
-| custom-line-grid                 | stiky-header                    |
-| -------------------------------- | --------------------------------  |
-| ![](screenshot/Screenshot_9.png) | ![](screenshot/Screenshot_10.png) |
+| custom-line-linear               | custom-line-grid                 | stiky-header                      |
+| -------------------------------- | -------------------------------- | --------------------------------  |
+| ![](screenshot/Screenshot_6.png) | ![](screenshot/Screenshot_9.png) | ![](screenshot/Screenshot_10.png) | 
 
 ## Demo
 [Download APK](apk/app-debug.apk)
