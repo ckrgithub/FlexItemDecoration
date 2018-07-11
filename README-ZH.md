@@ -16,8 +16,8 @@
 #### 添加依赖：
 ```
 	dependencies {
-		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.1.2'//gradle plugin 3.0(包含)以上使用
-		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.2'//gradle plugin 3.0一下使用
+		implementation 'ckrjfrog.FlexItemDecoration:Decoration:1.1.3'//gradle plugin 3.0(包含)以上使用
+		//compile 'ckrjfrog.FlexItemDecoration:Decoration:1.1.3'//gradle plugin 3.0一下使用
 	}
 ```
 
